@@ -83,54 +83,78 @@ $est_profit = $gmp * $lot_size;
         <span class="text-slate-200"><?php echo esc_html($name); ?></span>
     </nav>
 
-    <!-- Top Hero Card (Tightened) -->
-    <div class="bg-[#0B1220] border border-border-navy rounded-[24px] p-6 lg:p-8 mb-6 overflow-hidden relative">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+    <!-- Top Hero Card (Compact 50-50 Split) -->
+    <div class="bg-[#050B14] border border-border-navy rounded-[20px] p-0 overflow-hidden relative mb-6">
+        <div class="flex flex-col lg:flex-row items-stretch">
             
-            <!-- Left: Branding -->
-            <div class="flex items-center gap-6">
-                <div class="size-20 rounded-xl bg-white p-2.5 flex items-center justify-center shadow-2xl ring-4 ring-white/5 overflow-hidden">
-                    <?php if(!empty($ipo->icon_url)): ?>
-                        <img src="<?php echo esc_url($ipo->icon_url); ?>" alt="<?php echo esc_attr($name); ?>" class="w-full h-full object-contain" />
-                    <?php else: ?>
-                        <span class="text-3xl font-black text-slate-900"><?php echo substr($name, 0, 1); ?></span>
-                    <?php endif; ?>
-                </div>
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-black text-white tracking-tighter mb-2 leading-tight">
-                        <?php echo esc_html($name); ?>
-                    </h1>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-slate-800 text-slate-400 text-[9px] font-black uppercase tracking-widest rounded-full border border-slate-700">
-                            <?php echo esc_html($ipo->status); ?>
-                        </span>
-                        <span class="px-3 py-1 bg-primary/20 text-primary text-[9px] font-black uppercase tracking-widest rounded-full border border-primary/30">
-                            <?php echo $ipo->is_sme ? 'SME' : 'MAINBOARD'; ?>
-                        </span>
+            <!-- Left: Branding (50%) -->
+            <div class="w-full lg:w-1/2 p-5 lg:p-6 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-border-navy">
+                <div class="flex items-center gap-4">
+                    <div class="size-16 rounded-xl bg-white p-2 flex items-center justify-center shadow-xl ring-2 ring-white/5 overflow-hidden shrink-0">
+                        <?php if(!empty($ipo->icon_url)): ?>
+                            <img src="<?php echo esc_url($ipo->icon_url); ?>" alt="<?php echo esc_attr($name); ?>" class="w-full h-full object-contain" />
+                        <?php else: ?>
+                            <span class="text-2xl font-black text-slate-900"><?php echo substr($name, 0, 1); ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl lg:text-3xl font-black text-white tracking-tighter mb-2 leading-tight">
+                            <?php echo esc_html($name); ?>
+                        </h1>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-0.5 bg-[#1E293B] text-slate-300 text-[10px] font-black uppercase tracking-widest rounded border border-slate-700">
+                                <?php echo esc_html($ipo->status); ?>
+                            </span>
+                            <span class="px-2 py-0.5 bg-[#0F3864] text-blue-300 text-[10px] font-black uppercase tracking-widest rounded border border-blue-500/30">
+                                <?php echo $ipo->is_sme ? 'SME' : 'MAINBOARD'; ?>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right: Metrics (Scaled Down) -->
-            <div class="flex flex-wrap items-center gap-8 lg:gap-12">
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">EXPECTATION</p>
-                    <p class="text-2xl font-black text-neon-emerald">
-                        + ₹<?php echo $ipo->premium ?: '0'; ?> <span class="text-sm opacity-80">(<?php echo $gmp_perc; ?>%)</span>
+            <!-- Right: Metrics Container (50%) -->
+            <div class="w-full lg:w-1/2 bg-[#080E1A] p-5 lg:p-6 grid grid-cols-2 gap-x-6 gap-y-4 items-center relative">
+                
+                <!-- Decorator Lines -->
+                <div class="absolute inset-x-6 top-1/2 h-px bg-slate-800/50 hidden lg:block"></div>
+                <div class="absolute inset-y-6 left-1/2 w-px bg-slate-800/50 hidden lg:block"></div>
+
+                <!-- Expectation -->
+                <div class="relative z-10">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        <span class="size-1.5 rounded-full bg-emerald-500"></span> Expected GMP
+                    </p>
+                    <p class="text-2xl font-black text-emerald-400 flex flex-col items-start gap-0.5 leading-none">
+                        +₹<?php echo $ipo->premium ?: '0'; ?> 
                     </p>
                 </div>
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">EST. PROFIT</p>
-                    <p class="text-2xl font-black text-white">
+
+                <!-- Est Profit -->
+                <div class="relative z-10 pl-4 lg:pl-6 border-l border-slate-800/50 lg:border-0">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Est. Profit</p>
+                    <p class="text-xl lg:text-2xl font-black text-white leading-none">
                         ₹<?php echo number_format($est_profit); ?>
                     </p>
                 </div>
-                <div>
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">PRICE BAND</p>
-                    <p class="text-2xl font-black text-white">
+
+                <!-- Min Investment -->
+                <?php $min_invest = $price_max * $lot_size; ?>
+                <div class="relative z-10 pt-4 lg:pt-0 border-t border-slate-800/50 lg:border-0">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Min. Invest</p>
+                    <p class="text-xl lg:text-2xl font-black text-white leading-none">
+                        ₹<?php echo number_format($min_invest); ?>
+                    </p>
+                </div>
+
+                <!-- Price Band -->
+                <div class="relative z-10 pl-4 lg:pl-6 pt-4 lg:pt-0 border-l lg:border-l-0 border-t lg:border-t-0 border-slate-800/50">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Price Band</p>
+                    <p class="text-lg lg:text-xl font-black text-white leading-none">
                         <?php echo esc_html($ipo->price_band ?: 'TBA'); ?>
                     </p>
                 </div>
+
             </div>
         </div>
     </div>
