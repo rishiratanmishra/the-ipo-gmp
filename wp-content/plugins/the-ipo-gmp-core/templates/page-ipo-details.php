@@ -318,6 +318,9 @@ $est_profit = $gmp * $lot_size;
                 </div>
             </div>
             <?php endif; ?>
+
+            <!-- Broker Widget -->
+            <?php include TIGC_PATH . 'partials/widget-brokers.php'; ?>
         </div>
     </div>
 </main>
