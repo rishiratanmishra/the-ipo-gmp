@@ -64,16 +64,17 @@ $ticker_data = $wpdb->get_results("
             <!-- Search Bar (Header) -->
             <div class="hidden lg:flex items-center w-72 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all">
                 <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input type="text" placeholder="Search IPOs & Buyback news..." class="bg-transparent border-none text-xs text-white focus:ring-0 w-full placeholder:text-slate-600 ml-2">
+                <input type="text" placeholder="Search companies..." class="bg-transparent border-none text-xs text-white focus:ring-0 w-full placeholder:text-slate-600 ml-2">
             </div>
         </div>
 
         <div class="flex items-center gap-10">
             <!-- Navigation -->
             <nav class="hidden md:flex items-center gap-8">
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_front_page() ? 'text-primary' : ''; ?>" href="<?php echo home_url('/'); ?>">Intelligence</a>
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo strpos($_SERVER['REQUEST_URI'], 'buybacks') !== false ? 'text-primary' : ''; ?>" href="<?php echo home_url('/buybacks/'); ?>">Buybacks</a>
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors" href="#">Analyst View</a>
+                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_front_page() ? 'text-primary' : ''; ?>" href="<?php echo home_url('/'); ?>">Dashboard</a>
+                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('mainboard-ipos') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/mainboard-ipos/'); ?>">Mainboard</a>
+                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('sme-ipos') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/sme-ipos/'); ?>">SME</a>
+                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('buybacks') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/buybacks/'); ?>">Buybacks</a>
             </nav>
 
             <!-- Actions -->
