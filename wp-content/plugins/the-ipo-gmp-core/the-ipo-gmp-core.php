@@ -76,3 +76,47 @@ add_action('wp_enqueue_scripts', function() {
         ');
     }
 });
+
+// AJAX Search Handler
+add_action('wp_ajax_tigc_ajax_search', 'tigc_handle_ajax_search');
+add_action('wp_ajax_nopriv_tigc_ajax_search', 'tigc_handle_ajax_search');
+
+function tigc_handle_ajax_search() {
+    global $wpdb;
+    
+    $term = isset($_GET['term']) ? sanitize_text_field($_GET['term']) : '';
+    
+    if (empty($term)) {
+        wp_send_json_success([]);
+    }
+
+    $t_master = $wpdb->prefix . 'ipomaster';
+    
+    // Search by Name ONLY (Removing symbol to avoid column errors)
+    $query = $wpdb->prepare("
+        SELECT id, name, slug, status, premium 
+        FROM $t_master 
+        WHERE name LIKE %s 
+        ORDER BY CASE WHEN status = 'Open' THEN 1 ELSE 2 END, id DESC 
+        LIMIT 5
+    ", '%' . $wpdb->esc_like($term) . '%');
+
+    $results = $wpdb->get_results($query);
+
+    if ($wpdb->last_error) {
+        wp_send_json_error(['message' => 'DB Error', 'error' => $wpdb->last_error]);
+    }
+
+    $data = [];
+    foreach ($results as $r) {
+        $data[] = [
+            'id' => $r->id,
+            'name' => $r->name,
+            'slug' => $r->slug,
+            'status' => $r->status,
+            'gmp' => $r->premium
+        ];
+    }
+
+    wp_send_json_success($data);
+}
