@@ -15,7 +15,7 @@ $ticker_data = $wpdb->get_results("
 
 <div class="sticky top-0 z-50">
     <!-- Live Ticker -->
-    <div class="overflow-hidden h-7 bg-[#0B111D] border-b border-border-muted flex items-center">
+    <div class="overflow-hidden h-7 bg-[#0B111D] flex items-center">
         <div class="ticker-animate flex gap-12 items-center whitespace-nowrap px-10">
             <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] flex items-center gap-2">
                 <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
@@ -47,7 +47,7 @@ $ticker_data = $wpdb->get_results("
     </div>
 
     <!-- Main Header -->
-    <header class="flex items-center justify-between whitespace-nowrap border-b border-border-muted bg-[#0B111D]/95 backdrop-blur-md px-4 md:px-10 py-3.5">
+    <header class="flex items-center justify-between whitespace-nowrap bg-[#0B111D]/95 backdrop-blur-md px-4 md:px-10 py-3.5">
         <div class="flex items-center gap-10">
             <!-- Logo -->
             <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-2.5 group">

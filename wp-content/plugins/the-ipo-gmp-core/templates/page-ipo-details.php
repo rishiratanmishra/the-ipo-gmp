@@ -78,7 +78,7 @@ $est_profit = $gmp * $lot_size;
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 mb-6 text-xs font-bold uppercase tracking-widest text-slate-500">
         <span class="material-symbols-outlined text-sm">home</span>
-        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">Dashboard</a>
+        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">Homepage</a>
         <span class="text-slate-700">/</span>
         <span class="text-slate-200"><?php echo esc_html($name); ?></span>
     </nav>

@@ -101,7 +101,7 @@ function tigc_get_filter_url_sme($status_val) {
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 mb-6 text-sm font-medium text-slate-500">
         <span class="material-symbols-outlined text-sm">home</span>
-        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">Dashboard</a>
+        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">Homepage</a>
         <span class="material-symbols-outlined text-xs">chevron_right</span>
         <span class="text-slate-200">SME IPOs</span>
     </nav>
@@ -109,7 +109,7 @@ function tigc_get_filter_url_sme($status_val) {
     <!-- Header & Search -->
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
         <div>
-            <h1 class="text-white text-3xl font-black tracking-tight mb-2">SME <span class="text-purple-accent">Corner</span></h1>
+            <h1 class="text-white text-3xl font-black tracking-tight mb-2">SME <span class="text-primary">Corner</span></h1>
             <p class="text-slate-400 text-sm font-medium">Tracking <?php echo $total_items; ?> SME IPOs</p>
         </div>
         
@@ -134,9 +134,9 @@ function tigc_get_filter_url_sme($status_val) {
 
             <!-- Search Bar -->
             <form class="relative group" action="" method="GET">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-purple-accent transition-colors">search</span>
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">search</span>
                 <input type="text" name="q" value="<?php echo esc_attr($search); ?>" placeholder="Search SME..." 
-                       class="bg-slate-900 border border-slate-700 text-white text-sm rounded-lg pl-10 pr-4 py-2.5 w-full sm:w-64 focus:ring-1 focus:ring-purple-accent focus:border-purple-accent placeholder-slate-600">
+                       class="bg-slate-900 border border-slate-700 text-white text-sm rounded-lg pl-10 pr-4 py-2.5 w-full sm:w-64 focus:ring-1 focus:ring-primary focus:border-primary placeholder-slate-600">
                 <?php if($status): ?><input type="hidden" name="status" value="<?php echo esc_attr($status); ?>"><?php endif; ?>
             </form>
         </div>
@@ -171,7 +171,7 @@ function tigc_get_filter_url_sme($status_val) {
                     
                     // Dynamic Row Border for Status
                     $row_status_class = '';
-                    if (strtolower($ipo->status) === 'open') $row_status_class = 'border-l-2 border-l-purple-500';
+                    if (strtolower($ipo->status) === 'open') $row_status_class = 'border-l-2 border-l-primary';
                 ?>
                 <tr class="data-table-row transition-all cursor-pointer group <?php echo $row_status_class; ?>" onclick="window.location.href='<?php echo esc_url($details_url); ?>'">
                     <td class="px-6 py-4">
@@ -184,7 +184,7 @@ function tigc_get_filter_url_sme($status_val) {
                                 <?php endif; ?>
                             </div>
                             <div>
-                                <h3 class="text-sm font-bold text-white group-hover:text-purple-accent transition-colors line-clamp-1"><?php echo esc_html($ipo->name); ?></h3>
+                                <h3 class="text-sm font-bold text-white group-hover:text-primary transition-colors line-clamp-1"><?php echo esc_html($ipo->name); ?></h3>
                                 <p class="text-[10px] text-slate-500 font-bold tracking-wide mt-0.5">Size: ₹<?php echo esc_html($ipo->issue_size_cr ?: '-'); ?> Cr</p>
                             </div>
                         </div>
@@ -230,7 +230,7 @@ function tigc_get_filter_url_sme($status_val) {
             <span class="material-symbols-outlined text-4xl text-slate-700 mb-2">search_off</span>
             <p class="text-slate-500 font-medium">No SME IPOs found matching criteria.</p>
             <?php if($status || $search): ?>
-                <a href="?" class="mt-4 text-xs font-bold text-purple-400 hover:underline">Clear Filters</a>
+                <a href="?" class="mt-4 text-xs font-bold text-primary hover:underline">Clear Filters</a>
             <?php endif; ?>
         </div>
         <?php endif; ?>
@@ -249,7 +249,7 @@ function tigc_get_filter_url_sme($status_val) {
         // Page Numbers (Simple)
         for ($i = 1; $i <= $total_pages; $i++) {
             if ($i == $paged) {
-                echo '<span class="w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white font-bold text-xs shadow-lg shadow-purple-500/30">'.$i.'</span>';
+                echo '<span class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white font-bold text-xs shadow-lg shadow-blue-500/30">'.$i.'</span>';
             } elseif ($i <= 3 || $i == $total_pages || abs($paged - $i) <= 1) {
                 $page_params = $_GET; $page_params['paged'] = $i;
                 echo '<a href="?' . http_build_query($page_params) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors text-xs font-medium">'.$i.'</a>';

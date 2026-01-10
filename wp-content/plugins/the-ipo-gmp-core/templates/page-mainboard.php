@@ -101,7 +101,7 @@ function tigc_get_filter_url($status_val) {
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 mb-6 text-sm font-medium text-slate-500">
         <span class="material-symbols-outlined text-sm">home</span>
-        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">Dashboard</a>
+        <a href="<?php echo home_url('/'); ?>" class="hover:text-primary transition-colors">Homepage</a>
         <span class="material-symbols-outlined text-xs">chevron_right</span>
         <span class="text-slate-200">Mainboard IPOs</span>
     </nav>
