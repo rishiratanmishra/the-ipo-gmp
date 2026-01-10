@@ -123,19 +123,24 @@ $est_profit = $gmp * $lot_size;
             </div>
 
             <!-- Right: Key Metrics -->
-            <div class="grid grid-cols-3 gap-6 w-full lg:w-auto">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full lg:w-auto">
                 <div class="text-center lg:text-left">
                     <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">GMP</p>
                     <p class="text-2xl font-black text-emerald-400 leading-none">+₹<?php echo $ipo->premium ?: '0'; ?></p>
                     <p class="text-[10px] text-slate-400 mt-1">(<?php echo $gmp_perc; ?>%)</p>
                 </div>
-                <div class="text-center lg:text-left border-l border-slate-700/50 pl-6">
-                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Est. Profit</p>
-                    <p class="text-2xl font-black text-white leading-none">₹<?php echo number_format($est_profit); ?></p>
-                </div>
-                <div class="text-center lg:text-left border-l border-slate-700/50 pl-6">
+                <div class="text-center lg:text-left lg:border-l border-slate-700/50 lg:pl-6">
                     <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Price</p>
                     <p class="text-lg font-black text-white leading-none"><?php echo esc_html($ipo->price_band ?: 'TBA'); ?></p>
+                </div>
+                <div class="text-center lg:text-left lg:border-l border-slate-700/50 lg:pl-6">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Min. Invest</p>
+                    <p class="text-lg font-black text-white leading-none">₹<?php echo number_format($price_max * $lot_size); ?></p>
+                    <p class="text-[10px] text-slate-400 mt-1"><?php echo $lot_size; ?> Shares</p>
+                </div>
+                <div class="text-center lg:text-left lg:border-l border-slate-700/50 lg:pl-6">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Est. Profit</p>
+                    <p class="text-2xl font-black text-white leading-none">₹<?php echo number_format($est_profit); ?></p>
                 </div>
             </div>
         </div>
