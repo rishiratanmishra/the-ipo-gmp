@@ -195,14 +195,65 @@ class IPOD_Fetcher {
         };
 
         // Subscription, GMP, Lots, etc.
-        $data['application_breakup'] = $scrapeTable("//th[contains(.,'Application-Wise')]/ancestor::table");
-        $data['subscription']        = $scrapeTable("//h2[contains(.,'Subscription')]/ancestor::div[contains(@class,'card')]//table[1]");
-        $data['lot_distribution']    = $scrapeTable("//h2[contains(.,'Lot')]/ancestor::div[contains(@class,'card')]//table");
-        $data['reservation']         = $scrapeTable("//h2[contains(.,'Reservation')]/ancestor::div[contains(@class,'card')]//table");
+        // Application Breakup needs special handling - first header is decorative, skip it
+        $appBreakup = [];
+        $appTable = $xpath->query("//*[contains(text(),'Application-Wise')]/ancestor::table")->item(0);
+        if ($appTable) {
+            // Get headers - skip the first one as it's decorative
+            $headers = [];
+            $allHeaders = [];
+            foreach ($xpath->query(".//thead//th", $appTable) as $th) {
+                $allHeaders[] = $clean($th->textContent);
+            }
+            // Skip the first header (Application-Wise Breakup) - it doesn't have corresponding data
+            $headers = array_slice($allHeaders, 1);
+            
+            // Get data rows
+            $trQuery = ".//tbody//tr";
+            if ($xpath->query(".//thead", $appTable)->length == 0) {
+                $trQuery = ".//tr[position()>1]";
+            }
+            
+            foreach ($xpath->query($trQuery, $appTable) as $r) {
+                $cells = [];
+                
+                // Collect cells in DOCUMENT ORDER
+                foreach ($r->childNodes as $node) {
+                    if ($node->nodeType === XML_ELEMENT_NODE && ($node->nodeName === 'td' || $node->nodeName === 'th')) {
+                        $cells[] = $clean($node->textContent);
+                    }
+                }
+                
+                // Map to headers
+                $row = [];
+                foreach ($headers as $i => $h) {
+                    if (isset($cells[$i])) {
+                        $row[$h] = $cells[$i];
+                    }
+                }
+                
+                // Skip rows with "Total Applications" or other footer text
+                $skipRow = false;
+                foreach ($row as $k => $v) {
+                    if (stripos($k, 'Total Applications') !== false || stripos($v, 'Total Applications') !== false || stripos($v, 'IPO Premium') !== false) {
+                        $skipRow = true;
+                        break;
+                    }
+                }
+                
+                if (!$skipRow && count($row) > 1) {
+                    $appBreakup[] = $row;
+                }
+            }
+        }
+        $data['application_breakup'] = $appBreakup;
+
+        $data['subscription']        = $scrapeTable("//*[contains(text(),'Subscription')]/ancestor::div[contains(@class,'card')]//table[1]");
+        $data['lot_distribution']    = $scrapeTable("//*[contains(text(),'Lot') and contains(text(),'Distribution')]/ancestor::div[contains(@class,'card')]//table");
+        $data['reservation']         = $scrapeTable("//*[contains(text(),'Reservation')]/ancestor::div[contains(@class,'card')]//table");
         
         // IPO Details (Key-Value)
         $ipoDetails = [];
-        // Use generic selector for robustness
         foreach ($xpath->query("//*[contains(text(),'IPO Details')]/following::table[1]//tr") as $r) {
             $td = $r->getElementsByTagName("td");
             if ($td->length >= 2) {
@@ -212,102 +263,22 @@ class IPOD_Fetcher {
         $data['ipo_details'] = $ipoDetails;
 
         // 5. KPI Metrics
-        $kpi = [];
-        // Robust selector: looks for header containing KPI
-        $table = $xpath->query("//*[contains(text(),'KPI')]/following::table[1]")->item(0);
-        if ($table) {
-            $headers = [];
-            foreach ($xpath->query(".//thead//th", $table) as $i => $th) {
-                if ($i > 0) $headers[] = $clean($th->textContent);
-            }
-            foreach ($xpath->query(".//tbody//tr", $table) as $r) {
-                $row = [];
-                $th = $r->getElementsByTagName("th");
-                $td = $r->getElementsByTagName("td");
-                if ($th->length && $td->length) {
-                    $row['kpi'] = $clean($th->item(0)->textContent);
-                    foreach ($td as $i => $cell) {
-                        if (isset($headers[$i])) {
-                            $row[$headers[$i]] = $clean($cell->textContent);
-                        }
-                    }
-                    $kpi[] = $row;
-                }
-            }
-        }
-        $data['kpi'] = $kpi;
+        $data['kpi'] = $scrapeTable("//*[contains(text(),'Key Performance Indicators') or contains(text(),'KPI')]/following::table[1]");
 
-        // 6. Peer Comparison (Valuation)
-        $peerVal = [];
-        $table = $xpath->query("//*[contains(text(),'Peer Comparison (Valuation)')]/following::table[1]")->item(0);
-        if ($table) {
-            $headers = [];
-            foreach ($xpath->query(".//thead//th", $table) as $i => $th) {
-                if ($i > 0) $headers[] = $clean($th->textContent);
-            }
-            foreach ($xpath->query(".//tbody//tr", $table) as $r) {
-                $row = [];
-                $th = $r->getElementsByTagName("th");
-                $td = $r->getElementsByTagName("td");
-                if ($th->length) {
-                    $row['company'] = $clean($th->item(0)->textContent);
-                    foreach ($td as $i => $cell) {
-                        if (isset($headers[$i])) $row[$headers[$i]] = $clean($cell->textContent);
-                    }
-                    $peerVal[] = $row;
-                }
-            }
-        }
-        $data['peer_valuation'] = $peerVal;
+        // 6. Company Financials
+        $data['company_financials'] = $scrapeTable("//*[contains(text(),'Company Financial')]/following::table[1]");
 
-        // 7. Peer Comparison (Financial)
-        $peerFin = [];
-        $table = $xpath->query("//*[contains(text(),'Peer Comparison (Financial')]/following::table[1]")->item(0);
-        if ($table) {
-            $headers = [];
-            foreach ($xpath->query(".//thead//th", $table) as $i => $th) {
-                if ($i > 0) $headers[] = $clean($th->textContent);
-            }
-            foreach ($xpath->query(".//tbody//tr", $table) as $r) {
-                $row = [];
-                $th  = $r->getElementsByTagName("th");
-                $td  = $r->getElementsByTagName("td");
-                if ($th->length) {
-                    $row['company'] = $clean($th->item(0)->textContent);
-                    foreach ($td as $i => $cell) {
-                        if (isset($headers[$i])) $row[$headers[$i]] = $clean($cell->textContent);
-                    }
-                    $peerFin[] = $row;
-                }
-            }
-        }
-        $data['peer_financials'] = $peerFin;
+        // 7. Peer Comparison (Valuation and Financial)
+        // Note: Using flexible contains to handle 'Comparison' vs 'Comparision'
+        $data['peer_valuation']  = $scrapeTable("//*[contains(text(),'Peer Compar') and contains(text(),'Valuation')]/following::table[1]");
+        $data['peer_financials'] = $scrapeTable("//*[contains(text(),'Peer Compar') and contains(text(),'Financial')]/following::table[1]");
 
         // 8. Subscription Demand
-        $subscription_demand = [];
-        $table = $xpath->query("//th[contains(.,'Subscription Demand')]/ancestor::table")->item(0);
-        if ($table) {
-             // Logic adapted to use $clean directly
-            $headers = [];
-            foreach ($xpath->query(".//thead/tr[last()]/th", $table) as $th) {
-                $headers[] = $clean($th->textContent);
-            }
-            foreach ($xpath->query(".//tbody/tr", $table) as $r) {
-                $td = $r->getElementsByTagName("td");
-                if ($td->length === count($headers)) {
-                    $row = [];
-                    foreach ($headers as $i => $key) {
-                        $row[$key] = $clean($td->item($i)->textContent);
-                    }
-                    $subscription_demand[] = $row;
-                }
-            }
-        }
-        $data['subscription_demand'] = $subscription_demand;
+        $data['subscription_demand'] = $scrapeTable("//*[contains(text(),'Subscription Demand')]/ancestor::table");
 
         // 9. QIB Interest
         $qib = [];
-        foreach ($xpath->query("//th[contains(.,'QIB Interest')]/ancestor::table//td") as $td) {
+        foreach ($xpath->query("//*[contains(text(),'QIB Interest')]/ancestor::table//td") as $td) {
             $qib[] = $clean($td->textContent);
         }
         $data['qib_interest'] = $qib;
@@ -320,9 +291,67 @@ class IPOD_Fetcher {
         $data['lead_managers'] = $lm;
 
         // 11. Address & Registrar
-        // Use generic selector for robustness
         $data['address']   = $clean($xpath->query("//*[contains(text(),'Address')]/ancestor::div[contains(@class,'card')]//address")->item(0)->textContent ?? '');
-        $data['registrar'] = $clean($xpath->query("//*[contains(text(),'Registrar')]/ancestor::div[contains(@class,'card')]")->item(0)->textContent ?? '');
+        
+        // Refined Registrar
+        $regCard = $xpath->query("//*[contains(text(),'Registrar')]/ancestor::div[contains(@class,'card')]")->item(0);
+        if ($regCard) {
+            $data['registrar_name'] = $clean($xpath->query(".//a[contains(@href,'/registrar/')]", $regCard)->item(0)->textContent ?? '');
+            $data['registrar_phone'] = $clean($xpath->query(".//a[contains(@href,'tel:')]", $regCard)->item(0)->textContent ?? '');
+            $data['registrar_email'] = $clean($xpath->query(".//a[contains(@href,'mailto:')]", $regCard)->item(0)->textContent ?? '');
+            $data['registrar_url']   = $xpath->query(".//a[contains(@target,'_blank')]", $regCard)->item(0)->getAttribute('href') ?? '';
+            $data['registrar']       = $clean($regCard->textContent); // Fallback full text
+        }
+
+        // 12. About, Strength, Weakness (Using IDs for precision)
+        $aboutHeader = $xpath->query("//*[@id='ipo-about']//*[contains(text(),'About Company')]")->item(0);
+        if ($aboutHeader) {
+            // Find the actual header node if the text was inside a span/strong
+            $h = $aboutHeader;
+            while ($h && !preg_match('/^h[1-6]$/i', $h->nodeName)) $h = $h->parentNode;
+            $h = $h ?: $aboutHeader;
+            
+            $aboutText = '';
+            foreach($xpath->query("following-sibling::*", $h) as $sibling) {
+                $aboutText .= $sibling->textContent . "\n";
+            }
+            $data['about_company'] = $clean($aboutText);
+        }
+        
+        if (empty($data['about_company'])) {
+            $data['about_company'] = $clean($xpath->query("//*[@id='ipo-about']")->item(0)->textContent ?? '');
+        }
+        
+        // Clean "Details will be added soon" if it's the only content
+        $soon = 'Details will be added soon';
+        if (stripos(trim($data['about_company'] ?? ''), $soon) === 0 && strlen($data['about_company']) < 50) $data['about_company'] = '';
+
+        // Strengths
+        $strengths = [];
+        $strengthNode = $xpath->query("//*[@id='ipo-strength']")->item(0);
+        if ($strengthNode) {
+            foreach($xpath->query(".//li", $strengthNode) as $li) $strengths[] = $clean($li->textContent);
+            if(empty($strengths)) {
+                $stext = $clean($strengthNode->textContent);
+                if (stripos($stext, $soon) === false || strlen($stext) > 50) $data['strengths_text'] = $stext;
+            }
+        }
+        $data['strengths'] = $strengths;
+
+        // Weaknesses
+        $weaknesses = [];
+        $weaknessNode = $xpath->query("//*[@id='ipo-weakness']")->item(0);
+        if ($weaknessNode) {
+            foreach($xpath->query(".//li", $weaknessNode) as $li) $weaknesses[] = $clean($li->textContent);
+            if(empty($weaknesses)) {
+                $wtext = $clean($weaknessNode->textContent);
+                if (stripos($wtext, $soon) === false || strlen($wtext) > 50) $data['weaknesses_text'] = $wtext;
+            }
+        }
+        $data['weaknesses'] = $weaknesses;
+
+        // 13. Reviewers / Recommendations
+        $data['reviewers'] = $scrapeTable("//*[contains(text(),'Reviewers')]/following::table[1]");
 
         return $data;
     }
