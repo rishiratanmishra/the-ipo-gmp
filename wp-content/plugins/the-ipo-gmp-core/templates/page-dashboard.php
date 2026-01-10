@@ -105,9 +105,12 @@ $active_count = 0; // Initial value
             <section>
                 <div class="flex items-center justify-between mb-4 px-1">
                     <h2 class="text-white text-2xl font-bold tracking-tight">Mainboard IPOs</h2>
-                    <div class="flex gap-2 text-xs font-bold">
-                        <button id="btn-active" onclick="filterTable('active')" class="px-3 py-1 bg-primary/20 text-primary rounded-full border border-primary/30 transition-all hover:bg-primary/30">Active</button>
-                        <button id="btn-upcoming" onclick="filterTable('upcoming')" class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Upcoming</button>
+                    <div class="flex items-center gap-4">
+                        <div class="flex gap-2 text-xs font-bold">
+                            <button id="btn-active" onclick="filterTable('active')" class="px-3 py-1 bg-primary/20 text-primary rounded-full border border-primary/30 transition-all hover:bg-primary/30">Active</button>
+                            <button id="btn-upcoming" onclick="filterTable('upcoming')" class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Upcoming</button>
+                        </div>
+                        <a href="<?php echo home_url('/mainboard-ipos/'); ?>" class="text-primary text-xs font-bold hover:underline hidden md:block">View All →</a>
                     </div>
                 </div>
                 <div class="overflow-hidden rounded-xl border border-border-navy bg-[#0B1220]">
@@ -202,7 +205,7 @@ $active_count = 0; // Initial value
             <section>
                 <div class="flex items-center justify-between mb-4 px-1">
                     <h2 class="text-white text-2xl font-bold tracking-tight">SME IPO Monitor</h2>
-                    <a class="text-primary text-xs font-bold hover:underline" href="#">View All SME →</a>
+                    <a class="text-primary text-xs font-bold hover:underline" href="<?php echo home_url('/sme-ipos/'); ?>">View All SME →</a>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <?php if($sme): foreach($sme as $ipo): 
