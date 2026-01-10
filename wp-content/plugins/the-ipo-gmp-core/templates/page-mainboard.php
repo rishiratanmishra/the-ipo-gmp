@@ -8,12 +8,23 @@ global $wpdb;
 $t_master = $wpdb->prefix . 'ipomaster';
 
 // 1. Parameters
-$paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
+$paged = get_query_var('paged') ? get_query_var('paged') : (get_query_var('page') ? get_query_var('page') : (isset($_GET['paged']) ? intval($_GET['paged']) : 1));
+$paged = max(1, $paged);
 $limit = 20;
 $offset = ($paged - 1) * $limit;
 
 $search = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-$status = isset($_GET['status']) ? sanitize_text_field($_GET['status']) : '';
+// Status Param Logic: Default to 'open' if not set. explicit 'all' means show all.
+$status_param = isset($_GET['status']) ? sanitize_text_field($_GET['status']) : null;
+
+if ($status_param === null) {
+    // If searching, default to ALL (empty), otherwise default to OPEN
+    $status = !empty($search) ? '' : 'open';
+} elseif ($status_param === 'all') {
+    $status = '';     // Show All
+} else {
+    $status = $status_param;
+}
 
 // 2. Query Construction
 $where_clauses = ["is_sme = 0"];
@@ -118,13 +129,17 @@ function tigc_get_filter_url($status_val) {
             <div class="flex p-1 bg-slate-900 border border-border-navy rounded-lg">
                 <?php 
                 $tabs = [
-                    '' => 'All', 
+                    'all' => 'All', 
                     'open' => 'Open', 
                     'upcoming' => 'Upcoming', 
                     'closed' => 'Closed'
                 ];
+                
+                // Determine display status for active tab
+                $display_status = ($status === '') ? 'all' : $status;
+
                 foreach ($tabs as $k => $v): 
-                    $active = (strtolower($status) === $k) ? 'bg-[#0B1220] text-white shadow-sm font-bold border border-white/5' : 'text-slate-500 hover:text-white font-medium';
+                    $active = (strtolower($display_status) === $k) ? 'bg-[#0B1220] text-white shadow-sm font-bold border border-white/5' : 'text-slate-500 hover:text-white font-medium';
                 ?>
                 <a href="<?php echo tigc_get_filter_url($k); ?>" class="px-4 py-2 text-xs rounded-md transition-all <?php echo $active; ?>">
                     <?php echo $v; ?>
@@ -158,7 +173,8 @@ function tigc_get_filter_url($status_val) {
             </thead>
             <tbody class="divide-y divide-border-navy">
                 <?php foreach($mainboard as $ipo): 
-                    $details_url = home_url('/ipo-details/?slug=' . $ipo->slug);
+                    $slug = !empty($ipo->slug) ? $ipo->slug : sanitize_title($ipo->name);
+                    $details_url = home_url('/ipo-details/?slug=' . $slug);
                     $gmp_val = (float)$ipo->premium;
                     $cap_price = (float)$ipo->max_price;
                     
