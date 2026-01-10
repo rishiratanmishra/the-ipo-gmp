@@ -78,6 +78,7 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>The IPO GMP | Live Grey Market Premium Tracker</title>
     <meta name="description" content="Real-time IPO GMP, Buyback tracker and Market Intelligence."/>
+    <meta name="google-site-verification" content="0vKhg7_KxSrIdn1F2ZYSCNF3NmdHIDGqypqkcfReGG4" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -160,8 +161,9 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
                         <a href="<?php echo home_url('/mainboard-ipos/'); ?>" class="text-primary text-xs font-bold hover:underline hidden md:block">View All →</a>
                     </div>
                 </div>
-                <div class="overflow-hidden rounded-xl border border-border-navy bg-[#0B1220]">
-                    <table class="w-full text-left border-collapse">
+                <div class="rounded-xl border border-border-navy bg-[#0B1220] overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-slate-900/50 border-b border-border-navy">
                                 <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Company Name</th>
@@ -223,6 +225,8 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    </table>
+                    </div>
                 </div>
             </section>
             
@@ -314,8 +318,9 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
                         <a class="text-primary text-xs font-bold hover:underline hidden md:block" href="<?php echo home_url('/sme-ipos/'); ?>">View All SME →</a>
                     </div>
                 </div>
-                <div class="overflow-hidden rounded-xl border border-border-navy bg-[#0B1220]">
-                    <table class="w-full text-left border-collapse">
+                <div class="rounded-xl border border-border-navy bg-[#0B1220] overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-slate-900/50 border-b border-border-navy">
                                 <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Company Name</th>
@@ -362,6 +367,8 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    </table>
+                    </div>
                 </div>
             </section>
             
@@ -429,7 +436,7 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
                 </div>
                 <div class="p-5 space-y-3">
                     <p class="text-xs text-slate-400 mb-4 leading-relaxed">Check your application status directly on registrar portals:</p>
-                    <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="#">
+                    <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="https://linkintime.co.in/initial_offer/public-issues.html" target="_blank">
                         <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-bold text-blue-900 text-[10px]">LI</div>
                         <div>
                             <p class="text-sm font-bold text-white">Link Intime</p>
@@ -437,7 +444,51 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
                         </div>
                         <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
                     </a>
-                    <!-- More links... -->
+                    
+                    <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="https://kosmic.kfintech.com/ipostatus/" target="_blank">
+                        <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-bold text-blue-600 text-[10px]">KF</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">KFin Tech</p>
+                            <p class="text-[10px] text-slate-500">Major Registrar</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
+                    </a>
+
+                    <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="https://www.bigshareonline.com/ipo_Allotment.html" target="_blank">
+                        <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-bold text-orange-600 text-[10px]">BS</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Bigshare</p>
+                            <p class="text-[10px] text-slate-500">SME Specialist</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
+                    </a>
+
+                    <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="https://www.skylinerta.com/ipo.php" target="_blank">
+                        <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-bold text-sky-600 text-[10px]">SK</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Skyline</p>
+                            <p class="text-[10px] text-slate-500">Registrar</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
+                    </a>
+
+                    <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="https://maashitla.com/allotment-status/" target="_blank">
+                        <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-bold text-purple-600 text-[10px]">MS</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Maashitla</p>
+                            <p class="text-[10px] text-slate-500">SME Registrar</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
+                    </a>
+
+                     <a class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-border-navy hover:bg-slate-800 transition-colors" href="https://www.purvashare.com/queries/" target="_blank">
+                        <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-bold text-red-600 text-[10px]">PS</div>
+                        <div>
+                            <p class="text-sm font-bold text-white">Purva Share</p>
+                            <p class="text-[10px] text-slate-500">Registrar</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
+                    </a>
                 </div>
             </div>
             
