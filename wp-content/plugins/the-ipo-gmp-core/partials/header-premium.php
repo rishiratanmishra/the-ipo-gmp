@@ -64,7 +64,7 @@ $ticker_data = $wpdb->get_results("
             <!-- Search Bar (Header) -->
             <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET" class="hidden lg:flex items-center w-96 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all relative">
                 <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input id="tigc-search-input" type="text" name="q" placeholder="Search IPOs & Buyback news..." value="<?php echo isset($_GET['q']) ? esc_attr($_GET['q']) : ''; ?>" class="bg-transparent border-none text-xs text-white focus:ring-0 w-full placeholder:text-slate-600 ml-2" autocomplete="off">
+                <input id="tigc-search-input" type="text" name="q" placeholder="Search IPOs GMP..." value="<?php echo isset($_GET['q']) ? esc_attr($_GET['q']) : ''; ?>" class="bg-transparent border-none text-xs text-white focus:ring-0 w-full placeholder:text-slate-600 ml-2" autocomplete="off">
                 
                 <!-- Loading Spinner -->
                 <div id="tigc-search-loader" class="hidden absolute right-3 top-1/2 -translate-y-1/2">
@@ -86,15 +86,27 @@ $ticker_data = $wpdb->get_results("
         <div class="flex items-center gap-10">
             <!-- Navigation -->
             <nav class="hidden md:flex items-center gap-8">
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_front_page() ? 'text-primary' : ''; ?>" href="<?php echo home_url('/'); ?>">Homepage</a>
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('mainboard-ipos') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/mainboard-ipos/'); ?>">Mainboard</a>
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('sme-ipos') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/sme-ipos/'); ?>">SME</a>
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('buybacks') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/buybacks/'); ?>">Buybacks</a>
+                <?php
+                $nav = [
+                    ['name' => 'Homepage',  'link' => home_url('/'),                'active' => is_front_page() || is_page('dashboard')],
+                    ['name' => 'Mainboard', 'link' => home_url('/mainboard-ipos/'), 'active' => is_page('mainboard-ipos')],
+                    ['name' => 'SME',       'link' => home_url('/sme-ipos/'),       'active' => is_page('sme-ipos')],
+                    ['name' => 'Buybacks',  'link' => home_url('/buybacks/'),       'active' => is_page('buybacks')],
+                ];
+                
+                foreach($nav as $n):
+                    $base_class = "text-[11px] font-bold uppercase tracking-[0.15em] transition-colors";
+                    $color_class = $n['active'] ? "text-primary" : "text-slate-400 hover:text-white";
+                ?>
+                <a class="<?php echo "$base_class $color_class"; ?>" href="<?php echo esc_url($n['link']); ?>">
+                    <?php echo esc_html($n['name']); ?>
+                </a>
+                <?php endforeach; ?>
             </nav>
 
             <!-- Actions -->
             <div class="flex items-center gap-4">
-                <button class="flex h-9 px-5 items-center justify-center rounded-lg bg-primary text-white text-[11px] font-bold uppercase tracking-wider hover:bg-blue-600 transition-all">Portal Login</button>
+                <!-- Portal Login Removed -->
             </div>
         </div>
     </header>
