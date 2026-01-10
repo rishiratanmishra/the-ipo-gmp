@@ -9,9 +9,9 @@
             
             <!-- Branding & About -->
             <div class="space-y-8">
-                <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-2 group">
-                    <h2 class="text-white text-[28px] font-black tracking-tighter font-display italic">
-                        IPO<span class="text-primary">GMP</span>
+                <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3 group">
+                    <h2 class="text-white text-[28px] font-black leading-none tracking-tighter flex items-center font-display">
+                        IPO<span class="text-neon-emerald">GMP</span><span class="text-primary text-4xl leading-none">.</span>
                     </h2>
                 </a>
                 <p class="text-slate-400 text-[13px] leading-relaxed font-normal">
