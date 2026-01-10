@@ -71,7 +71,7 @@ $ticker_data = $wpdb->get_results("
         <div class="flex items-center gap-10">
             <!-- Navigation -->
             <nav class="hidden md:flex items-center gap-8">
-                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_front_page() ? 'text-primary' : ''; ?>" href="<?php echo home_url('/'); ?>">Dashboard</a>
+                <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_front_page() ? 'text-primary' : ''; ?>" href="<?php echo home_url('/'); ?>">Homepage</a>
                 <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('mainboard-ipos') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/mainboard-ipos/'); ?>">Mainboard</a>
                 <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('sme-ipos') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/sme-ipos/'); ?>">SME</a>
                 <a class="text-slate-400 hover:text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-colors <?php echo is_page('buybacks') ? 'text-primary' : ''; ?>" href="<?php echo home_url('/buybacks/'); ?>">Buybacks</a>
