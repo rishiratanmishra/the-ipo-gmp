@@ -55,7 +55,8 @@ if($search_query) {
         
         <?php if($results): ?>
         <div class="overflow-hidden rounded-xl border border-border-navy bg-[#0B1220]">
-            <table class="w-full text-left border-collapse">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[600px]">
                 <thead>
                     <tr class="bg-slate-900/50 border-b border-border-navy">
                         <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Company Name</th>
@@ -101,6 +102,7 @@ if($search_query) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
         </div>
         <?php else: ?>
             <div class="text-center py-20 border border-dashed border-border-navy rounded-xl bg-slate-900/20">
@@ -156,6 +158,7 @@ $est_profit = $gmp * $lot_size;
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title><?php echo esc_html($name); ?> - IPO Details</title>
+    <meta name="description" content="Check live GMP, Subscription Status, and Allotment Date for <?php echo esc_attr($name); ?>. Get real-time updates and listing estimates."/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>

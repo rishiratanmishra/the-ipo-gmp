@@ -25,6 +25,33 @@ function run_the_ipo_gmp_core() {
 }
 add_action('plugins_loaded', 'run_the_ipo_gmp_core');
 
+// Enforce Production Settings
+add_action('init', 'tigc_enforce_defaults');
+function tigc_enforce_defaults() {
+    if (!is_admin()) return;
+
+    // 1. Ensure Search Engine Visibility is ON
+    if (get_option('blog_public') == '0') {
+        update_option('blog_public', '1');
+    }
+
+    // 2. Fix Default Tagline
+    $tagline = get_option('blogdescription');
+    if ($tagline === 'Just another WordPress site' || empty($tagline)) {
+        update_option('blogdescription', 'Live IPO GMP & Market Intelligence');
+    }
+    
+    // 3. Set Date Format to Day Month Year (01 Jan 2026)
+    if (get_option('date_format') !== 'j M Y') {
+        update_option('date_format', 'j M Y');
+    }
+
+    // 4. Set Timezone to IST
+    if (get_option('timezone_string') !== 'Asia/Kolkata') {
+        update_option('timezone_string', 'Asia/Kolkata');
+    }
+}
+
 // Activation Hook: Auto-create Pages
 register_activation_hook(__FILE__, 'tigc_create_pages');
 function tigc_create_pages() {

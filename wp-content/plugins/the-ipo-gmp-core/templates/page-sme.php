@@ -80,6 +80,7 @@ function tigc_get_filter_url_sme($status_val) {
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>SME IPOs List | The IPO GMP</title>
+    <meta name="description" content="Track the latest SME IPOs with live GMP, Subscription numbers, and Listing Estimates. Stay ahead in the high-growth SME market."/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -161,7 +162,8 @@ function tigc_get_filter_url_sme($status_val) {
     <div class="overflow-hidden rounded-xl border border-border-navy bg-[#0B1220] shadow-2xl relative min-h-[400px]">
         
         <?php if($sme): ?>
-        <table class="w-full text-left border-collapse">
+        <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[600px]">
             <thead>
                 <tr class="bg-[#0f172a] border-b border-border-navy">
                     <th class="px-6 py-4 text-[11px] font-black text-slate-500 uppercase tracking-widest">Company</th>
@@ -240,6 +242,7 @@ function tigc_get_filter_url_sme($status_val) {
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
         
         <?php else: ?>
         <div class="flex flex-col items-center justify-center py-20">
