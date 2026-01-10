@@ -62,10 +62,10 @@ $ticker_data = $wpdb->get_results("
             </a>
 
             <!-- Search Bar (Header) -->
-            <div class="hidden lg:flex items-center w-72 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all">
+            <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET" class="hidden lg:flex items-center w-72 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all">
                 <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input type="text" placeholder="Search companies..." class="bg-transparent border-none text-xs text-white focus:ring-0 w-full placeholder:text-slate-600 ml-2">
-            </div>
+                <input type="text" name="q" placeholder="Search IPOs & Buyback news..." value="<?php echo isset($_GET['q']) ? esc_attr($_GET['q']) : ''; ?>" class="bg-transparent border-none text-xs text-white focus:ring-0 w-full placeholder:text-slate-600 ml-2">
+            </form>
         </div>
 
         <div class="flex items-center gap-10">

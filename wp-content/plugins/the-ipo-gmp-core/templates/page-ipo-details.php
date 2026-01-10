@@ -5,9 +5,122 @@
  */
 
 global $wpdb;
-$slug = isset($_GET['slug']) ? sanitize_text_field($_GET['slug']) : '';
 $t_master = $wpdb->prefix . 'ipomaster';
 $t_details = $wpdb->prefix . 'ipodetails';
+
+// --- SEARCH LOGIC ---
+$search_query = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+
+if($search_query) {
+    // Search Query
+    $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $t_master WHERE name LIKE %s OR symbol LIKE %s ORDER BY status ASC", '%'.$search_query.'%', '%'.$search_query.'%'));
+    
+    // Render Search Page
+    ?>
+    <!DOCTYPE html>
+    <html class="dark" lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>Search Results: <?php echo esc_html($search_query); ?> - IPO GMP</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: { 
+                            "primary": "#0d7ff2", 
+                            "background-dark": "#050A18", 
+                            "card-dark": "#0B1220",
+                            "border-navy": "#1E293B", 
+                            "neon-emerald": "#00FF94", 
+                            "purple-accent": "#A855F7" 
+                        },
+                        fontFamily: { "display": ["Inter", "sans-serif"] }
+                    }
+                }
+            }
+        </script>
+        <style>
+            .data-table-row:hover { background-color: rgba(13, 127, 242, 0.05); }
+        </style>
+    </head>
+    <body class="bg-[#050A18] text-slate-100 min-h-screen font-display antialiased">
+    <?php include TIGC_PATH . 'partials/header-premium.php'; ?>
+    <main class="max-w-[1280px] mx-auto px-4 md:px-10 py-8">
+        <h1 class="text-2xl font-black text-white mb-6">Search Results for "<span class="text-primary"><?php echo esc_html($search_query); ?></span>"</h1>
+        
+        <?php if($results): ?>
+        <div class="overflow-hidden rounded-xl border border-border-navy bg-[#0B1220]">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-900/50 border-b border-border-navy">
+                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Company Name</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Price Band</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-emerald-500 uppercase tracking-widest bg-emerald-500/5">GMP</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Dates</th>
+                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border-navy">
+                    <?php foreach($results as $ipo): 
+                        $details_url = home_url('/ipo-details/?slug=' . $ipo->slug);
+                        $gmp_val = $ipo->premium ?: '0';
+                        $status_class = strtolower($ipo->status);
+                    ?>
+                    <tr class="data-table-row transition-colors cursor-pointer group" onclick="window.location.href='<?php echo esc_url($details_url); ?>'">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded bg-white p-1 flex items-center justify-center font-bold text-slate-900 overflow-hidden">
+                                     <?php if(!empty($ipo->icon_url)): ?>
+                                        <img src="<?php echo esc_url($ipo->icon_url); ?>" alt="<?php echo esc_attr($ipo->name); ?>" class="w-full h-full object-contain" />
+                                    <?php else: ?>
+                                        <?php echo substr($ipo->name, 0, 1); ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-white group-hover:text-primary transition-colors"><?php echo esc_html($ipo->name); ?></p>
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase"><?php echo $ipo->is_sme ? 'SME' : 'Mainboard'; ?></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm font-medium text-slate-300"><?php echo esc_html($ipo->price_band); ?></td>
+                        <td class="px-6 py-4 text-sm font-black text-neon-emerald">+ ₹<?php echo $gmp_val; ?></td>
+                        <td class="px-6 py-4 text-sm font-medium text-slate-300">
+                            <?php echo date('M j', strtotime($ipo->open_date)); ?> - <?php echo date('M j', strtotime($ipo->close_date)); ?>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border border-white/10 bg-slate-800 text-slate-300">
+                                <?php echo esc_html($ipo->status); ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php else: ?>
+            <div class="text-center py-20 border border-dashed border-border-navy rounded-xl bg-slate-900/20">
+                <span class="material-symbols-outlined text-4xl text-slate-600 mb-4">search_off</span>
+                <p class="text-slate-400 font-medium">No IPOs found matching your query.</p>
+                <a href="<?php echo home_url('/'); ?>" class="inline-block mt-4 text-primary text-sm font-bold hover:underline">Back to Homepage</a>
+            </div>
+        <?php endif; ?>
+    </main>
+    <?php include TIGC_PATH . 'partials/footer-premium.php'; ?>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
+// --- END SEARCH LOGIC ---
+
+$slug = isset($_GET['slug']) ? sanitize_text_field($_GET['slug']) : '';
+
 
 // Fetch Base IPO Data
 $ipo = $wpdb->get_row($wpdb->prepare("SELECT * FROM $t_master WHERE slug = %s", $slug));
