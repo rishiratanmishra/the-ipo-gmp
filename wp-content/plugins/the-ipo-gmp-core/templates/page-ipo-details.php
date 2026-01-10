@@ -668,6 +668,14 @@ $est_profit = $gmp * $lot_size;
                         </table>
                     </div>
                 </div>
+                <?php else: ?>
+                <div class="glass-card border border-border-navy rounded-2xl p-12 text-center">
+                    <div class="inline-flex items-center justify-center size-16 rounded-full bg-slate-900/50 mb-4 border border-white/5">
+                        <span class="material-symbols-outlined text-3xl text-slate-600">rate_review</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">No Reviews Found</h3>
+                    <p class="text-xs text-slate-400 max-w-xs mx-auto">We couldn't find any broker recommendations or reviews for this IPO at the moment.</p>
+                </div>
                 <?php endif; ?>
             </div>
 
