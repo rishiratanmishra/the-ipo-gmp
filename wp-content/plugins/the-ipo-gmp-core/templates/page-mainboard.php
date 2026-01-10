@@ -121,6 +121,7 @@ function tigc_get_filter_url($status_val) {
                     '' => 'All', 
                     'open' => 'Open', 
                     'upcoming' => 'Upcoming', 
+                    'closed' => 'Closed',
                     'listed' => 'Listed'
                 ];
                 foreach ($tabs as $k => $v): 
