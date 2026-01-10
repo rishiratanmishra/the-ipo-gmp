@@ -1,0 +1,312 @@
+/* IPO Master Premium Admin Styles */
+
+/* Core Variables */
+:root {
+    --ipom-primary: #8b5cf6;
+    /* Violet 500 */
+    --ipom-primary-dark: #7c3aed;
+    --ipom-bg: #f3f4f6;
+    --ipom-surface: #ffffff;
+    --ipom-text-main: #111827;
+    --ipom-text-muted: #6b7280;
+    --ipom-border: #e5e7eb;
+    --ipom-success: #10b981;
+    --ipom-warning: #f59e0b;
+    --ipom-danger: #ef4444;
+}
+
+/* Framework Reset */
+.ipom-wrap {
+    max-width: 1200px;
+    margin: 40px auto;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    color: var(--ipom-text-main);
+}
+
+/* 1. Header Section */
+.ipom-header {
+    background: var(--ipom-surface);
+    padding: 24px 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    border: 1px solid var(--ipom-border);
+}
+
+.ipom-title h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--ipom-text-main);
+    background: linear-gradient(135deg, #111827 0%, #4b5563 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ipom-title p {
+    margin: 6px 0 0;
+    color: var(--ipom-text-muted);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.ipom-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ipom-btn-fresh {
+    background: var(--ipom-primary);
+    color: #fff;
+    border: none;
+    padding: 0 24px;
+    height: 48px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+    text-decoration: none;
+}
+
+.ipom-btn-fresh:hover {
+    background: var(--ipom-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px rgba(139, 92, 246, 0.3);
+    color: #fff;
+}
+
+.ipom-btn-fresh:active {
+    transform: translateY(0px);
+}
+
+/* 2. Stats Grid */
+.ipom-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.ipom-card {
+    background: var(--ipom-surface);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--ipom-border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ipom-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: currentColor;
+}
+
+.ipom-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.ipom-card.total {
+    color: var(--ipom-primary);
+}
+
+.ipom-card.sme {
+    color: var(--ipom-success);
+}
+
+.ipom-card.main {
+    color: var(--ipom-warning);
+}
+
+.ipom-card h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--ipom-text-muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.ipom-card .number {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--ipom-text-main);
+    line-height: 1;
+}
+
+/* 3. Table Wrapper */
+.ipom-table-wrapper {
+    background: var(--ipom-surface);
+    border: 1px solid var(--ipom-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* 4. Controls/Filters */
+.ipom-controls {
+    padding: 20px 24px;
+    background: #f9fafb;
+    border-bottom: 1px solid var(--ipom-border);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.ipom-input,
+.ipom-select {
+    height: 42px;
+    border: 1px solid var(--ipom-border);
+    border-radius: 6px;
+    padding: 0 16px;
+    font-size: 14px;
+    color: var(--ipom-text-main);
+    background: #fff;
+    transition: border-color 0.15s;
+}
+
+.ipom-input:focus,
+.ipom-select:focus {
+    border-color: var(--ipom-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* 5. Table */
+.ipom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ipom-table th {
+    background: #f9fafb;
+    padding: 16px 24px;
+    font-weight: 600;
+    color: var(--ipom-text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--ipom-border);
+    text-align: left;
+}
+
+.ipom-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--ipom-border);
+    vertical-align: middle;
+    font-size: 14px;
+    color: var(--ipom-text-main);
+}
+
+.ipom-table tr:hover td {
+    background: #f9fafb;
+}
+
+/* 6. Badges */
+.ipom-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.ipom-badge.sme {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.ipom-badge.main {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.ipom-badge.status {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* 7. Pagination */
+.ipom-pagination {
+    padding: 16px 24px;
+    border-top: 1px solid var(--ipom-border);
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ipom-page-links {
+    display: flex;
+    gap: 4px;
+}
+
+.ipom-page-link {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    color: var(--ipom-text-main);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.ipom-page-link:hover {
+    background: #e5e7eb;
+}
+
+.ipom-page-link.active {
+    background: var(--ipom-primary);
+    color: #fff;
+}
+
+.ipom-page-link.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* 8. Toast Notification */
+.ipom-toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s, bottom 0.3s;
+}
+
+.ipom-toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
