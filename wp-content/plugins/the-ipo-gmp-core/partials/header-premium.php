@@ -116,12 +116,20 @@ $ticker_data = $wpdb->get_results("
         
         <!-- Menu Content -->
         <div class="absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-[#0B111D] border-l border-border-navy shadow-2xl p-6 flex flex-col">
-            <div class="flex justify-between items-center mb-8">
+            <div class="flex justify-between items-center mb-6">
                 <span class="text-white font-bold text-lg">Menu</span>
                 <button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-white">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
+
+            <!-- Mobile Search -->
+            <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET" class="mb-6 relative">
+                 <input type="text" name="q" placeholder="Search IPOs..." class="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600">
+                 <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
+                     <span class="material-symbols-outlined text-xl">search</span>
+                 </button>
+            </form>
             
             <nav class="flex flex-col gap-6">
                 <?php foreach($nav as $n): 
