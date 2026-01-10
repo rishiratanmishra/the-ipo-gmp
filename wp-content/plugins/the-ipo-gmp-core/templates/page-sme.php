@@ -31,7 +31,7 @@ $where_clauses = ["is_sme = 1"];
 
 // Search Filter
 if (!empty($search)) {
-    $where_clauses[] = $wpdb->prepare("(name LIKE %s OR symbol LIKE %s)", '%'.$search.'%', '%'.$search.'%');
+    $where_clauses[] = $wpdb->prepare("name LIKE %s", '%'.$search.'%');
 }
 
 // Status Filter

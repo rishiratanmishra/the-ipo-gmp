@@ -227,6 +227,40 @@ $est_profit = $gmp * $lot_size;
                 </div>
             </div>
 
+            <!-- Application-Wise Breakup Table -->
+            <?php if(isset($details['application_breakup']) && !empty($details['application_breakup'])): ?>
+            <div class="p-6 rounded-2xl bg-[#0B1220] border border-border-navy shadow-lg">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-base font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-purple-accent text-lg">pie_chart</span>
+                        Application-Wise Breakup
+                    </h2>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[9px] font-black text-slate-500 uppercase tracking-widest border-b border-border-navy">
+                                <th class="pb-3 px-2">Category</th>
+                                <th class="pb-3 px-2 text-center">Applications</th>
+                                <th class="pb-3 px-2 text-center">Reserved</th>
+                                <th class="pb-3 px-2 text-right">Applied</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border-navy">
+                            <?php foreach($details['application_breakup'] as $ab): ?>
+                            <tr class="text-xs font-bold data-table-row">
+                                <td class="py-3 px-2 text-slate-300"><?php echo esc_html($ab['Application-Wise Breakup'] ?: '-'); ?></td>
+                                <td class="py-3 px-2 text-center text-slate-200"><?php echo esc_html($ab['Category'] ?: '-'); ?></td>
+                                <td class="py-3 px-2 text-center text-slate-500 font-medium"><?php echo esc_html($ab['Reserved'] ?: '-'); ?></td>
+                                <td class="py-3 px-2 text-right text-primary"><?php echo esc_html($ab['Applied'] ?: '-'); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php endif; ?>
+
             <!-- Technical IPO Details Grid (Added missing content) -->
             <?php if(isset($details['ipo_details'])): ?>
             <div class="p-6 rounded-2xl bg-[#0B1220] border border-border-navy">
