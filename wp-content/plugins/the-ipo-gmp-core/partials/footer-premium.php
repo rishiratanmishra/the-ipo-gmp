@@ -3,7 +3,7 @@
  * Shared Premium Footer Component
  */
 ?>
-<footer class="mt-24 border-t border-border-muted pt-20 pb-10 px-6 bg-[#0B111D] relative">
+<footer class="mt-24 pt-20 pb-10 px-6 bg-[#0B111D] relative">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-24 mb-20">
             

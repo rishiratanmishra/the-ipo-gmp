@@ -101,10 +101,43 @@ $ticker_data = $wpdb->get_results("
 
             <!-- Actions -->
             <div class="flex items-center gap-4">
-                <!-- Portal Login Removed -->
+                <!-- Hamburger Button (Mobile) -->
+                <button id="tigc-mobile-toggle" onclick="toggleMobileMenu()" class="md:hidden text-white p-2">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="tigc-mobile-menu" class="fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 md:hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+        
+        <!-- Menu Content -->
+        <div class="absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-[#0B111D] border-l border-border-navy shadow-2xl p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-white font-bold text-lg">Menu</span>
+                <button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-white">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <nav class="flex flex-col gap-6">
+                <?php foreach($nav as $n): 
+                    $color_class = $n['active'] ? "text-primary bg-primary/10 border-primary" : "text-slate-400 hover:text-white border-transparent hover:bg-slate-800";
+                ?>
+                <a class="text-sm font-bold uppercase tracking-wider px-4 py-3 rounded-lg border border-dashed transition-all <?php echo $color_class; ?>" href="<?php echo esc_url($n['link']); ?>">
+                    <?php echo esc_html($n['name']); ?>
+                </a>
+                <?php endforeach; ?>
+            </nav>
+
+            <div class="mt-auto pt-6 border-t border-border-navy">
+                <p class="text-[10px] text-slate-500 text-center uppercase tracking-widest">© <?php echo date('Y'); ?> IPO GMP</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -133,6 +166,16 @@ $ticker_data = $wpdb->get_results("
 </style>
 
 <script>
+function toggleMobileMenu() {
+    const menu = document.getElementById('tigc-mobile-menu');
+    // Toggle the translate class
+    if (menu.classList.contains('translate-x-full')) {
+        menu.classList.remove('translate-x-full');
+    } else {
+        menu.classList.add('translate-x-full');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('tigc-search-input');
     const resultsContainer = document.getElementById('tigc-search-results');

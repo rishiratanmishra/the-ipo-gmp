@@ -114,7 +114,7 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
     </div>
     -->
     <section class="mb-10 text-center lg:text-left pt-6">
-        <h1 class="text-white text-[44px] lg:text-[52px] font-black leading-tight mb-4 tracking-tighter">Live IPO <span class="text-primary">GMP</span>, Subscription & Allotment Status</h1>
+        <h1 class="text-white text-[44px] lg:text-[52px] font-black leading-tight mb-4 tracking-tighter">Live IPO <span class="text-neon-emerald">GMP</span>, Subscription & Allotment Status</h1>
         <p class="text-slate-400 text-lg max-w-2xl font-medium leading-relaxed">Track India's Real-time Grey Market Premium (GMP), Live Subscription numbers, and Listing Estimates for all Mainboard & SME IPOs.</p>
     </section>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
@@ -528,44 +528,7 @@ $avg_gmp = $gmp_items > 0 ? round($total_gmp_sum / $gmp_items) : 0;
     </section>
 </main>
 
-<!-- Notification FAB -->
-<button onclick="requestNotification()" class="fixed bottom-6 right-6 z-50 bg-primary hover:bg-blue-600 text-white p-4 rounded-full shadow-lg shadow-blue-500/30 transition-all hover:scale-110 group" title="Get GMP Alerts">
-    <span class="material-symbols-outlined text-2xl group-hover:animate-bell">notifications_active</span>
-</button>
 
-<script>
-function requestNotification() {
-    if ("Notification" in window) {
-        Notification.requestPermission().then(function (permission) {
-            if (permission === "granted") {
-                new Notification("The IPO GMP", { 
-                    body: "You are now subscribed to real-time GMP Alerts! 🚀", 
-                    icon: "https://web.archive.org/web/20240505101010/https://cdn-icons-png.flaticon.com/512/1040/1040230.png"
-                });
-            } else {
-                alert("Please allow notifications to get real-time GMP updates.");
-            }
-        });
-    } else {
-        alert("Your browser does not support notifications.");
-    }
-}
-</script>
-
-<style>
-    @keyframes bell-ring {
-        0% { transform: rotate(0); }
-        10% { transform: rotate(30deg); }
-        30% { transform: rotate(-28deg); }
-        50% { transform: rotate(34deg); }
-        70% { transform: rotate(-32deg); }
-        90% { transform: rotate(30deg); }
-        100% { transform: rotate(0); }
-    }
-    .group:hover .group-hover\:animate-bell {
-        animation: bell-ring 1s ease-in-out infinite;
-    }
-</style>
 <?php include TIGC_PATH . 'partials/footer-premium.php'; ?>
 </body>
 </html>
