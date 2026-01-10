@@ -121,8 +121,7 @@ function tigc_get_filter_url_sme($status_val) {
                     '' => 'All', 
                     'open' => 'Open', 
                     'upcoming' => 'Upcoming', 
-                    'closed' => 'Closed',
-                    'listed' => 'Listed'
+                    'closed' => 'Closed'
                 ];
                 foreach ($tabs as $k => $v): 
                     $active = (strtolower($status) === $k) ? 'bg-[#0B1220] text-white shadow-sm font-bold border border-white/5' : 'text-slate-500 hover:text-white font-medium';
