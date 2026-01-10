@@ -55,19 +55,18 @@ $buybacks = $wpdb->get_results("
 ");
 
 // 3. Helper for URL
-function tigc_buyback_filter_url($status_val) {
+$base_url = get_permalink();
+
+function tigc_buyback_filter_url($status_val, $base_url) {
     $params = $_GET;
     // Set status
     if ($status_val) $params['status'] = $status_val;
     else unset($params['status']);
     
-    // Maintain search if exists
-    // (It's already in $params)
-    
-    // Reset page
+    // Reset page always
     unset($params['paged']);
     
-    return '?' . http_build_query($params);
+    return $base_url . '?' . http_build_query($params);
 }
 ?>
 <!DOCTYPE html>
@@ -138,14 +137,14 @@ function tigc_buyback_filter_url($status_val) {
                 foreach ($tabs as $k => $v): 
                     $active = (strtolower($display_status) === $k) ? 'bg-[#0B1220] text-white shadow-sm font-bold border border-white/5' : 'text-slate-500 hover:text-white font-medium';
                 ?>
-                <a href="<?php echo tigc_buyback_filter_url($k); ?>" class="px-4 py-2 text-xs rounded-md transition-all <?php echo $active; ?>">
+                <a href="<?php echo tigc_buyback_filter_url($k, $base_url); ?>" class="px-4 py-2 text-xs rounded-md transition-all <?php echo $active; ?>">
                     <?php echo $v; ?>
                 </a>
                 <?php endforeach; ?>
             </div>
 
             <!-- Search -->
-            <form action="" method="GET" class="relative group">
+            <form action="<?php echo esc_url($base_url); ?>" method="GET" class="relative group">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-purple-500 transition-colors">search</span>
                 <input type="text" name="q" value="<?php echo esc_attr($search); ?>" placeholder="Search company..." 
                        class="bg-slate-900 border border-border-navy text-white text-sm rounded-lg pl-10 pr-4 py-2.5 w-full sm:w-64 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 placeholder-slate-600 transition-all">
@@ -212,7 +211,7 @@ function tigc_buyback_filter_url($status_val) {
             <span class="material-symbols-outlined text-4xl text-slate-700 mb-4">search_off</span>
             <p class="text-slate-500">No buyback events found for the current selection.</p>
             <?php if($status || $search): ?>
-                <a href="?" class="mt-4 text-xs font-bold text-purple-500 hover:text-purple-400 transition-colors">Clear All Filters</a>
+                <a href="<?php echo esc_url($base_url); ?>" class="mt-4 text-xs font-bold text-purple-500 hover:text-purple-400 transition-colors">Clear All Filters</a>
             <?php endif; ?>
         </div>
         <?php endif; ?>
@@ -222,10 +221,16 @@ function tigc_buyback_filter_url($status_val) {
     <?php if ($total_pages > 1): ?>
     <div class="mt-8 flex justify-center gap-2">
         <?php 
+        // Helper to build page URL
+        function tigc_page_url($base, $p) {
+            $params = $_GET;
+            $params['paged'] = $p;
+            return $base . '?' . http_build_query($params);
+        }
+
         // Prev Link
         if ($paged > 1) {
-            $prev_params = $_GET; $prev_params['paged'] = $paged - 1;
-            echo '<a href="?' . http_build_query($prev_params) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></a>';
+            echo '<a href="' . tigc_page_url($base_url, $paged - 1) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></a>';
         }
 
         // Page Numbers
@@ -233,8 +238,7 @@ function tigc_buyback_filter_url($status_val) {
             if ($i == $paged) {
                 echo '<span class="w-8 h-8 flex items-center justify-center rounded-lg bg-purple-600 text-white font-bold text-xs shadow-lg shadow-purple-500/30">'.$i.'</span>';
             } elseif ($i <= 3 || $i == $total_pages || abs($paged - $i) <= 1) {
-                $page_params = $_GET; $page_params['paged'] = $i;
-                echo '<a href="?' . http_build_query($page_params) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors text-xs font-medium">'.$i.'</a>';
+                echo '<a href="' . tigc_page_url($base_url, $i) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors text-xs font-medium">'.$i.'</a>';
             } elseif ($i == 4 && $paged > 5) {
                 echo '<span class="text-slate-600 px-1 pt-2">...</span>';
             }
@@ -242,8 +246,7 @@ function tigc_buyback_filter_url($status_val) {
 
         // Next Link
         if ($paged < $total_pages) {
-            $next_params = $_GET; $next_params['paged'] = $paged + 1;
-            echo '<a href="?' . http_build_query($next_params) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></a>';
+            echo '<a href="' . tigc_page_url($base_url, $paged + 1) . '" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></a>';
         }
         ?>
     </div>
