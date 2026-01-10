@@ -3,7 +3,7 @@
  * Plugin Name: The IPO GMP Core
  * Description: Core functionality, templates, and assets for The IPO GMP platform. Safe from theme updates.
  * Version: 1.0.0
- * Author: Agent
+ * Author: Zolaha.com
  * Text Domain: the-ipo-gmp-core
  */
 
@@ -12,14 +12,41 @@ if (!defined('ABSPATH')) exit;
 define('TIGC_PATH', plugin_dir_path(__FILE__));
 define('TIGC_URL', plugin_dir_url(__FILE__));
 
-// Include Loader
+// Include Loader & Admin
 require_once TIGC_PATH . 'includes/class-template-loader.php';
+require_once TIGC_PATH . 'includes/class-admin-menu.php';
 
 // Initialize
 function run_the_ipo_gmp_core() {
     new TIGC_Template_Loader();
+    if (is_admin()) {
+        new TIGC_Admin_Menu();
+    }
 }
 add_action('plugins_loaded', 'run_the_ipo_gmp_core');
+
+// Activation Hook: Auto-create Pages
+register_activation_hook(__FILE__, 'tigc_create_pages');
+function tigc_create_pages() {
+    $pages = [
+        'mainboard-ipos' => 'Mainboard IPOs',
+        'sme-ipos'       => 'SME IPOs',
+        'buybacks'       => 'Buybacks',
+        'ipo-details'    => 'IPO Details'
+    ];
+
+    foreach ($pages as $slug => $title) {
+        if (!get_page_by_path($slug)) {
+            wp_insert_post([
+                'post_title'   => $title,
+                'post_name'    => $slug,
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_content' => ''
+            ]);
+        }
+    }
+}
 
 // Enqueue Assets (Shared across all custom templates)
 add_action('wp_enqueue_scripts', function() {
