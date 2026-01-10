@@ -30,13 +30,14 @@ class IPOD_Fetcher {
         $sql = $wpdb->prepare("
             SELECT 
                 m.id, m.slug, m.status, d.fetched_at
-            FROM " . IPOM_TABLE . " m
+            FROM " . IPOD_MASTER . " m
             LEFT JOIN " . IPOD_TABLE . " d ON m.id = d.ipo_id
             WHERE
                 d.fetched_at IS NULL
                 OR (m.status = 'open' AND d.fetched_at < %s)
                 OR (m.status = 'upcoming' AND d.fetched_at < %s)
             ORDER BY 
+                (d.fetched_at IS NULL) DESC,
                 FIELD(UPPER(m.status),'OPEN','UPCOMING','CLOSED'),
                 m.id DESC
             LIMIT %d
@@ -88,6 +89,9 @@ class IPOD_Fetcher {
     /**
      * Scrapes data from external source.
      */
+    /**
+     * Scrapes data from external source.
+     */
     public static function scrape_data($id, $slug) {
         $url = "https://www.ipopremium.in/view/ipo/$id/$slug";
 
@@ -98,6 +102,7 @@ class IPOD_Fetcher {
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_TIMEOUT => 25,
+            CURLOPT_ENCODING => '', // Handle GZIP
             CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         ]);
 
@@ -118,12 +123,14 @@ class IPOD_Fetcher {
         $xpath = new DOMXPath($dom);
         $data = [];
 
-        // Helper
-        $clean = function($s) { return trim(preg_replace('/\s+/', ' ', $s)); };
+        // Helper: safe clean with unicode support
+        $clean = function($s) { 
+            return trim(preg_replace('/\s+/u', ' ', $s)); 
+        };
 
         // 1. Basic Info
-        $data['ipo_name'] = $clean($xpath->query("//h2[contains(@class,'profile-username')]")->item(0)->textContent ?? '');
-        $data['dates']    = $clean($xpath->query("//p[contains(@class,'text-muted')]")->item(0)->textContent ?? '');
+        $data['ipo_name'] = $clean($xpath->query("//*[contains(@class,'profile-username')]")->item(0)->textContent ?? '');
+        $data['dates']    = $clean($xpath->query("//*[contains(@class,'text-muted')]")->item(0)->textContent ?? '');
         $data['image']    = $xpath->query("//div[contains(@class,'box-profile')]//img")->item(0)->getAttribute("src") ?? '';
         
         // 2. Basic Details Table
@@ -171,8 +178,6 @@ class IPOD_Fetcher {
                 $td = $r->getElementsByTagName("td");
                 $th = $r->getElementsByTagName("th"); // Sometimes first col is th
                 
-                // Adjust if headers don't match columns exactly (common in messy HTML)
-                // For now, simple mapping
                 $row = [];
                 $cells = [];
                 
@@ -197,7 +202,8 @@ class IPOD_Fetcher {
         
         // IPO Details (Key-Value)
         $ipoDetails = [];
-        foreach ($xpath->query("//h5[contains(.,'IPO Details')]/following::table[1]//tr") as $r) {
+        // Use generic selector for robustness
+        foreach ($xpath->query("//*[contains(text(),'IPO Details')]/following::table[1]//tr") as $r) {
             $td = $r->getElementsByTagName("td");
             if ($td->length >= 2) {
                 $ipoDetails[$clean($td->item(0)->textContent)] = $clean($td->item(1)->textContent);
@@ -205,8 +211,118 @@ class IPOD_Fetcher {
         }
         $data['ipo_details'] = $ipoDetails;
 
-        // About
-        $data['about_company'] = $clean($xpath->query("//h5[contains(.,'About Company')]/following-sibling::p")->item(0)->textContent ?? '');
+        // 5. KPI Metrics
+        $kpi = [];
+        // Robust selector: looks for header containing KPI
+        $table = $xpath->query("//*[contains(text(),'KPI')]/following::table[1]")->item(0);
+        if ($table) {
+            $headers = [];
+            foreach ($xpath->query(".//thead//th", $table) as $i => $th) {
+                if ($i > 0) $headers[] = $clean($th->textContent);
+            }
+            foreach ($xpath->query(".//tbody//tr", $table) as $r) {
+                $row = [];
+                $th = $r->getElementsByTagName("th");
+                $td = $r->getElementsByTagName("td");
+                if ($th->length && $td->length) {
+                    $row['kpi'] = $clean($th->item(0)->textContent);
+                    foreach ($td as $i => $cell) {
+                        if (isset($headers[$i])) {
+                            $row[$headers[$i]] = $clean($cell->textContent);
+                        }
+                    }
+                    $kpi[] = $row;
+                }
+            }
+        }
+        $data['kpi'] = $kpi;
+
+        // 6. Peer Comparison (Valuation)
+        $peerVal = [];
+        $table = $xpath->query("//*[contains(text(),'Peer Comparison (Valuation)')]/following::table[1]")->item(0);
+        if ($table) {
+            $headers = [];
+            foreach ($xpath->query(".//thead//th", $table) as $i => $th) {
+                if ($i > 0) $headers[] = $clean($th->textContent);
+            }
+            foreach ($xpath->query(".//tbody//tr", $table) as $r) {
+                $row = [];
+                $th = $r->getElementsByTagName("th");
+                $td = $r->getElementsByTagName("td");
+                if ($th->length) {
+                    $row['company'] = $clean($th->item(0)->textContent);
+                    foreach ($td as $i => $cell) {
+                        if (isset($headers[$i])) $row[$headers[$i]] = $clean($cell->textContent);
+                    }
+                    $peerVal[] = $row;
+                }
+            }
+        }
+        $data['peer_valuation'] = $peerVal;
+
+        // 7. Peer Comparison (Financial)
+        $peerFin = [];
+        $table = $xpath->query("//*[contains(text(),'Peer Comparison (Financial')]/following::table[1]")->item(0);
+        if ($table) {
+            $headers = [];
+            foreach ($xpath->query(".//thead//th", $table) as $i => $th) {
+                if ($i > 0) $headers[] = $clean($th->textContent);
+            }
+            foreach ($xpath->query(".//tbody//tr", $table) as $r) {
+                $row = [];
+                $th  = $r->getElementsByTagName("th");
+                $td  = $r->getElementsByTagName("td");
+                if ($th->length) {
+                    $row['company'] = $clean($th->item(0)->textContent);
+                    foreach ($td as $i => $cell) {
+                        if (isset($headers[$i])) $row[$headers[$i]] = $clean($cell->textContent);
+                    }
+                    $peerFin[] = $row;
+                }
+            }
+        }
+        $data['peer_financials'] = $peerFin;
+
+        // 8. Subscription Demand
+        $subscription_demand = [];
+        $table = $xpath->query("//th[contains(.,'Subscription Demand')]/ancestor::table")->item(0);
+        if ($table) {
+             // Logic adapted to use $clean directly
+            $headers = [];
+            foreach ($xpath->query(".//thead/tr[last()]/th", $table) as $th) {
+                $headers[] = $clean($th->textContent);
+            }
+            foreach ($xpath->query(".//tbody/tr", $table) as $r) {
+                $td = $r->getElementsByTagName("td");
+                if ($td->length === count($headers)) {
+                    $row = [];
+                    foreach ($headers as $i => $key) {
+                        $row[$key] = $clean($td->item($i)->textContent);
+                    }
+                    $subscription_demand[] = $row;
+                }
+            }
+        }
+        $data['subscription_demand'] = $subscription_demand;
+
+        // 9. QIB Interest
+        $qib = [];
+        foreach ($xpath->query("//th[contains(.,'QIB Interest')]/ancestor::table//td") as $td) {
+            $qib[] = $clean($td->textContent);
+        }
+        $data['qib_interest'] = $qib;
+
+        // 10. Lead Managers
+        $lm = [];
+        foreach ($xpath->query("//*[contains(text(),'Lead Manager')]/ancestor::div[contains(@class,'card')]//a[contains(@href,'/lead-manager/')]") as $a) {
+            $lm[] = ["name" => $clean($a->textContent)];
+        }
+        $data['lead_managers'] = $lm;
+
+        // 11. Address & Registrar
+        // Use generic selector for robustness
+        $data['address']   = $clean($xpath->query("//*[contains(text(),'Address')]/ancestor::div[contains(@class,'card')]//address")->item(0)->textContent ?? '');
+        $data['registrar'] = $clean($xpath->query("//*[contains(text(),'Registrar')]/ancestor::div[contains(@class,'card')]")->item(0)->textContent ?? '');
 
         return $data;
     }

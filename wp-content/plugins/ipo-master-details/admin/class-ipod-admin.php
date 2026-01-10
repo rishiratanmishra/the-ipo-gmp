@@ -39,6 +39,7 @@ class IPOD_Admin {
 
     public function manual_fetch() {
         if (!current_user_can('manage_options')) return;
+        check_admin_referer('ipod_manual_fetch_action');
         
         IPOD_Fetcher::fetch_all();
         
@@ -50,7 +51,7 @@ class IPOD_Admin {
         global $wpdb;
 
         // Stats
-        $total_master = $wpdb->get_var("SELECT COUNT(*) FROM " . IPOM_TABLE);
+        $total_master = $wpdb->get_var("SELECT COUNT(*) FROM " . IPOD_MASTER);
         $total_details = $wpdb->get_var("SELECT COUNT(*) FROM " . IPOD_TABLE);
         $coverage = $total_master > 0 ? round(($total_details / $total_master) * 100, 1) : 0;
 
@@ -61,7 +62,7 @@ class IPOD_Admin {
 
         // Query joined data
         $sql = "SELECT d.*, m.name, m.slug, m.status as master_status FROM " . IPOD_TABLE . " d 
-                JOIN " . IPOM_TABLE . " m ON d.ipo_id = m.id 
+                JOIN " . IPOD_MASTER . " m ON d.ipo_id = m.id 
                 ORDER BY d.updated_at DESC LIMIT $limit OFFSET $offset";
         
         $rows = $wpdb->get_results($sql);
@@ -128,7 +129,7 @@ class IPOD_Admin {
                             <button onclick="ipod_copy_key()" class="material-icons-round text-slate-400 hover:text-white text-sm cursor-pointer">content_copy</button>
                         </div>
                         
-                        <a href="<?php echo admin_url("admin-post.php?action=ipod_manual_fetch"); ?>" onclick="return confirm('Run batch fetch for pending IPOs?');" class="bg-primary hover:bg-green-600 transition-all text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium shadow-lg glow-blue">
+                        <a href="<?php echo esc_url(wp_nonce_url(admin_url("admin-post.php?action=ipod_manual_fetch"), 'ipod_manual_fetch_action')); ?>" onclick="return confirm('Run batch fetch for pending IPOs?');" class="bg-primary hover:bg-green-600 transition-all text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium shadow-lg glow-blue">
                             <span class="material-icons-round text-sm">update</span>
                             Batch Fetch
                         </a>
