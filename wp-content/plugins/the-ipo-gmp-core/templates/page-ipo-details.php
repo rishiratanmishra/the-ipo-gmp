@@ -138,6 +138,30 @@ if (!$ipo) {
 
 // Fetch Detailed Content
 $details_row = $wpdb->get_row($wpdb->prepare("SELECT details_json FROM $t_details WHERE slug = %s OR ipo_id = %d", $slug, $ipo->id));
+
+// --- ON-DEMAND FETCH (Bypass Cron Status Check) ---
+if ((!$details_row || empty($details_row->details_json)) && class_exists('IPOD_Fetcher')) {
+    // Manually trigger scrape
+    $scraped_data = IPOD_Fetcher::scrape_data($ipo->id, $ipo->slug);
+    
+    // Validate and Save if successful
+    if ($scraped_data && !isset($scraped_data['error']) && !empty($scraped_data['ipo_name'])) {
+        $json_data = wp_json_encode($scraped_data, JSON_UNESCAPED_UNICODE);
+        
+        $wpdb->replace($t_details, [
+            "ipo_id"       => $ipo->id,
+            "slug"         => $ipo->slug,
+            "details_json" => $json_data,
+            "fetched_at"   => current_time("mysql"),
+            "updated_at"   => current_time("mysql"),
+        ]);
+        
+        // Use new data immediately
+        $details_row = (object) ['details_json' => $json_data];
+    }
+}
+// --------------------------------------------------
+
 $details = $details_row ? json_decode($details_row->details_json, true) : null;
 
 $name = $ipo->name;
