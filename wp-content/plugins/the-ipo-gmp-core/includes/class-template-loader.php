@@ -5,6 +5,7 @@ class TIGC_Template_Loader {
     public function __construct() {
         add_filter('page_template', [$this, 'load_custom_template']);
         add_filter('template_include', [$this, 'force_front_page_template']);
+        add_filter('404_template', [$this, 'load_404_template']);
     }
 
     /**
@@ -42,8 +43,19 @@ class TIGC_Template_Loader {
         if (is_front_page()) {
             $file = TIGC_PATH . 'templates/page-dashboard.php';
             if (file_exists($file)) {
-                return $file;
+                return $template = $file;
             }
+        }
+        return $template;
+    }
+
+    /**
+     * Load Custom 404 Template
+     */
+    public function load_404_template($template) {
+        $file = TIGC_PATH . 'templates/404.php';
+        if (file_exists($file)) {
+            return $file;
         }
         return $template;
     }
