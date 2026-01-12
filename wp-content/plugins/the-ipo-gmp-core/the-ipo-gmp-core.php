@@ -147,3 +147,66 @@ function tigc_handle_ajax_search() {
 
     wp_send_json_success($data);
 }
+
+// --- SITEMAP LOGIC (Moved from sitemap-control) ---
+
+// 1. Clean up default sitemaps (Disable Users & Taxonomies)
+add_filter( 'wp_sitemaps_add_provider', function ( $provider, $name ) {
+    // Only allow 'posts' and our custom 'ipos'
+    if ( $name !== 'posts' && $name !== 'ipos' ) {
+        return false;
+    }
+    return $provider;
+}, 10, 2 );
+
+// 2. Limit Post Types in 'posts' provider to just Post & Page
+add_filter( 'wp_sitemaps_post_types', function ( $post_types ) {
+    return [
+        'post' => $post_types['post'],
+        'page' => $post_types['page'],
+    ];
+});
+
+// 3. Register Custom IPO Sitemap Provider
+if ( class_exists( 'WP_Sitemaps_Provider' ) ) {
+
+    class IPO_Sitemap_Provider extends WP_Sitemaps_Provider {
+        public function __construct() {
+            $this->name        = 'ipos'; // Provider name
+            $this->object_type = 'custom'; // Object type
+        }
+
+        public function get_url_list( $page_num, $object_subtype = '' ) {
+            global $wpdb;
+            $limit = 2000;
+            $offset = ( $page_num - 1 ) * $limit;
+            $table_name = $wpdb->prefix . 'ipomaster';
+            
+            $results = $wpdb->get_results( 
+                $wpdb->prepare( "SELECT slug, updated_at FROM $table_name ORDER BY id DESC LIMIT %d OFFSET %d", $limit, $offset ) 
+            );
+
+            $url_list = [];
+            foreach ( $results as $row ) {
+                $url_list[] = [
+                    'loc' => home_url( '/ipo-details/?slug=' . $row->slug ),
+                    'lastmod' => !empty($row->updated_at) ? date('c', strtotime($row->updated_at)) : null,
+                ];
+            }
+            return $url_list;
+        }
+
+        public function get_max_num_pages( $object_subtype = '' ) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'ipomaster';
+            $total = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" );
+            return ceil( $total / 2000 );
+        }
+    }
+
+    add_action( 'init', function () {
+        $provider = new IPO_Sitemap_Provider();
+        wp_register_sitemap_provider( 'ipos', $provider );
+    } );
+}
+
