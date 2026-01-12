@@ -69,7 +69,9 @@ if($search_query) {
                 <tbody class="divide-y divide-border-navy">
                     <?php foreach($results as $ipo): 
                         $details_url = home_url('/ipo-details/?slug=' . $ipo->slug);
-                        $gmp_val = $ipo->premium ?: '0';
+                        $gmp_val = (float)($ipo->premium ?: 0);
+                        $gmp_display = ($gmp_val < 0) ? '-₹' . abs($gmp_val) : '+₹' . $gmp_val;
+                        $gmp_color = ($gmp_val < 0) ? 'text-red-400' : 'text-neon-emerald';
                         $status_class = strtolower($ipo->status);
                     ?>
                     <tr class="data-table-row transition-colors cursor-pointer group" onclick="window.location.href='<?php echo esc_url($details_url); ?>'">
@@ -89,7 +91,7 @@ if($search_query) {
                             </div>
                         </td>
                         <td class="px-6 py-4 text-sm font-medium text-slate-300"><?php echo esc_html($ipo->price_band); ?></td>
-                        <td class="px-6 py-4 text-sm font-black text-neon-emerald">+ ₹<?php echo $gmp_val; ?></td>
+                        <td class="px-6 py-4 text-sm font-black <?php echo $gmp_color; ?>"><?php echo $gmp_display; ?></td>
                         <td class="px-6 py-4 text-sm font-medium text-slate-300">
                             <?php echo date('M j', strtotime($ipo->open_date)); ?> - <?php echo date('M j', strtotime($ipo->close_date)); ?>
                         </td>
@@ -242,7 +244,9 @@ $est_profit = $gmp * $lot_size;
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full lg:w-auto">
                 <div class="text-center lg:text-left">
                     <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">GMP</p>
-                    <p class="text-2xl font-black text-emerald-400 leading-none">+₹<?php echo $ipo->premium ?: '0'; ?></p>
+                    <p class="text-2xl font-black <?php echo ($ipo->premium < 0) ? 'text-red-400' : 'text-emerald-400'; ?> leading-none">
+                        <?php echo ($ipo->premium < 0) ? '-₹' . abs($ipo->premium) : '+₹' . ($ipo->premium ?: '0'); ?>
+                    </p>
                     <p class="text-[10px] text-slate-400 mt-1">(<?php echo $gmp_perc; ?>%)</p>
                 </div>
                 <div class="text-center lg:text-left lg:border-l border-slate-700/50 lg:pl-6">
@@ -541,6 +545,11 @@ $est_profit = $gmp * $lot_size;
             <!-- FINANCIALS TAB -->
             <div id="tab-financials" class="tab-content hidden space-y-6">
                 
+                <?php 
+                $has_financials = !empty($details['company_financials']) || !empty($details['kpi']) || !empty($details['peer_valuation']) || !empty($details['peer_financials']);
+                if($has_financials): 
+                ?>
+
                 <!-- Company Financials -->
                 <?php if(!empty($details['company_financials'])): ?>
                 <div class="glass-card border border-border-navy rounded-2xl p-6">
@@ -671,13 +680,26 @@ $est_profit = $gmp * $lot_size;
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
+
+                <?php else: ?>
+                <div class="glass-card border border-border-navy rounded-2xl p-12 text-center">
+                    <div class="inline-flex items-center justify-center size-16 rounded-full bg-slate-900/50 mb-4 border border-white/5">
+                        <span class="material-symbols-outlined text-3xl text-slate-600">account_balance_wallet</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Financial Data Not Available</h3>
+                    <p class="text-xs text-slate-400 max-w-xs mx-auto">We don't have financial records for this company yet.</p>
+                </div>
+                <?php endif; ?>
             </div>
 
             <!-- ANALYSIS TAB -->
             <div id="tab-analysis" class="tab-content hidden space-y-6">
                 
                 <!-- Strengths & Weaknesses -->
-                <?php if(!empty($details['strengths']) || !empty($details['strengths_text']) || !empty($details['weaknesses']) || !empty($details['weaknesses_text'])): ?>
+                <?php 
+                $has_analysis = !empty($details['strengths']) || !empty($details['strengths_text']) || !empty($details['weaknesses']) || !empty($details['weaknesses_text']);
+                if($has_analysis):
+                ?>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Strengths -->
                     <div class="glass-card border border-border-navy rounded-2xl p-6">
@@ -753,6 +775,14 @@ $est_profit = $gmp * $lot_size;
                         <?php endif; ?>
                     </div>
                 </div>
+                <?php else: ?>
+                <div class="glass-card border border-border-navy rounded-2xl p-12 text-center">
+                    <div class="inline-flex items-center justify-center size-16 rounded-full bg-slate-900/50 mb-4 border border-white/5">
+                        <span class="material-symbols-outlined text-3xl text-slate-600">analytics</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Analysis Pending</h3>
+                    <p class="text-xs text-slate-400 max-w-xs mx-auto">Our experts are currently analyzing this IPO. Please check back later for Strengths & Weaknesses.</p>
+                </div>
                 <?php endif; ?>
             </div>
 
@@ -809,14 +839,18 @@ $est_profit = $gmp * $lot_size;
             <div class="glass-card border border-border-navy rounded-2xl p-6">
                 <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Quota Reservation</h3>
                 <div class="space-y-4">
-                    <?php if(isset($details['reservation'])): foreach($details['reservation'] as $r): ?>
+                    <?php if(isset($details['reservation']) && !empty($details['reservation'])): foreach($details['reservation'] as $r): ?>
                     <div class="flex items-center justify-between group">
                         <span class="text-xs font-bold text-slate-400"><?php echo esc_html($r['Category'] ?: '-'); ?></span>
                         <span class="text-[11px] font-black text-white bg-slate-900/80 border border-white/5 px-2.5 py-1.5 rounded-lg min-w-[55px] text-center shadow-sm group-hover:border-primary/30 transition-colors">
                             <?php echo esc_html($r['%'] ?: '0%'); ?>
                         </span>
                     </div>
-                    <?php endforeach; endif; ?>
+                    <?php endforeach; else: ?>
+                    <div class="text-center py-4">
+                        <span class="text-[10px] text-slate-500 font-bold italic">Quota information not available</span>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
