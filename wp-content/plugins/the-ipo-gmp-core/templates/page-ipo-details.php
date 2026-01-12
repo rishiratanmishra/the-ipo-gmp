@@ -125,6 +125,13 @@ if($search_query) {
 
 $slug = isset($_GET['slug']) ? sanitize_text_field($_GET['slug']) : '';
 
+// Redirect if no slug provided
+if (empty($slug)) {
+    status_header(404);
+    nocache_headers();
+    include(get_query_template('404'));
+    exit;
+}
 
 // Fetch Base IPO Data
 $ipo = $wpdb->get_row($wpdb->prepare("SELECT * FROM $t_master WHERE slug = %s", $slug));
