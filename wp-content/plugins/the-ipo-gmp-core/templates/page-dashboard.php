@@ -524,60 +524,28 @@ get_header();
         <aside class="space-y-8">
             <!-- Trending IPO Widget -->
             <?php if ($highest_gmp_ipo): ?>
-                <div class="relative p-5 rounded-xl bg-[#0B1221] border border-blue-600/40 overflow-hidden">
-                    <!-- Subtle Glow -->
-                    <div class="absolute -inset-1 bg-blue-500/10 rounded-xl blur-lg opacity-30"></div>
-
+                <div class="p-5 rounded-xl bg-primary/10 border border-blue-600/40 relative overflow-hidden">
                     <div class="relative z-10">
-                        <div class="flex justify-between items-center mb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="text-lg">🔥</span>
-                                <h4 class="text-blue-500 font-bold text-xs uppercase tracking-wide">Top Trending</h4>
-                            </div>
+                        <div class="flex justify-between items-center mb-1">
+                            <h4 class="text-primary font-black text-sm uppercase tracking-tighter">🔥 Top Trending</h4>
                             <span
-                                class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider <?php echo strtolower($highest_gmp_ipo->status) === 'open' ? 'bg-green-500/10 text-green-500 border border-green-500/50' : 'bg-slate-700/50 text-slate-300 border border-slate-600/50'; ?>">
+                                class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider <?php echo strtolower($highest_gmp_ipo->status) === 'open' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-700 text-slate-300 border border-slate-600'; ?>">
                                 <?php echo esc_html($highest_gmp_ipo->status); ?>
                             </span>
                         </div>
-                        <p class="text-white text-base font-bold mb-3 leading-snug">
-                            <?php echo esc_html($highest_gmp_ipo->name); ?></p>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-baseline">
-                                <span class="text-slate-400 text-[11px] font-medium">Current GMP</span>
-                                <div class="text-right">
-                                    <span class="text-green-400 font-bold text-base">+
-                                        ₹<?php echo esc_html($highest_gmp_ipo->premium); ?></span><?php
-                                           // Extract numeric values from premium and price_band
-                                           $premium_numeric = (float) preg_replace('/[^0-9.]/', '', $highest_gmp_ipo->premium);
-                                           $price_str = (string) ($highest_gmp_ipo->price_band ?? '');
-                                           preg_match_all('/[\d.]+/', $price_str, $matches);
-                                           $price = !empty($matches[0]) ? (float) max($matches[0]) : 0;
-
-                                           if ($price > 0 && $premium_numeric > 0) {
-                                               $percent = ($premium_numeric / $price) * 100;
-                                               echo ' <span class="text-green-400 text-sm">(' . number_format($percent, 1) . '%)</span>';
-                                           }
-                                           ?>
-                                </div>
+                        <p class="text-white text-lg font-bold"><?php echo esc_html($highest_gmp_ipo->name); ?></p>
+                        <div class="flex flex-col gap-3 mt-4">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400">Current GMP</span>
+                                <span class="text-neon-emerald font-bold">+
+                                    ₹<?php echo esc_html($highest_gmp_ipo->premium); ?></span>
                             </div>
-                            <p class="text-[10px] text-slate-500 text-right">Most demanded active stock</p>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full">
+                                <div class="bg-primary h-full rounded-full shadow-[0_0_8px_rgba(13,127,242,0.6)]"
+                                    style="width: 100%"></div>
+                            </div>
+                            <p class="text-[10px] text-slate-500 text-right">Most demanded active Stock</p>
                         </div>
-                    </div>
-                </div>
-            <?php else: ?>
-                <!-- Empty State for No Trending IPO -->
-                <div
-                    class="relative p-6 rounded-2xl bg-gradient-to-br from-slate-800/30 via-slate-800/20 to-transparent overflow-hidden border border-slate-700/30">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-r from-slate-700/5 via-slate-600/5 to-slate-700/5 opacity-50">
-                    </div>
-
-                    <div class="relative z-10 text-center py-4">
-                        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-slate-800/50 flex items-center justify-center">
-                            <span class="text-3xl opacity-50">📊</span>
-                        </div>
-                        <h4 class="text-slate-400 font-bold text-sm mb-1">No Trending Data</h4>
-                        <p class="text-slate-600 text-xs leading-relaxed">Check back soon for<br>trending IPO insights</p>
                     </div>
                 </div>
             <?php endif; ?>
