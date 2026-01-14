@@ -15,16 +15,24 @@ $t_master = $wpdb->prefix . 'ipomaster';
 $mainboard = $wpdb->get_results("
     SELECT * FROM $t_master 
     WHERE is_sme = 0
-    AND status IN ('open', 'upcoming', 'allotment')
-    ORDER BY id DESC LIMIT 10
+    AND (
+        status IN ('open', 'upcoming', 'allotment') 
+        OR (status IN ('close', 'closed') AND STR_TO_DATE(listing_date, '%b %d, %Y') >= CURDATE())
+        OR status LIKE '%allotment%' 
+    )
+    ORDER BY id DESC LIMIT 50
 ");
 
 // B. Active SME
 $sme = $wpdb->get_results("
     SELECT * FROM $t_master 
     WHERE is_sme = 1
-    AND status IN ('open', 'upcoming')
-    ORDER BY id DESC LIMIT 6
+    AND (
+        status IN ('open', 'upcoming', 'allotment') 
+        OR (status IN ('close', 'closed') AND STR_TO_DATE(listing_date, '%b %d, %Y') >= CURDATE())
+        OR status LIKE '%allotment%'
+    )
+    ORDER BY id DESC LIMIT 50
 ");
 
 // D. Global Stats (Aggregate)
@@ -138,12 +146,14 @@ get_header();
                                 class="px-3 py-1 bg-primary/20 text-primary rounded-full border border-primary/30 transition-all hover:bg-primary/30">Active</button>
                             <button id="btn-upcoming" onclick="filterTable('upcoming')"
                                 class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Upcoming</button>
+                            <button id="btn-closed" onclick="filterTable('closed')"
+                                class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Pre-Listing</button>
                         </div>
                         <a href="<?php echo home_url('/mainboard-ipos/'); ?>"
                             class="text-primary text-xs font-bold hover:underline hidden md:block">View All →</a>
                     </div>
                 </div>
-                <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
+                <div id="mainboard-container" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse min-w-[600px]">
                             <thead>
@@ -157,9 +167,9 @@ get_header();
                                     <th
                                         class="px-6 py-4 text-xs font-semibold text-emerald-500 uppercase tracking-widest bg-emerald-500/5">
                                         GMP Premium</th>
-                                    <th
+                                    <th id="header-dates-main"
                                         class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
-                                        Listing Dates</th>
+                                        Offer Dates</th>
                                     <th
                                         class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
                                         Status</th>
@@ -175,6 +185,7 @@ get_header();
                                         $status_class = strtolower($ipo->status);
                                         ?>
                                         <tr class="data-table-row transition-colors cursor-pointer group ipo-row row-<?php echo esc_attr($status_class); ?>"
+                                            data-status="<?php echo esc_attr($status_class); ?>"
                                             onclick="window.location.href='<?php echo esc_url($details_url); ?>'">
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center gap-3">
@@ -220,8 +231,13 @@ get_header();
                                                 class="px-6 py-4 text-sm font-black text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10 transition-colors">
                                                 + ₹<?php echo $gmp_val; ?></td>
                                             <td class="px-6 py-4 text-sm font-medium text-slate-300">
-                                                <?php echo date('M j', strtotime($ipo->open_date)); ?> -
-                                                <?php echo date('M j', strtotime($ipo->close_date)); ?>
+                                                <span class="date-offer">
+                                                    <?php echo date('M j', strtotime($ipo->open_date)); ?> -
+                                                    <?php echo date('M j', strtotime($ipo->close_date)); ?>
+                                                </span>
+                                                <span class="date-listing hidden text-slate-300">
+                                                    <?php echo esc_html($ipo->listing_date); ?>
+                                                </span>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <span class="flex items-center gap-1.5 text-xs font-bold text-primary">
@@ -265,31 +281,60 @@ get_header();
                     // Update Mainboard Buttons
                     const btnActive = document.getElementById('btn-active');
                     const btnUpcoming = document.getElementById('btn-upcoming');
+                    const btnClosed = document.getElementById('btn-closed');
+                    const headerDates = document.getElementById('header-dates-main');
 
                     const activeClass = "bg-primary/20 text-primary border-primary/30";
                     const inactiveClass = "bg-slate-800 text-slate-400 border-slate-700";
 
+                    // Reset all
+                    btnActive.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+                    btnUpcoming.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+                    if (btnClosed) btnClosed.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+
+                    // Set Active and update Header
                     if (filter === 'active') {
                         btnActive.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-primary/30 " + activeClass;
-                        btnUpcoming.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
-                    } else {
+                        if (headerDates) headerDates.textContent = "Offer Dates";
+                        toggleDateColumns(false, 'mainboard-container');
+                    } else if (filter === 'upcoming') {
                         btnUpcoming.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-primary/30 " + activeClass;
-                        btnActive.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+                        if (headerDates) headerDates.textContent = "Offer Dates";
+                        toggleDateColumns(false, 'mainboard-container');
+                    } else if (filter === 'closed') {
+                        if (btnClosed) btnClosed.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-primary/30 " + activeClass;
+                        if (headerDates) headerDates.textContent = "Listing Date";
+                        toggleDateColumns(true, 'mainboard-container');
                     }
 
                     // Filter Mainboard Rows
                     const rows = document.querySelectorAll('.ipo-row');
                     let visibleCount = 0;
                     rows.forEach(row => {
+                        const status = row.getAttribute('data-status') || '';
+
+                        // Define checks
+                        const isUpcoming = status.includes('upcoming');
+                        const isClosed = status.includes('close') || status.includes('allotment') || status.includes('out'); // "Allotment Out"
+                        const isOpen = status.includes('open') || status === 'live';
+
+                        // Logic
                         if (filter === 'active') {
-                            if (row.classList.contains('row-open') || row.classList.contains('row-allotment')) {
+                            if (isOpen && !isClosed && !isUpcoming) {
                                 row.style.display = 'table-row';
                                 visibleCount++;
                             } else {
                                 row.style.display = 'none';
                             }
                         } else if (filter === 'upcoming') {
-                            if (row.classList.contains('row-upcoming')) {
+                            if (isUpcoming) {
+                                row.style.display = 'table-row';
+                                visibleCount++;
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        } else if (filter === 'closed') {
+                            if (isClosed) {
                                 row.style.display = 'table-row';
                                 visibleCount++;
                             } else {
@@ -305,37 +350,69 @@ get_header();
                     }
                 }
 
+                function toggleDateColumns(showListing, containerId) {
+                    const container = document.getElementById(containerId);
+                    if (!container) return;
+
+                    const offers = container.querySelectorAll('.date-offer');
+                    const listings = container.querySelectorAll('.date-listing');
+
+                    if (showListing) {
+                        offers.forEach(el => el.classList.add('hidden'));
+                        listings.forEach(el => el.classList.remove('hidden'));
+                    } else {
+                        offers.forEach(el => el.classList.remove('hidden'));
+                        listings.forEach(el => el.classList.add('hidden'));
+                    }
+                }
+
                 function filterSME(filter) {
                     // Update SME Buttons
                     const btnSmeActive = document.getElementById('btn-sme-active');
                     const btnSmeUpcoming = document.getElementById('btn-sme-upcoming');
+                    const btnSmeClosed = document.getElementById('btn-sme-closed');
+                    const headerDates = document.getElementById('header-dates-sme');
 
                     const activeClass = "bg-primary/20 text-primary border-primary/30";
                     const inactiveClass = "bg-slate-800 text-slate-400 border-slate-700";
 
+                    // Reset
+                    btnSmeActive.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+                    btnSmeUpcoming.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+                    if (btnSmeClosed) btnSmeClosed.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+
                     if (filter === 'active') {
                         btnSmeActive.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-primary/30 " + activeClass;
-                        btnSmeUpcoming.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
-                    } else {
+                        if (headerDates) headerDates.textContent = "Offer Dates";
+                        toggleDateColumns(false, 'sme-container');
+                    } else if (filter === 'upcoming') {
                         btnSmeUpcoming.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-primary/30 " + activeClass;
-                        btnSmeActive.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-slate-700 hover:text-white " + inactiveClass;
+                        if (headerDates) headerDates.textContent = "Offer Dates";
+                        toggleDateColumns(false, 'sme-container');
+                    } else if (filter === 'closed') {
+                        if (btnSmeClosed) btnSmeClosed.className = "px-3 py-1 rounded-full text-xs font-bold border transition-all hover:bg-primary/30 " + activeClass;
+                        if (headerDates) headerDates.textContent = "Listing Date";
+                        toggleDateColumns(true, 'sme-container');
                     }
 
                     // Filter SME Rows
                     const rows = document.querySelectorAll('.sme-row');
                     rows.forEach(row => {
+                        const status = row.getAttribute('data-status') || '';
+
+                        const isUpcoming = status.includes('upcoming');
+                        const isClosed = status.includes('close') || status.includes('allotment') || status.includes('out');
+                        const isOpen = status.includes('open') || status === 'live';
+
                         if (filter === 'active') {
-                            if (row.classList.contains('row-open') || row.classList.contains('row-allotment')) {
-                                row.style.display = 'table-row';
-                            } else {
-                                row.style.display = 'none';
-                            }
+                            if (isOpen && !isClosed && !isUpcoming) row.style.display = 'table-row';
+                            else row.style.display = 'none';
                         } else if (filter === 'upcoming') {
-                            if (row.classList.contains('row-upcoming')) {
-                                row.style.display = 'table-row';
-                            } else {
-                                row.style.display = 'none';
-                            }
+                            if (isUpcoming) row.style.display = 'table-row';
+                            else row.style.display = 'none';
+                        } else if (filter === 'closed') {
+                            if (isClosed) row.style.display = 'table-row';
+                            else row.style.display = 'none';
                         }
                     });
                 }
@@ -355,12 +432,14 @@ get_header();
                                 class="px-3 py-1 bg-primary/20 text-primary rounded-full border border-primary/30 transition-all hover:bg-primary/30">Active</button>
                             <button id="btn-sme-upcoming" onclick="filterSME('upcoming')"
                                 class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Upcoming</button>
+                            <button id="btn-sme-closed" onclick="filterSME('closed')"
+                                class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Pre-Listing</button>
                         </div>
                         <a class="text-primary text-xs font-bold hover:underline hidden md:block"
                             href="<?php echo home_url('/sme-ipos/'); ?>">View All SME →</a>
                     </div>
                 </div>
-                <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
+                <div id="sme-container" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse min-w-[600px]">
                             <thead>
@@ -374,9 +453,9 @@ get_header();
                                     <th
                                         class="px-6 py-4 text-xs font-semibold text-emerald-500 uppercase tracking-widest bg-emerald-500/5">
                                         GMP Premium</th>
-                                    <th
+                                    <th id="header-dates-sme"
                                         class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
-                                        Listing Dates</th>
+                                        Offer Dates</th>
                                     <th
                                         class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
                                         Status</th>
@@ -390,6 +469,7 @@ get_header();
                                         $status_class = strtolower($ipo->status);
                                         ?>
                                         <tr class="data-table-row transition-colors cursor-pointer group sme-row row-<?php echo esc_attr($status_class); ?>"
+                                            data-status="<?php echo esc_attr($status_class); ?>"
                                             onclick="window.location.href='<?php echo esc_url($details_url); ?>'">
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center gap-3">
@@ -418,8 +498,13 @@ get_header();
                                                 class="px-6 py-4 text-sm font-black text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10 transition-colors">
                                                 + ₹<?php echo $gmp_val; ?></td>
                                             <td class="px-6 py-4 text-sm font-medium text-slate-300">
-                                                <?php echo date('M j', strtotime($ipo->open_date)); ?> -
-                                                <?php echo date('M j', strtotime($ipo->close_date)); ?>
+                                                <span class="date-offer">
+                                                    <?php echo date('M j', strtotime($ipo->open_date)); ?> -
+                                                    <?php echo date('M j', strtotime($ipo->close_date)); ?>
+                                                </span>
+                                                <span class="date-listing hidden text-slate-300">
+                                                    <?php echo esc_html($ipo->listing_date); ?>
+                                                </span>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <span class="flex items-center gap-1.5 text-xs font-bold text-primary">
