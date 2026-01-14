@@ -100,8 +100,9 @@
                 </a>
 
                 <!-- Search Bar (Header) -->
-                <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET"
-                    class="hidden lg:flex items-center w-96 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all relative">
+                <form action="<?php echo home_url('/mainboard-ipos/'); ?>" method="GET"
+                    class="hidden lg:flex items-center w-96 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all relative"
+                    onsubmit="var q = this.querySelector('input[name=\'q\']'); q.value = q.value.trim(); if(q.value === '') return false;">
                     <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -167,7 +168,8 @@
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
-                <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET" class="mb-6 relative">
+                <form action="<?php echo home_url('/mainboard-ipos/'); ?>" method="GET" class="mb-6 relative"
+                    onsubmit="var q = this.querySelector('input[name=\'q\']'); q.value = q.value.trim(); if(q.value === '') return false;">
                     <input type="text" name="q" placeholder="Search IPOs..."
                         class="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600">
                     <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
@@ -211,7 +213,9 @@
         .ticker-animate {
             display: flex;
             width: max-content;
-            animation: ticker-slide <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>s linear infinite;
+            animation: ticker-slide
+                <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>
+                s linear infinite;
             will-change: transform;
         }
 
