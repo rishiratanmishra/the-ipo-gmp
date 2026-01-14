@@ -1,0 +1,1213 @@
+2026-01-12 22:39:12 [IPO AI]: API Error Response Data: Array
+(
+    [message] => No endpoints found for google/gemini-flash-1.5.
+    [code] => 404
+)
+
+2026-01-12 22:39:12 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5.
+2026-01-12 22:39:12 [IPO AI]: API Error Response Data: Array
+(
+    [message] => No endpoints found for google/gemini-flash-1.5.
+    [code] => 404
+)
+
+2026-01-12 22:42:44 [IPO AI]: API Error Response Data: Array
+(
+    [message] => No endpoints found for google/gemini-flash-1.5.
+    [code] => 404
+)
+
+2026-01-12 22:42:44 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5.
+2026-01-12 22:42:45 [IPO AI]: API Error Response Data: Array
+(
+    [message] => No endpoints found for google/gemini-flash-1.5.
+    [code] => 404
+)
+
+2026-01-12 22:48:29 [IPO AI]: Fetching Database Record...
+2026-01-12 22:48:29 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-12 22:48:30 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-12 22:48:30 [IPO AI]: Model google/gemini-flash-1.5 failed (404). Switching to fallback: google/gemini-flash-1.5-8b
+2026-01-12 22:48:30 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-12 22:48:30 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-12 22:48:30 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-12 22:48:31 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-12 22:48:31 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-12 22:51:19 [IPO AI]: Fetching Database Record...
+2026-01-12 22:51:19 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-12 22:51:22 [IPO AI]: ✍️ AI Writing Content (Model: allenai/molmo-2-8b:free)...
+2026-01-12 22:51:37 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-12 22:51:37 [IPO AI]: Created Post ID: 139 for Ipo: Bharat Coking Coal Ltd
+2026-01-12 23:06:43 [IPO AI]: Fetching Database Record...
+2026-01-12 23:06:43 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-12 23:06:46 [IPO AI]: ✍️ AI Writing Content (Model: allenai/molmo-2-8b:free)...
+2026-01-12 23:06:53 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-12 23:06:53 [IPO AI]: Updated Post ID: 139 for Ipo: Bharat Coking Coal Ltd
+2026-01-12 23:16:05 [IPO AI]: Fetching database record...
+2026-01-12 23:16:05 [IPO AI]: Running keyword research...
+2026-01-12 23:16:08 [IPO AI]: Generating long-form content via AI...
+2026-01-13 16:20:51 [IPO AI]: Cron: Running Hourly Check
+2026-01-13 16:20:51 [IPO AI]: Cron: Found new IPO - Amagi Media Labs Ltd
+2026-01-13 16:20:51 [IPO AI]: Fetching Database Record...
+2026-01-13 16:20:51 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:20:56 [IPO AI]: ✍️ AI Writing Content (Model: allenai/molmo-2-8b:free)...
+2026-01-13 16:21:00 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-13 16:21:00 [IPO AI]: Created Post ID: 143 for Ipo: Amagi Media Labs Ltd
+2026-01-13 16:26:30 [IPO AI]: Fetching Database Record...
+2026-01-13 16:26:30 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:26:36 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => User not found.
+            [code] => 401
+        )
+
+)
+
+2026-01-13 16:26:36 [IPO AI]: Keyword Generation Failed Data: User not found.
+2026-01-13 16:26:36 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:26:41 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:26:41 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:27:37 [IPO AI]: Fetching Database Record...
+2026-01-13 16:27:37 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:27:41 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:27:41 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:27:41 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:27:43 [IPO AI]: API Error Response Data: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:27:43 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:31:40 [IPO AI]: Cron: Running Hourly Check
+2026-01-13 16:31:40 [IPO AI]: Cron: Found new IPO - GRE Renew Enertech Ltd.
+2026-01-13 16:31:40 [IPO AI]: Fetching Database Record...
+2026-01-13 16:31:40 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:31:45 [IPO AI]: Fetching Database Record...
+2026-01-13 16:31:45 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:31:45 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:31:45 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:31:46 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:31:46 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:31:49 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:31:49 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:31:49 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:31:49 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:31:50 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:31:50 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:31:50 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:31:50 [IPO AI]: Cron: Found new IPO - Avana Electrosystems Ltd.
+2026-01-13 16:31:50 [IPO AI]: Fetching Database Record...
+2026-01-13 16:31:50 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:31:53 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:31:53 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:31:53 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:31:55 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:31:55 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:31:55 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:31:55 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:31:58 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:31:58 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:31:58 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:31:58 [IPO AI]: Cron: Found new IPO - INDO SMC LIMITED
+2026-01-13 16:31:58 [IPO AI]: Fetching Database Record...
+2026-01-13 16:31:58 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:02 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:02 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:02 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:02 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:04 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:04 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:04 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:32:04 [IPO AI]: Cron: Found new IPO - Narmadesh Brass Industries Ltd
+2026-01-13 16:32:04 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:04 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:07 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:07 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:07 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:07 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:09 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:09 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:09 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:32:09 [IPO AI]: Cron: Found new IPO - Armour Security India Ltd.
+2026-01-13 16:32:09 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:09 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:12 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:12 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:12 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:12 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:12 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:12 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:13 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:32:13 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-pro-1.5-exp.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:13 [IPO AI]: Model google/gemini-pro-1.5-exp failed (404). Switching to fallback: google/gemini-flash-1.5-8b
+2026-01-13 16:32:14 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:14 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:14 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:32:14 [IPO AI]: Cron: Found new Buyback - Fairchem Organics
+2026-01-13 16:32:14 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:14 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:14 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:32:14 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:14 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:32:14 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:32:15 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:32:15 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:15 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:32:16 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:16 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:16 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:16 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:18 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:18 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:18 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:32:18 [IPO AI]: Cron: Found new Buyback - Oscar Global
+2026-01-13 16:32:18 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:18 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:21 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:21 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:21 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:21 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:24 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:24 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:24 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:32:24 [IPO AI]: Cron: Found new Buyback - Sanmitra Commercial
+2026-01-13 16:32:24 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:24 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:26 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:26 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:26 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:26 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:27 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:27 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:27 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:32:27 [IPO AI]: Cron: Rotating keywords for Post 143
+2026-01-13 16:32:27 [IPO AI]: Fetching Database Record...
+2026-01-13 16:32:27 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:32:29 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:29 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:29 [IPO AI]: Keyword Generation Failed Data: Provider returned error
+2026-01-13 16:32:29 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-2.0-flash-exp:free)...
+2026-01-13 16:32:31 [IPO AI]: API Error Response Code: 429
+2026-01-13 16:32:31 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => Provider returned error
+            [code] => 429
+            [metadata] => Array
+                (
+                    [raw] => google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations
+                    [provider_name] => Google
+                )
+
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:32:31 [IPO AI]: ❌ AI Error: Provider returned error
+2026-01-13 16:36:10 [IPO AI]: Fetching Database Record...
+2026-01-13 16:36:10 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:36:15 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:36:15 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for meta-llama/llama-3.1-8b-instruct:free.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:36:15 [IPO AI]: Model meta-llama/llama-3.1-8b-instruct:free failed (404). Switching to fallback: google/gemini-flash-1.5-8b
+2026-01-13 16:36:16 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:36:16 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:36:16 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:36:16 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:36:17 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:36:17 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:36:17 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:37:32 [IPO AI]: Fetching Database Record...
+2026-01-13 16:37:32 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:37:34 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:37:34 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:37:34 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:37:34 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:37:35 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:37:35 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:37:35 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:45:35 [IPO AI]: Fetching Database Record...
+2026-01-13 16:45:35 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:45:39 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:45:39 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:45:39 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:45:39 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:45:40 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:45:40 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:45:40 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:45:56 [IPO AI]: Fetching Database Record...
+2026-01-13 16:45:56 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:45:57 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:45:57 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for meta-llama/llama-3.1-8b-instruct:free.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:45:57 [IPO AI]: Model meta-llama/llama-3.1-8b-instruct:free failed (404). Switching to fallback: google/gemini-flash-1.5-8b
+2026-01-13 16:45:58 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:45:58 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:45:58 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:45:58 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:46:00 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:46:00 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:46:00 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:48:38 [IPO AI]: Fetching Database Record...
+2026-01-13 16:48:38 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:48:39 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:48:39 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for meta-llama/llama-3.1-8b-instruct:free.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:48:39 [IPO AI]: Model meta-llama/llama-3.1-8b-instruct:free failed (404). Switching to fallback: google/gemini-flash-1.5-8b
+2026-01-13 16:48:41 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:48:41 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:48:41 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:48:41 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:48:43 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:48:43 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:48:43 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:49:04 [IPO AI]: Fetching Database Record...
+2026-01-13 16:49:04 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:49:05 [IPO AI]: API Error Response Code: 400
+2026-01-13 16:49:05 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => mythomist/7b:free is not a valid model ID
+            [code] => 400
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:49:05 [IPO AI]: Keyword Generation Failed Data: mythomist/7b:free is not a valid model ID
+2026-01-13 16:49:05 [IPO AI]: ✍️ AI Writing Content (Model: mythomist/7b:free)...
+2026-01-13 16:49:06 [IPO AI]: API Error Response Code: 400
+2026-01-13 16:49:06 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => mythomist/7b:free is not a valid model ID
+            [code] => 400
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:49:06 [IPO AI]: ❌ AI Error: mythomist/7b:free is not a valid model ID
+2026-01-13 16:49:26 [IPO AI]: Fetching Database Record...
+2026-01-13 16:49:26 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 16:49:27 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:49:27 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for meta-llama/llama-3.1-8b-instruct:free.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:49:27 [IPO AI]: Model meta-llama/llama-3.1-8b-instruct:free failed (404). Switching to fallback: google/gemini-flash-1.5-8b
+2026-01-13 16:49:29 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:49:29 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:49:29 [IPO AI]: Keyword Generation Failed Data: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 16:49:29 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 16:49:31 [IPO AI]: API Error Response Code: 404
+2026-01-13 16:49:31 [IPO AI]: API Error Body: Array
+(
+    [error] => Array
+        (
+            [message] => No endpoints found for google/gemini-flash-1.5-8b.
+            [code] => 404
+        )
+
+    [user_id] => user_37FUyOLHgR303avQNda7OI0nvtF
+)
+
+2026-01-13 16:49:31 [IPO AI]: ❌ AI Error: No endpoints found for google/gemini-flash-1.5-8b.
+2026-01-13 17:18:44 [IPO AI]: Fetching Database Record...
+2026-01-13 17:18:44 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:18:45 [IPO AI]: Google API Error Data: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:18:45 [IPO AI]: Keyword Generation Failed Data: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:18:45 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:18:47 [IPO AI]: Google API Error Data: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:18:47 [IPO AI]: ❌ AI Error: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:21:03 [IPO AI]: Fetching Database Record...
+2026-01-13 17:21:03 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:21:05 [IPO AI]: Google API Error Data: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:21:05 [IPO AI]: Keyword Generation Failed Data: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:21:05 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:21:07 [IPO AI]: Google API Error Data: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:21:07 [IPO AI]: ❌ AI Error: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:22:59 [IPO AI]: Fetching Database Record...
+2026-01-13 17:22:59 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:23:00 [IPO AI]: Google API (gemini-1.5-flash-001) failed: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:23:01 [IPO AI]: Google API (gemini-1.5-flash) failed: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:23:01 [IPO AI]: Google API (gemini-pro) failed: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:23:01 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:23:01 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:23:02 [IPO AI]: Google API (gemini-1.5-flash-001) failed: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:23:03 [IPO AI]: Google API (gemini-1.5-flash) failed: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:23:04 [IPO AI]: Google API (gemini-pro) failed: Array
+(
+    [error] => Array
+        (
+            [code] => 404
+            [message] => models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+            [status] => NOT_FOUND
+        )
+
+)
+
+2026-01-13 17:23:04 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:25:22 [IPO AI]: Fetching Database Record...
+2026-01-13 17:25:22 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:25:23 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:25:24 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:25:25 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:25:25 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:25:25 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:25:26 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:25:26 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:25:27 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:25:27 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:10 [IPO AI]: Cron: Running Hourly Check
+2026-01-13 17:33:10 [IPO AI]: Cron: Found new IPO - GRE Renew Enertech Ltd.
+2026-01-13 17:33:10 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:10 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:11 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:12 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:13 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:13 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:13 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:14 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:15 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:16 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:16 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:16 [IPO AI]: Cron: Found new IPO - Avana Electrosystems Ltd.
+2026-01-13 17:33:16 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:16 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:17 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:18 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:19 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:19 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:19 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:20 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:21 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:21 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:21 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:21 [IPO AI]: Cron: Found new IPO - INDO SMC LIMITED
+2026-01-13 17:33:21 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:21 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:22 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:23 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:24 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:24 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:24 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:25 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:26 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:26 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:26 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:26 [IPO AI]: Cron: Found new IPO - Narmadesh Brass Industries Ltd
+2026-01-13 17:33:26 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:26 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:27 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:28 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:29 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:29 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:29 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:31 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:32 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:32 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:32 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:32 [IPO AI]: Cron: Found new IPO - Armour Security India Ltd.
+2026-01-13 17:33:32 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:32 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:33 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:34 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:35 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:35 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:35 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:35 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:36 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:37 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:37 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:37 [IPO AI]: Cron: Found new Buyback - Fairchem Organics
+2026-01-13 17:33:37 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:37 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:38 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:39 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:40 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:40 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:40 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:41 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:42 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:43 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:43 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:43 [IPO AI]: Cron: Found new Buyback - Oscar Global
+2026-01-13 17:33:43 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:43 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:44 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:45 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:45 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:45 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:45 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:46 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:47 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:48 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:48 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:48 [IPO AI]: Cron: Found new Buyback - Sanmitra Commercial
+2026-01-13 17:33:48 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:48 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:49 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:50 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:51 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:51 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:51 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:52 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:52 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:53 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:53 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:53 [IPO AI]: Cron: Rotating keywords for Post 143
+2026-01-13 17:33:53 [IPO AI]: Fetching Database Record...
+2026-01-13 17:33:53 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:33:54 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:55 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:56 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:56 [IPO AI]: Keyword Generation Failed Data: All Google Models failed. Please check your API Key.
+2026-01-13 17:33:56 [IPO AI]: ✍️ AI Writing Content (Model: google/gemini-flash-1.5-8b)...
+2026-01-13 17:33:57 [IPO AI]: Google API (gemini-1.5-flash-001) failed. Code: 404. Msg: models/gemini-1.5-flash-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:58 [IPO AI]: Google API (gemini-1.5-flash) failed. Code: 404. Msg: models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:58 [IPO AI]: Google API (gemini-pro) failed. Code: 404. Msg: models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-01-13 17:33:58 [IPO AI]: ❌ AI Error: All Google Models failed. Please check your API Key.
+2026-01-13 17:45:18 [IPO AI]: Fetching Database Record...
+2026-01-13 17:45:18 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-13 17:45:18 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-13 17:45:33 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-13 17:45:33 [IPO AI]: 🔑 Keywords Found: Primary: [Aritas Vinyl Ltd IPO Date & Price Band] | Secondary: [Aritas Vinyl Ltd IPO Review & Analysis, Aritas Vinyl Ltd Upcoming IPO Subscription Status, Aritas Vinyl Ltd GMP 0 Analysis, Aritas Vinyl Ltd IPO Listing Price Expectations]
+2026-01-13 17:45:33 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-13 17:45:33 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-13 17:45:55 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-13 17:45:55 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-13 17:45:55 [IPO AI]: Created Post ID: 145 for Ipo: Aritas Vinyl Ltd.
+2026-01-14 19:28:09 [IPO AI]: Cron: Running Hourly Check
+2026-01-14 19:28:09 [IPO AI]: Cron: Found new IPO - GRE Renew Enertech Ltd.
+2026-01-14 19:28:09 [IPO AI]: Fetching Database Record...
+2026-01-14 19:28:09 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:28:09 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:28:33 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:28:33 [IPO AI]: 🔑 Keywords Found: Primary: [GRE Renew Enertech GMP Today] | Secondary: [GRE Renew Enertech Subscription Status Live, GRE Renew Enertech Should I Apply, GRE Renew Enertech Listing Price, GRE Renew Enertech Review]
+2026-01-14 19:28:33 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:28:33 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:28:55 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:28:55 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:28:55 [IPO AI]: Created Post ID: 146 for Ipo: GRE Renew Enertech Ltd.
+2026-01-14 19:29:17 [IPO AI]: Cron: Running Daily Updates
+2026-01-14 19:29:17 [IPO AI]: Fetching Database Record...
+2026-01-14 19:29:17 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:29:17 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:29:31 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:29:31 [IPO AI]: 🔑 Keywords Found: Primary: [GMP Today] | Secondary: [Subscription Status Live, Should I Apply, Listing Price, 8% GMP Premium]
+2026-01-14 19:29:31 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:29:31 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:29:58 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:29:58 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:29:58 [IPO AI]: Updated Post ID: 143 for Ipo: Amagi Media Labs Ltd
+2026-01-14 19:35:06 [IPO AI]: Cron: Running Hourly Check
+2026-01-14 19:35:06 [IPO AI]: Cron: Found new IPO - INDO SMC LIMITED
+2026-01-14 19:35:06 [IPO AI]: Fetching Database Record...
+2026-01-14 19:35:06 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:35:06 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:35:24 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:35:24 [IPO AI]: 🔑 Keywords Found: Primary: [GMP Today INDO SMC] | Secondary: [Subscription Status Live INDO SMC, Should I Apply INDO SMC, GMP 32 Premium, 21.5% IPO Growth]
+2026-01-14 19:35:24 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:35:24 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:35:49 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:35:49 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:36:04 [IPO AI]: Created Post ID: 149 for Ipo: INDO SMC LIMITED
+2026-01-14 19:37:18 [IPO AI]: Fetching Database Record...
+2026-01-14 19:37:18 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:37:18 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:37:30 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:37:30 [IPO AI]: 🔑 Keywords Found: Primary: [Aritas Vinyl Ltd IPO Review] | Secondary: [Aritas Vinyl Ltd IPO Date, Aritas Vinyl Ltd Price Band, Aritas Vinyl Ltd Subscription Status, Aritas Vinyl Ltd Listing Price]
+2026-01-14 19:37:30 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:37:30 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:38:16 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:38:16 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:38:16 [IPO AI]: Updated Post ID: 145 for Ipo: Aritas Vinyl Ltd.
+2026-01-14 19:42:08 [IPO AI]: Fetching Database Record...
+2026-01-14 19:42:08 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:42:08 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:42:26 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:42:26 [IPO AI]: 🔑 Keywords Found: Primary: [Shadowfax Technologies IPO Upcoming] | Secondary: [Shadowfax Technologies IPO Date, Shadowfax Technologies Price Band, Shadowfax IPO Review Analysis, Shadowfax Technologies GMP 16]
+2026-01-14 19:42:26 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:42:26 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:43:33 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:43:33 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:43:33 [IPO AI]: Created Post ID: 151 for Ipo: Shadowfax Technologies Ltd.
+2026-01-14 19:45:22 [IPO AI]: Fetching Database Record...
+2026-01-14 19:45:22 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:45:22 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:45:37 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:45:37 [IPO AI]: 🔑 Keywords Found: Primary: [Narmadesh Brass IPO GMP Today] | Secondary: [Narmadesh Brass Subscription Status Live, Narmadesh Brass Should I Apply Now, Narmadesh Brass IPO Review, Narmadesh Brass Listing Price Update]
+2026-01-14 19:45:37 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:45:37 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:46:23 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:46:23 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:46:23 [IPO AI]: Created Post ID: 152 for Ipo: Narmadesh Brass Industries Ltd
+2026-01-14 19:47:43 [IPO AI]: Fetching Database Record...
+2026-01-14 19:47:43 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:47:43 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:47:56 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:47:56 [IPO AI]: 🔑 Keywords Found: Primary: [GMP Today] | Secondary: [Subscription Status Live, Should I Apply, IPO Subscription Update, Armour Security GMP Analysis]
+2026-01-14 19:47:56 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:47:56 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:48:36 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:48:36 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:48:36 [IPO AI]: Created Post ID: 153 for Ipo: Armour Security India Ltd.
+2026-01-14 19:49:58 [IPO AI]: Fetching Database Record...
+2026-01-14 19:49:58 [IPO AI]: 🧠 AI performing Keyword Research...
+2026-01-14 19:49:58 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:50:07 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:50:07 [IPO AI]: 🔑 Keywords Found: Primary: [GRE Renew Enertech IPO GMP Today] | Secondary: [Subscription Status Live GRE Renew Enertech, Should I Apply GRE Renew Enertech IPO, GRE Renew Enertech IPO Listing Price, GRE Renew Enertech IPO Review]
+2026-01-14 19:50:07 [IPO AI]: ✍️ AI Writing Content (Model: nvidia/nemotron-nano-9b-v2:free)...
+2026-01-14 19:50:07 [IPO AI]: Attempting generation with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:51:10 [IPO AI]: Success with model: nvidia/nemotron-nano-9b-v2:free
+2026-01-14 19:51:10 [IPO AI]: 🛡️ Running Safety Checks...
+2026-01-14 19:51:10 [IPO AI]: Updated Post ID: 146 for Ipo: GRE Renew Enertech Ltd.
