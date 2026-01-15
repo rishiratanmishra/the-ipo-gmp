@@ -171,7 +171,7 @@ $ticker_data = $wpdb->get_results("
 
 <style>
     .ticker-animate {
-        animation: ticker-slide 80s linear infinite;
+        animation: ticker-slide 20s linear infinite;
     }
 
     @keyframes ticker-slide {

@@ -213,9 +213,7 @@
         .ticker-animate {
             display: flex;
             width: max-content;
-            animation: ticker-slide
-                <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>
-                s linear infinite;
+            animation: ticker-slide <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>s linear infinite;
             will-change: transform;
         }
 
