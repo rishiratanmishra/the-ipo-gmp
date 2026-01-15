@@ -35,9 +35,9 @@ $limit = 20;
 $default_status = 'active';
 
 if ($context === 'buyback') {
-    // Buyback Logic
-    $where_sql = "1=1 AND (type LIKE '%Open%' OR type LIKE '%Upcoming%')"; // Active logic
-    $items = $wpdb->get_results("SELECT * FROM $t_buybacks WHERE $where_sql ORDER BY id DESC LIMIT $limit");
+    // Buyback Logic (Default Active = Open)
+    $where_sql = "1=1 AND (type LIKE '%Open%')";
+    $items = $wpdb->get_results("SELECT * FROM $t_buybacks WHERE $where_sql ORDER BY period DESC LIMIT $limit");
     $total = $wpdb->get_var("SELECT COUNT(*) FROM $t_buybacks WHERE $where_sql");
     $total_pages = ceil($total / $limit);
 } else {
@@ -70,12 +70,20 @@ get_header();
         <div class="flex p-1 bg-slate-900/50 rounded-xl border border-border-navy overflow-x-auto custom-scrollbar">
             <button onclick="setFilter('active')" id="btn-active"
                 class="filter-btn active px-4 py-2 rounded-lg text-sm font-bold text-white bg-slate-800 transition-all whitespace-nowrap">Active</button>
-            <button onclick="setFilter('pre-listing')" id="btn-pre-listing"
-                class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Pre-Listing</button>
-            <button onclick="setFilter('upcoming')" id="btn-upcoming"
-                class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Upcoming</button>
-            <button onclick="setFilter('closed')" id="btn-closed"
-                class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Closed</button>
+
+            <?php if ($context === 'buyback'): ?>
+                <!-- Only Active and Closed for Buybacks -->
+                <button onclick="setFilter('closed')" id="btn-closed"
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Closed</button>
+            <?php else: ?>
+                <!-- Full tabs for IPOs -->
+                <button onclick="setFilter('pre-listing')" id="btn-pre-listing"
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Pre-Listing</button>
+                <button onclick="setFilter('upcoming')" id="btn-upcoming"
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Upcoming</button>
+                <button onclick="setFilter('closed')" id="btn-closed"
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition-all whitespace-nowrap">Closed</button>
+            <?php endif; ?>
         </div>
 
         <!-- Search Input -->
@@ -88,123 +96,217 @@ get_header();
         </div>
     </div>
 
-    <!-- Results Table -->
-    <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden relative">
-        <div id="loading-overlay" class="absolute inset-0 bg-slate-900/80 z-10 hidden flex items-center justify-center">
+    <!-- Results Container -->
+    <div class="relative min-h-[400px]">
+        <div id="loading-overlay"
+            class="absolute inset-0 bg-slate-900/80 z-10 hidden flex items-center justify-center rounded-xl">
             <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[800px]">
-                <thead>
-                    <tr class="bg-slate-900/50 border-b border-border-navy">
-                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
-                            Company Name
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
-                            <?php echo ($context === 'buyback') ? 'Type' : 'Price Band'; ?>
-                        </th>
-                        <th
-                            class="px-6 py-4 text-xs font-semibold text-emerald-500 uppercase tracking-widest bg-emerald-500/5">
-                            <?php echo ($context === 'buyback') ? 'Offer Price' : 'GMP Premium'; ?>
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
-                            <?php echo ($context === 'buyback') ? 'Size' : 'Dates'; ?>
-                        </th>
-                        <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
-                            Status
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="ipo-results" class="divide-y divide-border-navy">
-                    <?php if ($items):
-                        foreach ($items as $item):
-                            // Determine Link and Status
-                            $link = '#';
-                            $status_class = '';
 
-                            if ($context === 'buyback') {
-                                // Buyback specific overrides
-                                $name = $item->company;
-                                $col2 = $item->type;
-                                $col3 = $item->price;
-                                $col4 = $item->issue_size;
-                                $col5 = 'Active';
-                            } else {
-                                // IPO specific
-                                $name = $item->name;
-                                $col2 = $item->price_band;
-
-                                $gmp_val = $item->premium ?: '0';
-                                $gmp_clean = (float) preg_replace('/[^0-9.-]/', '', $gmp_val);
-                                $is_neg = $gmp_clean < 0;
-                                $col3 = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
-                                $col3_class = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
-
-                                $col4 = date('M j', strtotime($item->open_date)) . ' - ' . date('M j', strtotime($item->close_date));
-                                $col5 = $item->status;
-                                $link = home_url('/ipo-details/?slug=' . $item->slug);
-                                $status_class = strtolower($item->status);
-                            }
-                            ?>
-                            <tr class="group hover:bg-slate-800/30 transition-colors cursor-pointer"
-                                onclick="window.location.href='<?php echo esc_url($link); ?>'">
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <?php if ($context !== 'buyback'): ?>
-                                            <div
-                                                class="w-8 h-8 rounded bg-white p-1 flex items-center justify-center font-bold text-slate-900 overflow-hidden group-hover:scale-110 transition-transform">
-                                                <?php if (!empty($item->icon_url)): ?>
-                                                    <img src="<?php echo esc_url($item->icon_url); ?>"
-                                                        alt="<?php echo esc_attr($name); ?>" class="w-full h-full object-contain" />
-                                                <?php else: ?>
-                                                    <?php echo substr($name, 0, 1); ?>
-                                                <?php endif; ?>
-                                            </div>
+        <?php if ($context === 'buyback'): ?>
+            <!-- CARD GRID LAYOUT (Buybacks) -->
+            <div id="ipo-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <?php if ($items):
+                    foreach ($items as $item):
+                        // Calculation for Premium
+                        $offer_price = (float) preg_replace('/[^0-9.]/', '', $item->price);
+                        $mkt_price = (float) preg_replace('/[^0-9.]/', '', $item->market_price);
+                        $premium = 0;
+                        if ($mkt_price > 0 && $offer_price > 0) {
+                            $premium = round((($offer_price - $mkt_price) / $mkt_price) * 100, 1);
+                        }
+                        $status_color = stripos($item->status, 'close') !== false ? 'text-red-400 border-red-400/20 bg-red-400/10' : 'text-emerald-400 border-emerald-400/20 bg-emerald-400/10';
+                        ?>
+                        <div
+                            class="bg-card-dark border border-border-navy rounded-2xl p-6 hover:border-primary/50 transition-all group relative overflow-hidden flex flex-col">
+                            <!-- Header -->
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-lg bg-white p-1 flex items-center justify-center overflow-hidden shrink-0">
+                                        <?php if (!empty($item->logo)): ?>
+                                            <img src="<?php echo esc_url($item->logo); ?>" alt="<?php echo esc_attr($item->company); ?>"
+                                                class="w-full h-full object-contain">
+                                        <?php else: ?>
+                                            <span class="text-slate-900 font-bold"><?php echo substr($item->company, 0, 1); ?></span>
                                         <?php endif; ?>
-                                        <div>
-                                            <p class="text-sm font-bold text-white group-hover:text-primary transition-colors">
-                                                <?php echo esc_html($name); ?>
-                                            </p>
-                                        </div>
                                     </div>
-                                </td>
-                                <td class="px-6 py-4 text-sm font-medium text-slate-300">
-                                    <?php echo esc_html($col2); ?>
-                                </td>
-                                <td class="px-6 py-4 text-sm font-black <?php echo $col3_class; ?>">
-                                    <?php echo esc_html($col3); ?>
-                                </td>
-                                <td class="px-6 py-4 text-sm font-medium text-slate-300">
-                                    <?php echo esc_html($col4); ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="flex items-center gap-1.5 text-xs font-bold text-primary">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                                        <?php echo esc_html($col5); ?>
-                                    </span>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5" class="py-12 text-center text-slate-500">
-                                No records found.
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+                                    <div>
+                                        <h3
+                                            class="text-white font-bold text-base leading-tight group-hover:text-primary transition-colors max-w-[150px] line-clamp-2">
+                                            <?php echo esc_html($item->company); ?>
+                                        </h3>
+                                        <span class="text-[10px] uppercase font-bold text-slate-500 mt-1 block">
+                                            <?php echo esc_html($item->type); ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-[10px] uppercase font-bold text-slate-500">Premium</div>
+                                    <div
+                                        class="text-lg font-black <?php echo $premium > 0 ? 'text-neon-emerald' : 'text-slate-400'; ?>">
+                                        <?php echo $premium > 0 ? '+' . $premium . '%' : '0%'; ?>
+                                    </div>
+                                </div>
+                            </div>
 
-        <!-- Pagination -->
-        <div
-            class="p-4 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-900/30">
-            <span id="page-info" class="text-xs font-bold text-slate-500 order-2 md:order-1">Page 1</span>
+                            <!-- Data Grid -->
+                            <div class="grid grid-cols-2 gap-y-4 gap-x-2 py-4 border-t border-dashed border-slate-800 text-sm">
+                                <div>
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold">Buyback Price</div>
+                                    <div class="text-white font-bold">₹<?php echo esc_html($item->price); ?></div>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold">Market Price</div>
+                                    <div class="text-slate-300 font-medium">₹<?php echo esc_html($item->market_price ?: '-'); ?>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold">Issue Size</div>
+                                    <div class="text-slate-300 font-medium"><?php echo esc_html($item->issue_size); ?></div>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold">Shares</div>
+                                    <div class="text-slate-300 font-medium"><?php echo esc_html($item->shares); ?></div>
+                                </div>
+                                <div class="col-span-2 border-t border-dashed border-slate-800 pt-2 mt-1">
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold">Tender Period</div>
+                                    <div class="text-white font-medium text-xs">
+                                        <?php
+                                        if (!empty($item->period)) {
+                                            preg_match_all('/\d{4}-\d{2}-\d{2}/', $item->period, $matches);
+                                            if (!empty($matches[0]) && count($matches[0]) >= 2) {
+                                                echo date('d M \'y', strtotime($matches[0][0])) . ' - ' . date('d M \'y', strtotime($matches[0][1]));
+                                            } else {
+                                                echo esc_html($item->period);
+                                            }
+                                        } else {
+                                            echo 'Dates TBA';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div id="pagination-numbers" class="flex items-center gap-1 order-1 md:order-2 flex-wrap justify-center">
-                <!-- Numbers injected via JS -->
+                            <!-- Footer / Dates -->
+                            <div class="mt-auto pt-4 border-t border-slate-800 flex justify-between items-end">
+                                <div>
+                                    <div class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Record Date</div>
+                                    <div class="text-white font-bold text-xs"><?php echo esc_html($item->record_date ?: 'TBA'); ?>
+                                    </div>
+                                </div>
+                                <div class="px-2 py-1 rounded text-[10px] font-bold uppercase border <?php echo $status_color; ?>">
+                                    <?php echo esc_html($item->status); ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach;
+                else: ?>
+                    <div class="col-span-full py-12 text-center text-slate-500">No records found.</div>
+                <?php endif; ?>
             </div>
+
+        <?php else: ?>
+            <!-- TABLE LAYOUT (Mainboard/SME) -->
+            <div id="ipo-results" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-slate-900/50 border-b border-border-navy">
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+                                    Company Name
+                                </th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+                                    Price Band
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-xs font-semibold text-emerald-500 uppercase tracking-widest bg-emerald-500/5">
+                                    GMP Premium
+                                </th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+                                    Dates
+                                </th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border-navy">
+                            <?php if ($items):
+                                foreach ($items as $item):
+                                    // IPO specific logic
+                                    $name = $item->name;
+                                    $col2 = $item->price_band;
+                                    $gmp_val = $item->premium ?: '0';
+                                    $gmp_clean = (float) preg_replace('/[^0-9.-]/', '', $gmp_val);
+                                    $is_neg = $gmp_clean < 0;
+                                    $col3 = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
+                                    $col3_class = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
+                                    $col4 = date('M j', strtotime($item->open_date)) . ' - ' . date('M j', strtotime($item->close_date));
+                                    $col5 = $item->status;
+                                    $link = home_url('/ipo-details/?slug=' . $item->slug);
+                                    ?>
+                                    <tr class="group hover:bg-slate-800/30 transition-colors cursor-pointer"
+                                        onclick="window.location.href='<?php echo esc_url($link); ?>'">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-8 h-8 rounded bg-white p-1 flex items-center justify-center font-bold text-slate-900 overflow-hidden group-hover:scale-110 transition-transform">
+                                                    <?php if (!empty($item->icon_url)): ?>
+                                                        <img src="<?php echo esc_url($item->icon_url); ?>"
+                                                            alt="<?php echo esc_attr($name); ?>" class="w-full h-full object-contain" />
+                                                    <?php else: ?>
+                                                        <?php echo substr($name, 0, 1); ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div>
+                                                    <p
+                                                        class="text-sm font-bold text-white group-hover:text-primary transition-colors">
+                                                        <?php echo esc_html($name); ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-300">
+                                            <?php echo esc_html($col2); ?>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-black <?php echo $col3_class; ?>">
+                                            <?php echo esc_html($col3); ?>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-300">
+                                            <?php echo esc_html($col4); ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="flex items-center gap-1.5 text-xs font-bold text-primary">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                                <?php echo esc_html($col5); ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="py-12 text-center text-slate-500">
+                                        No records found.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Pagination -->
+    <div
+        class="mt-12 p-4 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-900/30 rounded-xl">
+        <span id="page-info" class="text-xs font-bold text-slate-500 order-2 md:order-1">Page 1</span>
+
+        <div id="pagination-numbers" class="flex items-center gap-1 order-1 md:order-2 flex-wrap justify-center">
+            <!-- Numbers injected via JS -->
         </div>
+    </div>
     </div>
 </main>
 

@@ -122,10 +122,10 @@ get_header();
             <form action="<?php echo esc_url($base_url); ?>" method="GET" class="relative group">
                 <span
                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-purple-500 transition-colors">search</span>
-                <input type="text" name="q" value="<?php echo esc_attr($search); ?>" placeholder="Search company..."
+                <input type="text" name="q" value="<?php echo esc_attr($search); ?>"
+                    placeholder="Search all buybacks..."
                     class="bg-slate-900 border border-border-navy text-white text-sm rounded-lg pl-10 pr-4 py-2.5 w-full sm:w-64 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 placeholder-slate-600 transition-all">
-                <?php if ($status): ?><input type="hidden" name="status"
-                        value="<?php echo esc_attr($status); ?>"><?php endif; ?>
+                <?php // Status filter removed to allow global search ?>
             </form>
         </div>
     </div>
@@ -153,7 +153,8 @@ get_header();
                         <div>
                             <h3
                                 class="text-white font-bold text-lg group-hover:text-purple-400 transition-colors mb-2 line-clamp-1">
-                                <?php echo esc_html($bb->company); ?></h3>
+                                <?php echo esc_html($bb->company); ?>
+                            </h3>
                             <span
                                 class="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 uppercase tracking-wider">
                                 <?php echo esc_html($bb->type); // Using type column which is essentially status ?>
