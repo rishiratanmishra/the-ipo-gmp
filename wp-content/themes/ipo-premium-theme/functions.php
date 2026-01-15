@@ -137,4 +137,6 @@ require get_template_directory() . '/inc/white-label.php';
 require get_template_directory() . '/inc/dashboard.php';
 require get_template_directory() . '/inc/demo-import.php';
 require get_template_directory() . '/inc/tgm-config.php';
+require get_template_directory() . '/inc/post-options.php';
+
 
