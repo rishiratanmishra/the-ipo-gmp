@@ -186,6 +186,7 @@ get_header();
                                         $is_neg = $gmp_clean < 0;
                                         $gmp_txt = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
                                         $gmp_color = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
+                                        $status_class = strtolower($ipo->status);
                                         ?>
                                         <tr class="data-table-row transition-colors cursor-pointer group ipo-row row-<?php echo esc_attr($status_class); ?>"
                                             data-status="<?php echo esc_attr($status_class); ?>"
@@ -319,12 +320,15 @@ get_header();
 
                         // Define checks
                         const isUpcoming = status.includes('upcoming');
-                        const isClosed = status.includes('close') || status.includes('allotment') || status.includes('out'); // "Allotment Out"
-                        const isOpen = status.includes('open') || status === 'live';
+                        const isClosed = status.includes('close') || status.includes('listed') || status.includes('out') || status.includes('basis') || status.includes('refund') || status.includes('credit'); 
+                        const isAllotment = status.includes('allotment'); // Separate check for allotment if needed, usually 'closed' bucket
 
-                        // Logic
+                        // Refined Logic
                         if (filter === 'active') {
-                            if (isOpen && !isClosed && !isUpcoming) {
+                            // Active = Open, Live, or NOT Upcoming AND NOT Closed
+                            // This catch-all ensures 'Closes Today', 'Bidding Started' etc appear in Active.
+                            // We explicitly exclude 'Allotment' from active if not already covered by isClosed
+                            if (!isUpcoming && !isClosed && !isAllotment) {
                                 row.style.display = 'table-row';
                                 visibleCount++;
                             } else {
@@ -338,7 +342,8 @@ get_header();
                                 row.style.display = 'none';
                             }
                         } else if (filter === 'closed') {
-                            if (isClosed) {
+                            // Pre-Listing / Closed tab shows Closed + Allotment phases
+                            if (isClosed || isAllotment) {
                                 row.style.display = 'table-row';
                                 visibleCount++;
                             } else {
