@@ -28,16 +28,27 @@ if (strpos($slug, 'sme') !== false) {
     $desc = 'Latest Share Buybacks, Tender Offers, and Open Market buybacks.';
 }
 
-// 2. Initial Data (Page 1, All, Empty Search)
-// We use the same fetching logic as AJAX normally, but here we just init.
-// Actually, let's just let AJAX load it or load initial state PHP side.
-// PHP side load is better for SEO.
+// 2. Initial Data (Active by Default)
 $items = [];
+$total_pages = 1;
+$limit = 20;
+$default_status = 'active';
+
 if ($context === 'buyback') {
-    $items = $wpdb->get_results("SELECT * FROM $t_buybacks ORDER BY id DESC LIMIT 20");
+    // Buyback Logic
+    $where_sql = "1=1 AND (type LIKE '%Open%' OR type LIKE '%Upcoming%')"; // Active logic
+    $items = $wpdb->get_results("SELECT * FROM $t_buybacks WHERE $where_sql ORDER BY id DESC LIMIT $limit");
+    $total = $wpdb->get_var("SELECT COUNT(*) FROM $t_buybacks WHERE $where_sql");
+    $total_pages = ceil($total / $limit);
 } else {
+    // IPO Logic
     $is_sme = ($context === 'sme') ? 1 : 0;
-    $items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $t_master WHERE is_sme = %d ORDER BY id DESC LIMIT 20", $is_sme));
+    // Active Logic (Match Ajax.php: status='open' OR status LIKE '%live%')
+    $where_sql = $wpdb->prepare("is_sme = %d AND (status = 'open' OR status LIKE '%%live%%')", $is_sme);
+
+    $items = $wpdb->get_results("SELECT * FROM $t_master WHERE $where_sql ORDER BY id DESC LIMIT $limit");
+    $total = $wpdb->get_var("SELECT COUNT(*) FROM $t_master WHERE $where_sql");
+    $total_pages = ceil($total / $limit);
 }
 
 get_header();
@@ -122,7 +133,13 @@ get_header();
                                 // IPO specific
                                 $name = $item->name;
                                 $col2 = $item->price_band;
-                                $col3 = '+ ₹' . ($item->premium ?: '0');
+
+                                $gmp_val = $item->premium ?: '0';
+                                $gmp_clean = (float) preg_replace('/[^0-9.-]/', '', $gmp_val);
+                                $is_neg = $gmp_clean < 0;
+                                $col3 = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
+                                $col3_class = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
+
                                 $col4 = date('M j', strtotime($item->open_date)) . ' - ' . date('M j', strtotime($item->close_date));
                                 $col5 = $item->status;
                                 $link = home_url('/ipo-details/?slug=' . $item->slug);
@@ -154,8 +171,7 @@ get_header();
                                 <td class="px-6 py-4 text-sm font-medium text-slate-300">
                                     <?php echo esc_html($col2); ?>
                                 </td>
-                                <td
-                                    class="px-6 py-4 text-sm font-black text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10">
+                                <td class="px-6 py-4 text-sm font-black <?php echo $col3_class; ?>">
                                     <?php echo esc_html($col3); ?>
                                 </td>
                                 <td class="px-6 py-4 text-sm font-medium text-slate-300">
@@ -195,17 +211,17 @@ get_header();
 <script>
     let currentState = {
         context: '<?php echo $context; ?>',
-        status: 'active', // Default to active
+        status: 'active', // Default aligned with PHP
         search: '',
         paged: 1,
-        totalPages: 10 // Init
+        totalPages: <?php echo max(1, $total_pages); ?> // PHP Calculated
     };
 
-    // Initial fetch on load to ensure we show only active (PHP renders all by default, so we overwrite or should refine PHP)
-    // To match desired behavior "Remove All", we should probably trigger a fetch immediately or update PHP to filter by default.
-    // For speed, let's trigger a fetch on load.
+    // Optimization: Only fetch if we somehow didn't load data, but now we assume PHP loaded page 1.
+    // So we don't call fetchData() on load unless we want to refresh.
     document.addEventListener('DOMContentLoaded', () => {
-        fetchData();
+        // Initial Pagination UI render
+        updatePaginationUI();
     });
 
     let debounceTimer;
@@ -233,20 +249,20 @@ get_header();
             currentState.paged = 1;
 
             if (currentState.search.length > 0) {
-                 // Visual UX: Remove active state from all tabs since search is global
-                 document.querySelectorAll('.filter-btn').forEach(btn => {
+                // Visual UX: Remove active state from all tabs since search is global
+                document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.classList.remove('active', 'bg-slate-800', 'text-white');
                     btn.classList.add('text-slate-400');
                 });
             } else {
                 // Restore the highlighted tab for the current status if search is empty
                 const activeBtn = document.getElementById('btn-' + currentState.status);
-                if(activeBtn) {
-                     activeBtn.classList.add('active', 'bg-slate-800', 'text-white');
-                     activeBtn.classList.remove('text-slate-400');
+                if (activeBtn) {
+                    activeBtn.classList.add('active', 'bg-slate-800', 'text-white');
+                    activeBtn.classList.remove('text-slate-400');
                 }
             }
-            
+
             fetchData();
         }, 500);
     }

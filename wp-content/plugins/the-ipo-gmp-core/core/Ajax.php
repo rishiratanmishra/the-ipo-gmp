@@ -112,7 +112,13 @@ class Ajax
         } else {
             $name = $item->name;
             $col2 = $item->price_band;
-            $col3 = '+ ₹' . ($item->premium ?: '0');
+
+            $gmp_val = $item->premium ?: '0';
+            $gmp_clean = (float) preg_replace('/[^0-9.-]/', '', $gmp_val);
+            $is_neg = $gmp_clean < 0;
+            $col3 = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
+            $col3_class = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
+
             $col4 = date('M j', strtotime($item->open_date)) . ' - ' . date('M j', strtotime($item->close_date));
             $col5 = $item->status;
             $link = home_url('/ipo-details/?slug=' . $item->slug);
@@ -142,7 +148,7 @@ class Ajax
                 </div>
             </td>
             <td class="px-6 py-4 text-sm font-medium text-slate-300">' . esc_html($col2) . '</td>
-            <td class="px-6 py-4 text-sm font-black text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10">' . esc_html($col3) . '</td>
+            <td class="px-6 py-4 text-sm font-black ' . $col3_class . '">' . esc_html($col3) . '</td>
             <td class="px-6 py-4 text-sm font-medium text-slate-300">' . esc_html($col4) . '</td>
             <td class="px-6 py-4">
                 <span class="flex items-center gap-1.5 text-xs font-bold text-primary">

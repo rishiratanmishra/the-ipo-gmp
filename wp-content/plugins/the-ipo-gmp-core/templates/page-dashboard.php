@@ -182,7 +182,10 @@ get_header();
                                         $ad_counter++;
                                         $details_url = home_url('/ipo-details/?slug=' . $ipo->slug);
                                         $gmp_val = $ipo->premium ?: '0';
-                                        $status_class = strtolower($ipo->status);
+                                        $gmp_clean = (float) preg_replace('/[^0-9.-]/', '', $gmp_val);
+                                        $is_neg = $gmp_clean < 0;
+                                        $gmp_txt = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
+                                        $gmp_color = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
                                         ?>
                                         <tr class="data-table-row transition-colors cursor-pointer group ipo-row row-<?php echo esc_attr($status_class); ?>"
                                             data-status="<?php echo esc_attr($status_class); ?>"
@@ -228,8 +231,9 @@ get_header();
                                                 <?php echo esc_html($ipo->price_band); ?>
                                             </td>
                                             <td
-                                                class="px-6 py-4 text-sm font-black text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10 transition-colors">
-                                                + ₹<?php echo $gmp_val; ?></td>
+                                                class="px-6 py-4 text-sm font-black <?php echo $gmp_color; ?> transition-colors">
+                                                <?php echo $gmp_txt; ?>
+                                            </td>
                                             <td class="px-6 py-4 text-sm font-medium text-slate-300">
                                                 <span class="date-offer">
                                                     <?php echo date('M j', strtotime($ipo->open_date)); ?> -
@@ -466,6 +470,10 @@ get_header();
                                     foreach ($sme as $ipo):
                                         $details_url = home_url('/ipo-details/?slug=' . $ipo->slug);
                                         $gmp_val = $ipo->premium ?: '0';
+                                        $gmp_clean = (float) preg_replace('/[^0-9.-]/', '', $gmp_val);
+                                        $is_neg = $gmp_clean < 0;
+                                        $gmp_txt = ($is_neg ? '- ₹' . abs($gmp_clean) : '+ ₹' . $gmp_val);
+                                        $gmp_color = $is_neg ? 'text-red-400' : 'text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10';
                                         $status_class = strtolower($ipo->status);
                                         ?>
                                         <tr class="data-table-row transition-colors cursor-pointer group sme-row row-<?php echo esc_attr($status_class); ?>"
@@ -495,8 +503,9 @@ get_header();
                                                 <?php echo esc_html($ipo->price_band); ?>
                                             </td>
                                             <td
-                                                class="px-6 py-4 text-sm font-black text-neon-emerald bg-neon-emerald/5 group-hover:bg-neon-emerald/10 transition-colors">
-                                                + ₹<?php echo $gmp_val; ?></td>
+                                                class="px-6 py-4 text-sm font-black <?php echo $gmp_color; ?> transition-colors">
+                                                <?php echo $gmp_txt; ?>
+                                            </td>
                                             <td class="px-6 py-4 text-sm font-medium text-slate-300">
                                                 <span class="date-offer">
                                                     <?php echo date('M j', strtotime($ipo->open_date)); ?> -
@@ -810,9 +819,11 @@ get_header();
             <div class="p-6 rounded-xl bg-slate-900/50 border border-border-navy">
                 <h3 class="text-white font-bold text-sm mb-4">Quick Market Links</h3>
                 <ul class="space-y-2 text-xs font-medium text-slate-400">
-                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span
+                    <li><a href="<?php echo home_url('/mainboard-ipos/'); ?>"
+                            class="hover:text-primary transition-colors flex items-center gap-2"><span
                                 class="w-1 h-1 rounded-full bg-slate-600"></span> Upcoming Mainboard IPOs</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span
+                    <li><a href="<?php echo home_url('/sme-ipos/'); ?>"
+                            class="hover:text-primary transition-colors flex items-center gap-2"><span
                                 class="w-1 h-1 rounded-full bg-slate-600"></span> SME IPO Performance</a></li>
                 </ul>
             </div>
