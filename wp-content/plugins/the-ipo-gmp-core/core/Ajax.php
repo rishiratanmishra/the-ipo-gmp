@@ -12,6 +12,60 @@ class Ajax
     {
         add_action('wp_ajax_tigc_filter_ipos', [$this, 'filter_ipos']);
         add_action('wp_ajax_nopriv_tigc_filter_ipos', [$this, 'filter_ipos']);
+        add_action('wp_ajax_tigc_ajax_search', [$this, 'ajax_search']);
+        add_action('wp_ajax_nopriv_tigc_ajax_search', [$this, 'ajax_search']);
+    }
+
+    public function ajax_search()
+    {
+        global $wpdb;
+        $term = isset($_GET['term']) ? sanitize_text_field($_GET['term']) : '';
+
+        if (strlen($term) < 2) {
+            wp_send_json_success([]);
+        }
+
+        $results = [];
+        $t_master = $wpdb->prefix . 'ipomaster';
+        $t_buybacks = $wpdb->prefix . 'buybacks';
+
+        // Search IPOs (Mainboard & SME)
+        $ipos = $wpdb->get_results($wpdb->prepare("
+            SELECT name, slug, status, premium, 'IPO' as type 
+            FROM $t_master 
+            WHERE name LIKE %s 
+            ORDER BY id DESC LIMIT 5
+        ", '%' . $wpdb->esc_like($term) . '%'));
+
+        // Search Buybacks
+        $buybacks = $wpdb->get_results($wpdb->prepare("
+            SELECT company as name, slug, status, price as premium, 'Buyback' as type 
+            FROM $t_buybacks 
+            WHERE company LIKE %s 
+            ORDER BY id DESC LIMIT 5
+        ", '%' . $wpdb->esc_like($term) . '%'));
+
+        foreach ($ipos as $ipo) {
+            $results[] = [
+                'name' => $ipo->name,
+                'status' => $ipo->status, // e.g. 'Open', 'Upcoming'
+                'slug' => $ipo->slug,
+                'gmp' => $ipo->premium,
+                'type' => 'IPO'
+            ];
+        }
+
+        foreach ($buybacks as $bb) {
+            $results[] = [
+                'name' => $bb->name,
+                'status' => $bb->status, // e.g. 'Live', 'Closed'
+                'slug' => $bb->slug,
+                'gmp' => null, // Buybacks usually show Price, logic can vary
+                'type' => 'Buyback'
+            ];
+        }
+
+        wp_send_json_success($results);
     }
 
     public function filter_ipos()

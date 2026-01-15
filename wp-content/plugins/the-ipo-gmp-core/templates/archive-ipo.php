@@ -65,9 +65,9 @@ get_header();
     </section>
 
     <!-- Filters & Search -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+    <div class="flex flex-wrap md:flex-row justify-between items-center gap-4 mb-6">
         <!-- Filter Buttons -->
-        <div class="flex p-1 bg-slate-900/50 rounded-xl border border-border-navy overflow-x-auto custom-scrollbar">
+        <div class="flex p-1 bg-slate-900/50 rounded-xl border border-border-navy overflow-x-auto custom-scrollbar max-w-full">
             <button onclick="setFilter('active')" id="btn-active"
                 class="filter-btn active px-4 py-2 rounded-lg text-sm font-bold text-white bg-slate-800 transition-all whitespace-nowrap">Active</button>
 

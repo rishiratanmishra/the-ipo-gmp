@@ -138,7 +138,7 @@ get_header();
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div class="lg:col-span-3 space-y-12">
             <section>
-                <div class="flex items-center justify-between mb-4 px-1">
+                <div class="flex flex-wrap items-center justify-between mb-4 px-1 gap-y-4">
                     <h2 class="text-white text-2xl font-bold tracking-tight">Mainboard IPOs</h2>
                     <div class="flex items-center gap-4">
                         <div class="flex gap-2 text-xs font-bold">
@@ -155,7 +155,7 @@ get_header();
                 </div>
                 <div id="mainboard-container" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[600px]">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
                             <thead>
                                 <tr class="bg-slate-900/50 border-b border-border-navy">
                                     <th
@@ -320,7 +320,7 @@ get_header();
 
                         // Define checks
                         const isUpcoming = status.includes('upcoming');
-                        const isClosed = status.includes('close') || status.includes('listed') || status.includes('out') || status.includes('basis') || status.includes('refund') || status.includes('credit'); 
+                        const isClosed = status.includes('close') || status.includes('listed') || status.includes('out') || status.includes('basis') || status.includes('refund') || status.includes('credit');
                         const isAllotment = status.includes('allotment'); // Separate check for allotment if needed, usually 'closed' bucket
 
                         // Refined Logic
@@ -433,7 +433,7 @@ get_header();
                 });
             </script>
             <section>
-                <div class="flex items-center justify-between mb-4 px-1">
+                <div class="flex flex-wrap items-center justify-between mb-4 px-1 gap-y-4">
                     <h2 class="text-white text-2xl font-bold tracking-tight">SME IPO Monitor</h2>
                     <div class="flex items-center gap-4">
                         <div class="flex gap-2 text-xs font-bold">
@@ -450,7 +450,7 @@ get_header();
                 </div>
                 <div id="sme-container" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[600px]">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
                             <thead>
                                 <tr class="bg-slate-900/50 border-b border-border-navy">
                                     <th

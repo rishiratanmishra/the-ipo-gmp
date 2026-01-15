@@ -170,11 +170,17 @@
                 </div>
                 <form action="<?php echo home_url('/mainboard-ipos/'); ?>" method="GET" class="mb-6 relative"
                     onsubmit="var q = this.querySelector('input[name=\'q\']'); q.value = q.value.trim(); if(q.value === '') return false;">
-                    <input type="text" name="q" placeholder="Search IPOs..."
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600">
+                    <input id="tigc-mobile-search-input" type="text" name="q" placeholder="Search IPOs..."
+                        class="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600"
+                        autocomplete="off">
                     <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
                         <span class="material-symbols-outlined text-xl">search</span>
                     </button>
+                    <!-- Mobile Search Results -->
+                    <div id="tigc-mobile-search-results"
+                        class="hidden absolute top-full left-0 w-full mt-2 bg-card-dark border border-border-navy rounded-xl shadow-2xl overflow-hidden z-50">
+                        <ul class="divide-y divide-border-navy max-h-48 overflow-y-auto no-scrollbar"></ul>
+                    </div>
                 </form>
                 <nav class="flex flex-col gap-6">
                     <nav class="flex flex-col gap-6">
@@ -213,7 +219,9 @@
         .ticker-animate {
             display: flex;
             width: max-content;
-            animation: ticker-slide <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>s linear infinite;
+            animation: ticker-slide
+                <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>
+                s linear infinite;
             will-change: transform;
         }
 
@@ -281,9 +289,64 @@
                     });
                 }, 300);
             });
+            // Mobile Search Logic
+            const mobileInput = document.getElementById('tigc-mobile-search-input');
+            const mobileResultsContainer = document.getElementById('tigc-mobile-search-results');
+            let mobileDebounceTimer; // Separate timer for mobile
+
+            if (mobileInput && mobileResultsContainer) {
+                const mobileList = mobileResultsContainer.querySelector('ul');
+
+                mobileInput.addEventListener('input', function (e) {
+                    clearTimeout(mobileDebounceTimer);
+                    const term = e.target.value.trim();
+
+                    if (term.length < 2) {
+                        mobileResultsContainer.classList.add('hidden');
+                        return;
+                    }
+
+                    mobileDebounceTimer = setTimeout(() => {
+                        const url = '<?php echo admin_url('admin-ajax.php'); ?>?action=tigc_ajax_search&term=' + encodeURIComponent(term);
+
+                        fetch(url)
+                            .then(r => r.json())
+                            .then(res => {
+                                if (res.success && res.data.length > 0) {
+                                    mobileList.innerHTML = '';
+                                    res.data.forEach(item => {
+                                        const li = document.createElement('li');
+                                        const gmpHtml = item.gmp ? `<span class="text-xs font-bold text-neon-emerald whitespace-nowrap">+₹${item.gmp}</span>` : '';
+
+                                        li.innerHTML = `
+                                            <a href="<?php echo home_url('/ipo-details/'); ?>?slug=${item.slug}" class="flex items-center justify-between p-3 hover:bg-slate-800/50 transition-colors border-b border-border-navy last:border-0">
+                                                <div class="overflow-hidden mr-2">
+                                                    <p class="text-xs font-bold text-white truncate">${item.name}</p>
+                                                    <p class="text-[10px] text-slate-500 uppercase">${item.status}</p>
+                                                </div>
+                                                ${gmpHtml}
+                                            </a>`;
+                                        mobileList.appendChild(li);
+                                    });
+                                    mobileResultsContainer.classList.remove('hidden');
+                                } else {
+                                    mobileList.innerHTML = '<li class="p-3 text-xs text-slate-500 text-center">No results found.</li>';
+                                    mobileResultsContainer.classList.remove('hidden');
+                                }
+                            })
+                            .catch(err => {
+                                console.error('Mobile search error:', err);
+                            });
+                    }, 300);
+                });
+            }
+
             document.addEventListener('click', function (e) {
                 if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
                     resultsContainer.classList.add('hidden');
+                }
+                if (mobileInput && !mobileInput.contains(e.target) && mobileResultsContainer && !mobileResultsContainer.contains(e.target)) {
+                    mobileResultsContainer.classList.add('hidden');
                 }
             });
         });
