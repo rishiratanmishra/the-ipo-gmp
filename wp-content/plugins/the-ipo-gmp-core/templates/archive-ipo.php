@@ -208,7 +208,7 @@ get_header();
 
         <?php else: ?>
             <!-- TABLE LAYOUT (Mainboard/SME) -->
-            <div id="ipo-results" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
+            <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse min-w-[800px]">
                         <thead>
@@ -231,7 +231,7 @@ get_header();
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-border-navy">
+                        <tbody id="ipo-results" class="divide-y divide-border-navy">
                             <?php if ($items):
                                 foreach ($items as $item):
                                     // IPO specific logic
