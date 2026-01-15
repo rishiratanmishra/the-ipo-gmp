@@ -226,17 +226,17 @@ function ipopro_customize_register($wp_customize)
         'type' => 'text',
     ]);
 
-    // Social Links (Simple)
-    $wp_customize->add_setting('social_twitter', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
-    $wp_customize->add_control('social_twitter', [
-        'label' => __('Twitter URL', 'ipo-premium'),
+    // Social Links (Instagram & YouTube)
+    $wp_customize->add_setting('social_instagram', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control('social_instagram', [
+        'label' => __('Instagram URL', 'ipo-premium'),
         'section' => 'ipopro_footer_section',
         'type' => 'url',
     ]);
 
-    $wp_customize->add_setting('social_facebook', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
-    $wp_customize->add_control('social_facebook', [
-        'label' => __('Facebook URL', 'ipo-premium'),
+    $wp_customize->add_setting('social_youtube', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control('social_youtube', [
+        'label' => __('YouTube URL', 'ipo-premium'),
         'section' => 'ipopro_footer_section',
         'type' => 'url',
     ]);
@@ -324,6 +324,34 @@ function ipopro_customizer_css()
             backdrop-filter: blur(var(--blur-glass));
             -webkit-backdrop-filter: blur(var(--blur-glass));
             border-radius: var(--radius-card);
+        }
+
+        /* Footer Widget Styling */
+        footer .widget ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* space-y-4 equivalent */
+        }
+
+        footer .widget ul li {
+            margin: 0;
+        }
+
+        footer .widget ul li a {
+            color: #64748b;
+            /* text-slate-500 */
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        footer .widget ul li a:hover {
+            color: var(--color-primary);
         }
     </style>
     <?php

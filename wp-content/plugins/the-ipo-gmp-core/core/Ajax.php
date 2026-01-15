@@ -38,14 +38,17 @@ class Ajax
             $where = "1=1";
             if (!empty($search)) {
                 $where .= $wpdb->prepare(" AND company LIKE %s", '%' . $wpdb->esc_like($search) . '%');
-            }
-            if ($filter_status !== 'all') {
-                if ($filter_status === 'active') {
-                    $where .= " AND (type LIKE '%Open%')"; // Type is usually 'Open'
-                } elseif ($filter_status === 'upcoming') {
-                    $where .= " AND (type LIKE '%Upcoming%')";
-                } elseif ($filter_status === 'closed' || $filter_status === 'pre-listing') {
-                    $where .= " AND (type LIKE '%Closed%')";
+                // Search is Global: Ignore status filters
+            } else {
+                // Not Searching: Apply Filters
+                if ($filter_status !== 'all') {
+                    if ($filter_status === 'active') {
+                        $where .= " AND (type LIKE '%Open%')"; // Type is usually 'Open'
+                    } elseif ($filter_status === 'upcoming') {
+                        $where .= " AND (type LIKE '%Upcoming%')";
+                    } elseif ($filter_status === 'closed' || $filter_status === 'pre-listing') {
+                        $where .= " AND (type LIKE '%Closed%')";
+                    }
                 }
             }
 
@@ -90,7 +93,11 @@ class Ajax
                 $html .= $this->render_row($item, $context);
             }
         } else {
-            $html .= '<tr><td colspan="5" class="py-12 text-center text-slate-500">No records found.</td></tr>';
+            if ($context === 'buyback') {
+                $html .= '<div class="col-span-full py-12 text-center text-slate-500 font-medium">No records found matching your criteria.</div>';
+            } else {
+                $html .= '<tr><td colspan="5" class="py-12 text-center text-slate-500">No records found.</td></tr>';
+            }
         }
 
         wp_send_json_success([
