@@ -46,8 +46,7 @@ Disallow: /*?p=
 Disallow: /*&
 
 # Sitemap location
-# TODO: Replace YOURDOMAIN.com with your actual domain
-Sitemap: https://YOURDOMAIN.com/sitemap.xml
+Sitemap: https://theipogmp.com/wp-sitemap.xml
 
 # Crawl delay (optional, adjust as needed)
 # Crawl-delay: 1
