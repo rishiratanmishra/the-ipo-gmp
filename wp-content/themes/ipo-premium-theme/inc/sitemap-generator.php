@@ -230,4 +230,4 @@ function ipopro_sitemap_activation()
     ipopro_sitemap_rewrite_rules();
     flush_rewrite_rules();
 }
-register_activation_hook(__FILE__, 'ipopro_sitemap_activation');
+add_action('after_switch_theme', 'ipopro_sitemap_activation');

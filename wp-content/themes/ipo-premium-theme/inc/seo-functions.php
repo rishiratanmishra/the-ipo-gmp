@@ -42,8 +42,8 @@ function ipopro_seo_meta_tags()
     $og_image = $default_image;
     $og_type = 'website';
 
-    // Homepage / Dashboard
-    if (is_front_page() || is_page_template('templates/page-dashboard.php')) {
+    // Homepage / Dashboard (Fixed detection logic)
+    if (is_front_page() || is_page('dashboard') || is_page_template('templates/page-dashboard.php')) {
         $t_master = $wpdb->prefix . 'ipomaster';
         $active_count = $wpdb->get_var("SELECT COUNT(*) FROM $t_master WHERE status IN ('open', 'upcoming', 'allotment')");
 
@@ -74,19 +74,19 @@ function ipopro_seo_meta_tags()
         }
     }
     // Mainboard Archive
-    elseif (is_page_template('templates/page-mainboard.php') || strpos($_SERVER['REQUEST_URI'], '/mainboard-ipos') !== false) {
+    elseif (is_page('mainboard-ipos') || is_page_template('templates/page-mainboard.php') || strpos($_SERVER['REQUEST_URI'], '/mainboard-ipos') !== false) {
         $page_title = "Mainboard IPO GMP List - Live Subscription & Status - $site_name";
         $meta_description = "Complete list of Mainboard IPOs with real-time GMP, subscription status, and allotment updates. Track all active, upcoming, and recently closed Mainboard IPOs in India.";
         $canonical_url = home_url('/mainboard-ipos/');
     }
     // SME Archive
-    elseif (is_page_template('templates/page-sme.php') || strpos($_SERVER['REQUEST_URI'], '/sme-ipos') !== false) {
+    elseif (is_page('sme-ipos') || is_page_template('templates/page-sme.php') || strpos($_SERVER['REQUEST_URI'], '/sme-ipos') !== false) {
         $page_title = "SME IPO GMP List - Live Subscription & Allotment - $site_name";
         $meta_description = "Track SME IPOs with real-time grey market premium, subscription numbers, and allotment status. Complete list of active and upcoming SME IPOs on NSE Emerge and BSE SME platforms.";
         $canonical_url = home_url('/sme-ipos/');
     }
     // Buybacks Page
-    elseif (is_page_template('templates/page-buybacks.php') || strpos($_SERVER['REQUEST_URI'], '/buybacks') !== false) {
+    elseif (is_page('buybacks') || is_page_template('templates/page-buybacks.php') || strpos($_SERVER['REQUEST_URI'], '/buybacks') !== false) {
         $page_title = "Active Buyback Offers in India - Live Tender Offers - $site_name";
         $meta_description = "Track active share buyback offers and tender offers in India. Get buyback prices, acceptance ratios, and important dates for all open buyback programs.";
         $canonical_url = home_url('/buybacks/');
@@ -153,6 +153,7 @@ function ipopro_schema_output()
     $site_url = home_url('/');
     $logo_id = get_theme_mod('custom_logo');
     $logo_url = $logo_id ? wp_get_attachment_image_url($logo_id, 'full') : '';
+    $currency = 'INR'; // Make dynamic if needed in future
 
     // Organization Schema (appears on all pages)
     $organization_schema = [
@@ -204,7 +205,7 @@ function ipopro_schema_output()
                 'offers' => [
                     '@type' => 'Offer',
                     'price' => preg_replace('/[^0-9.]/', '', $ipo->max_price ?: '0'),
-                    'priceCurrency' => 'INR',
+                    'priceCurrency' => $currency,
                     'availability' => $ipo->status === 'open' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
                     'validFrom' => $ipo->open_date,
                     'validThrough' => $ipo->close_date
@@ -272,3 +273,38 @@ function ipopro_resource_hints($urls, $relation_type)
 }
 // add_filter('wp_resource_hints', 'ipopro_resource_hints', 10, 2);
 // add_filter('document_title_parts', 'ipopro_document_title_parts');
+
+/**
+ * Dynamic Robots.txt
+ * Fix: Generates valid robots.txt only if the physical file doesn't exist.
+ */
+function ipopro_dynamic_robots_txt($output, $public)
+{
+    $site_url = home_url('/');
+
+    $output = "User-agent: *\n";
+    $output .= "Allow: /\n\n";
+
+    $output .= "# Explicitly allow AI crawlers\n";
+    $output .= "User-agent: GPTBot\nAllow: /\n";
+    $output .= "User-agent: ChatGPT-User\nAllow: /\n";
+    $output .= "User-agent: CCBot\nAllow: /\n";
+    $output .= "User-agent: PerplexityBot\nAllow: /\n";
+    $output .= "User-agent: Claude-Web\nAllow: /\n";
+    $output .= "User-agent: anthropic-ai\nAllow: /\n";
+    $output .= "User-agent: Applebot\nAllow: /\n\n";
+
+    $output .= "# Disallow admin and login pages\n";
+    $output .= "Disallow: /wp-admin/\n";
+    $output .= "Disallow: /wp-login.php\n";
+    $output .= "Disallow: /wp-register.php\n";
+    $output .= "Disallow: /wp-includes/\n";
+    $output .= "Disallow: /xmlrpc.php\n";
+    $output .= "Disallow: /wp-content/cache/\n\n";
+
+    $output .= "# Sitemap location\n";
+    $output .= "Sitemap: " . $site_url . "sitemap.xml\n";
+
+    return $output;
+}
+add_filter('robots_txt', 'ipopro_dynamic_robots_txt', 10, 2);
