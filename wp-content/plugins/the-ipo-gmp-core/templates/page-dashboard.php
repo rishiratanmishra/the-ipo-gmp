@@ -649,6 +649,79 @@ get_header();
                 </div>
             <?php endif; ?>
 
+            <!-- Buyback Watch Widget -->
+            <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
+                <div class="p-5 border-b border-border-navy flex items-center justify-between">
+                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+                        Buyback Watch
+                    </h3>
+                    <span
+                        class="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">Active</span>
+                </div>
+                <div class="divide-y divide-border-navy">
+                    <?php
+                    // Fetch Active Buybacks
+                    $buybacks = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}buybacks WHERE type LIKE '%Open%' OR type LIKE '%Upcoming%' ORDER BY id DESC LIMIT 5");
+
+                    if ($buybacks):
+                        foreach ($buybacks as $bb):
+                            // Calc Premium
+                            $offer_price = (float) preg_replace('/[^0-9.]/', '', $bb->price);
+                            $mkt_price = (float) preg_replace('/[^0-9.]/', '', $bb->market_price);
+                            $premium = 0;
+                            if ($mkt_price > 0 && $offer_price > 0) {
+                                $premium = round((($offer_price - $mkt_price) / $mkt_price) * 100, 1);
+                            }
+                            ?>
+                            <div class="p-4 hover:bg-slate-800/50 transition-colors cursor-pointer group">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4
+                                        class="text-white font-bold text-sm group-hover:text-purple-400 transition-colors truncate max-w-[150px]">
+                                        <?php echo esc_html($bb->company); ?>
+                                    </h4>
+                                    <span
+                                        class="text-[10px] font-bold text-slate-400 uppercase"><?php echo esc_html($bb->type ?: 'Tender'); ?></span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <div class="flex flex-col">
+                                        <span class="text-slate-500">Price</span>
+                                        <span class="text-white font-semibold">₹<?php echo esc_html($bb->price); ?></span>
+                                    </div>
+                                    <?php if ($premium > 0): ?>
+                                        <div class="flex flex-col items-end">
+                                            <span class="text-slate-500">Premium</span>
+                                            <span class="text-neon-emerald font-bold">+<?php echo $premium; ?>%</span>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="flex flex-col items-end">
+                                            <span class="text-slate-500">Size</span>
+                                            <span
+                                                class="text-slate-300 font-bold"><?php echo esc_html($bb->issue_size ?: '-'); ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; else: ?>
+                        <div class="p-8 text-center flex flex-col items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-slate-600 text-2xl">savings</span>
+                            <p class="text-slate-500 text-xs font-medium">No active buybacks.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="p-3 bg-slate-900/50 text-center border-t border-border-navy">
+                    <a href="<?php echo home_url('/buybacks/'); ?>"
+                        class="text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors">View All
+                        Buybacks →</a>
+                </div>
+            </div>
+            <!-- AD SLOT: Sidebar Square (300x250) -->
+            <!--
+            <div class="w-full h-[250px] bg-slate-800/50 border border-double border-slate-700 rounded-xl flex items-center justify-center">
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Advertisement</span>
+            </div>
+            -->
+
             <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
                 <div class="p-5 border-b border-border-navy flex items-center justify-between">
                     <h3 class="text-white font-bold text-lg">Allotment Corner</h3>
@@ -728,80 +801,6 @@ get_header();
                         </div>
                         <span class="material-symbols-outlined text-slate-600 ml-auto text-sm">open_in_new</span>
                     </a>
-                </div>
-            </div>
-
-            <!-- AD SLOT: Sidebar Square (300x250) -->
-            <!--
-            <div class="w-full h-[250px] bg-slate-800/50 border border-double border-slate-700 rounded-xl flex items-center justify-center">
-                <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Advertisement</span>
-            </div>
-            -->
-
-            <!-- Buyback Watch Widget -->
-            <div class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
-                <div class="p-5 border-b border-border-navy flex items-center justify-between">
-                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-                        Buyback Watch
-                    </h3>
-                    <span
-                        class="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">Active</span>
-                </div>
-                <div class="divide-y divide-border-navy">
-                    <?php
-                    // Fetch Active Buybacks
-                    $buybacks = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}buybacks WHERE type LIKE '%Open%' OR type LIKE '%Upcoming%' ORDER BY id DESC LIMIT 5");
-
-                    if ($buybacks):
-                        foreach ($buybacks as $bb):
-                            // Calc Premium
-                            $offer_price = (float) preg_replace('/[^0-9.]/', '', $bb->price);
-                            $mkt_price = (float) preg_replace('/[^0-9.]/', '', $bb->market_price);
-                            $premium = 0;
-                            if ($mkt_price > 0 && $offer_price > 0) {
-                                $premium = round((($offer_price - $mkt_price) / $mkt_price) * 100, 1);
-                            }
-                            ?>
-                            <div class="p-4 hover:bg-slate-800/50 transition-colors cursor-pointer group">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h4
-                                        class="text-white font-bold text-sm group-hover:text-purple-400 transition-colors truncate max-w-[150px]">
-                                        <?php echo esc_html($bb->company); ?>
-                                    </h4>
-                                    <span
-                                        class="text-[10px] font-bold text-slate-400 uppercase"><?php echo esc_html($bb->type ?: 'Tender'); ?></span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <div class="flex flex-col">
-                                        <span class="text-slate-500">Price</span>
-                                        <span class="text-white font-semibold">₹<?php echo esc_html($bb->price); ?></span>
-                                    </div>
-                                    <?php if ($premium > 0): ?>
-                                        <div class="flex flex-col items-end">
-                                            <span class="text-slate-500">Premium</span>
-                                            <span class="text-neon-emerald font-bold">+<?php echo $premium; ?>%</span>
-                                        </div>
-                                    <?php else: ?>
-                                        <div class="flex flex-col items-end">
-                                            <span class="text-slate-500">Size</span>
-                                            <span
-                                                class="text-slate-300 font-bold"><?php echo esc_html($bb->issue_size ?: '-'); ?></span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        <?php endforeach; else: ?>
-                        <div class="p-8 text-center flex flex-col items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-slate-600 text-2xl">savings</span>
-                            <p class="text-slate-500 text-xs font-medium">No active buybacks.</p>
-                        </div>
-                    <?php endif; ?>
-                </div>
-                <div class="p-3 bg-slate-900/50 text-center border-t border-border-navy">
-                    <a href="<?php echo home_url('/buybacks/'); ?>"
-                        class="text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors">View All
-                        Buybacks →</a>
                 </div>
             </div>
 
