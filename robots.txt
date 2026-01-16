@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and login pages
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /wp-includes/
+Disallow: /xmlrpc.php
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/cache/
+Disallow: /wp-content/themes/*/inc/
+
+# Allow specific assets
+Allow: /wp-content/uploads/
+Allow: /wp-content/themes/*/assets/
+Allow: /wp-content/themes/*/css/
+Allow: /wp-content/themes/*/js/
+
+# Disallow search and query parameters
+Disallow: /*?s=
+Disallow: /*?q=
+Disallow: /*?p=
+Disallow: /*&
+
+# Sitemap location
+# TODO: Replace YOURDOMAIN.com with your actual domain
+Sitemap: https://YOURDOMAIN.com/sitemap.xml
+
+# Crawl delay (optional, adjust as needed)
+# Crawl-delay: 1

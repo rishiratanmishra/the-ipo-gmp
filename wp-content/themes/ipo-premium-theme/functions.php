@@ -138,5 +138,11 @@ require get_template_directory() . '/inc/dashboard.php';
 require get_template_directory() . '/inc/demo-import.php';
 require get_template_directory() . '/inc/tgm-config.php';
 require get_template_directory() . '/inc/post-options.php';
+require get_template_directory() . '/inc/seo-functions.php';
+require get_template_directory() . '/inc/sitemap-generator.php';
 
+/**
+ * Hook SEO Meta Tags into wp_head
+ */
+add_action('wp_head', 'ipopro_seo_meta_tags', 1);
 
