@@ -60,7 +60,7 @@ function ipopro_sitemap_template_redirect()
 
     exit;
 }
-add_action('template_redirect', 'ipopro_sitemap_template_redirect');
+// add_action('template_redirect', 'ipopro_sitemap_template_redirect');
 
 /**
  * Generate main sitemap index

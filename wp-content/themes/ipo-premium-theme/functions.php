@@ -144,5 +144,5 @@ require get_template_directory() . '/inc/sitemap-generator.php';
 /**
  * Hook SEO Meta Tags into wp_head
  */
-add_action('wp_head', 'ipopro_seo_meta_tags', 1);
+// add_action('wp_head', 'ipopro_seo_meta_tags', 1);
 

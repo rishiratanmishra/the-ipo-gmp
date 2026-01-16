@@ -29,24 +29,11 @@ Disallow: /wp-login.php
 Disallow: /wp-register.php
 Disallow: /wp-includes/
 Disallow: /xmlrpc.php
-Disallow: /wp-content/plugins/
+# Disallow: /wp-content/plugins/ (Allowed for SEO and functionality)
 Disallow: /wp-content/cache/
-Disallow: /wp-content/themes/*/inc/
-
-# Allow specific assets
-Allow: /wp-content/uploads/
-Allow: /wp-content/themes/*/assets/
-Allow: /wp-content/themes/*/css/
-Allow: /wp-content/themes/*/js/
-
-# Disallow search and query parameters
-Disallow: /*?s=
-Disallow: /*?q=
-Disallow: /*?p=
-Disallow: /*&
 
 # Sitemap location
-Sitemap: https://theipogmp.com/wp-sitemap.xml
+Sitemap: https://theipogmp.com/sitemap.xml
 
 # Crawl delay (optional, adjust as needed)
 # Crawl-delay: 1

@@ -270,18 +270,5 @@ function ipopro_resource_hints($urls, $relation_type)
 
     return $urls;
 }
-add_filter('wp_resource_hints', 'ipopro_resource_hints', 10, 2);
-
-/**
- * Optimize title tag output
- */
-function ipopro_document_title_parts($title)
-{
-    // Remove "Archives" from archive titles
-    if (isset($title['title']) && strpos($title['title'], 'Archives') !== false) {
-        $title['title'] = str_replace(' Archives', '', $title['title']);
-    }
-
-    return $title;
-}
-add_filter('document_title_parts', 'ipopro_document_title_parts');
+// add_filter('wp_resource_hints', 'ipopro_resource_hints', 10, 2);
+// add_filter('document_title_parts', 'ipopro_document_title_parts');
