@@ -71,7 +71,7 @@ $est_profit = $gmp * $lot_size;
     </nav>
 
     <!-- Hero Card with Sticky Metrics -->
-    <div class="glass-card border border-border-navy rounded-[24px] p-6 mb-6 sticky top-0 z-40">
+    <div class="glass-card border border-border-navy rounded-[24px] p-6 mb-6 md:sticky md:top-0 z-40">
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
 
             <!-- Left: Branding -->
