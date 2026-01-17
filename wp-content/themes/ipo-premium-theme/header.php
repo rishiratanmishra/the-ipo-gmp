@@ -15,7 +15,7 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class('bg-background-dark text-slate-100 font-display antialiased'); ?>>
+<body <?php body_class('bg-background-dark text-slate-100 font-body antialiased'); ?>>
     <?php wp_body_open(); ?>
 
     <?php

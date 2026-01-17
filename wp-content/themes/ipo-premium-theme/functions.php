@@ -21,8 +21,22 @@ function ipopro_scripts()
     // 1. Tailwind (CDN for now, can be swapped for local build)
     wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,container-queries', [], null);
 
-    // 2. Google Fonts (Dynamic based on Customizer, fallback to Inter)
-    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap', [], null);
+    // 2. Google Fonts (Dynamic based on Customizer)
+    $heading_font = get_theme_mod('heading_font', 'Inter');
+    $body_font = get_theme_mod('body_font', 'Inter');
+
+    $fonts_to_load = array_unique([$heading_font, $body_font]);
+    $font_families = [];
+
+    foreach ($fonts_to_load as $font) {
+        $font_name = str_replace(' ', '+', $font);
+        // Add weights common to all used fonts to ensure consistency
+        $font_families[] = "family={$font_name}:wght@300;400;500;600;700;800;900";
+    }
+
+    $fonts_url = 'https://fonts.googleapis.com/css2?' . implode('&', $font_families) . '&display=swap';
+
+    wp_enqueue_style('google-fonts', $fonts_url, [], null);
 
     // 3. Material Icons
     wp_enqueue_style('material-icons', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap', [], null);
