@@ -282,7 +282,8 @@ get_header();
                                                 </div>
                                                 <p class="text-white font-bold text-sm">Market is Sleeping</p>
                                                 <p class="text-slate-500 text-xs">No active Mainboard IPOs right now.
-                                                    <br>Whales are waiting, you should too.</p>
+                                                    <br>Whales are waiting, you should too.
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -579,17 +580,14 @@ get_header();
 
             <!-- Latest News Section -->
             <section>
-                <div class="flex items-center justify-between mb-4 px-1">
-                    <h2 class="text-white text-2xl font-bold tracking-tight">Market Pulse <span class="text-primary text-sm font-normal ml-2 hidden md:inline-block">/ Expert Views</span></h2>
-                    <a class="text-primary text-xs font-bold hover:underline"
-                        href="<?php echo home_url('/blog/'); ?>">Read Full Reports →</a>
+                <div class="flex items-center justify-between mb-6 px-1">
+                    <h2 class="text-white text-2xl font-bold tracking-tight">Market Pulse</h2>
+                    <a class="flex items-center gap-1 text-primary text-xs font-bold hover:text-emerald-400 transition-colors uppercase tracking-wider"
+                        href="<?php echo home_url('/blog/'); ?>">
+                        Read Reports <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
                 </div>
-                <!-- ... grid ... --> 
-                <!-- Note: The grid content loop is fine, just updating the empty state below -->
-                
-                <!-- WE NEED TO TARGET THE EMPTY STATE ONLY IF POSSIBLE OR JUST REPLACE THE WHOLE BLOCK IF EASIER. 
-                     Checking line numbers, the loop is 574-606. Empty state is 608-619. 
-                     I will replace the start of section to the end of empty state to be safe and clean. -->
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <?php
                     $recent_posts = get_posts(array('numberposts' => 3, 'post_status' => 'publish'));
@@ -597,44 +595,83 @@ get_header();
                         foreach ($recent_posts as $post):
                             setup_postdata($post);
                             ?>
-                            <a href="<?php the_permalink(); ?>" class="group block">
-                                <div
-                                    class="aspect-video bg-slate-800 rounded-xl mb-3 overflow-hidden border border-border-navy group-hover:border-primary/50 transition-all relative">
-                                    <?php if (has_post_thumbnail()):
-                                        echo get_the_post_thumbnail(null, 'medium', ['class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500']);
-                                    else: ?>
-                                        <div
-                                            class="w-full h-full flex items-center justify-center bg-slate-900/50 text-slate-700 font-black text-xs uppercase tracking-widest">
-                                            <span class="material-symbols-outlined text-4xl mb-1">article</span>
-                                        </div>
-                                    <?php endif; ?>
+                            <article class="group relative h-full">
+                                <a href="<?php the_permalink(); ?>" class="flex flex-col h-full">
                                     <div
-                                        class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#0B1220] to-transparent opacity-60">
+                                        class="relative aspect-video rounded-2xl overflow-hidden mb-4 border border-white/5 group-hover:border-primary/30 group-hover:shadow-lg group-hover:shadow-primary/5 transition-all duration-500">
+                                        <?php if (has_post_thumbnail()):
+                                            echo get_the_post_thumbnail(null, 'medium', ['class' => 'w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700']);
+                                        else: ?>
+                                            <div class="w-full h-full flex items-center justify-center bg-slate-800 text-slate-700">
+                                                <span class="material-symbols-outlined text-4xl">article</span>
+                                            </div>
+                                        <?php endif; ?>
+                                        <!-- Scrim Gradient -->
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity">
+                                        </div>
+
+                                        <!-- Badge -->
+                                        <div class="absolute top-3 left-3">
+                                            <?php
+                                            $cats = get_the_category();
+                                            $cat_name = !empty($cats) ? $cats[0]->name : 'Analysis';
+                                            ?>
+                                                    <span
+                                                class="px-2 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-lg text-[10px] font-bold text-white uppercase tracking-wider">
+                                                        <?php echo esc_html($cat_name); ?>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <h3
-                                    class="text-white font-bold text-sm leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
-                                    <?php the_title(); ?>
-                                </h3>
-                                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                                    <?php echo get_the_date('M j, Y'); ?>
-                                </p>
-                            </a>
+
+                                    <div class="flex flex-col flex-1 px-1">
+                                        <div
+                                            class="flex items-center gap-2 mb-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                            <span class="text-primary"><?php echo get_the_date('M j'); ?></span>
+                                            <span class="w-1 h-1 rounded-full bg-slate-700"></span>
+                                            <span><?php echo get_the_date('Y'); ?></span>
+                                        </div>
+
+                                        <h3
+                                            class="text-white font-bold text-lg leading-snug mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                                            <?php the_title(); ?>
+                                        </h3>
+
+                                        <p class="text-slate-400 text-xs leading-relaxed line-clamp-2 mb-3">
+                                            <?php echo wp_trim_words(get_the_excerpt(), 15, '...'); ?>
+                                        </p>
+
+                                        <div
+                                            class="mt-auto flex items-center text-xs font-bold text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                                            Read Article <span
+                                                class="material-symbols-outlined text-sm ml-1">trending_flat</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
                         <?php endforeach;
                         wp_reset_postdata();
                     endif; ?>
 
                     <?php if (!$recent_posts): ?>
                         <div
-                            class="col-span-3 py-16 text-center border border-dashed border-border-navy rounded-xl flex flex-col items-center justify-center gap-3 bg-slate-900/20">
-                            <div
-                                class="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-600 mb-2">
-                                <span class="material-symbols-outlined text-3xl">edit_note</span>
+                            class="col-span-3 py-16 px-4 text-center border border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center gap-4 bg-slate-900/30">
+                            <div class="relative">
+                                <div
+                                    class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center text-slate-600 rotate-3">
+                                    <span class="material-symbols-outlined text-3xl">edit_square</span>
+                                </div>
+                                <div class="w-16 h-16 rounded-2xl bg-slate-800/50 absolute top-0 left-0 -rotate-6 -z-10">
+                                </div>
                             </div>
-                            <h4 class="text-slate-300 font-bold text-sm">Analysis Brewing...</h4>
-                            <p class="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed">
-                                Our writers are looking for the next breakout IPO. <br>New reports will drop here soon.
-                            </p>
+
+                            <div>
+                                <h4 class="text-white font-bold text-base mb-1">Market Insights Loading...</h4>
+                                <p class="text-slate-500 text-xs max-w-sm mx-auto leading-relaxed">
+                                    Our analysts are currently breaking down the latest GMP trends. <br>Check back shortly
+                                    for premium reports.
+                                </p>
+                            </div>
                         </div>
                     <?php endif; ?>
                 </div>
