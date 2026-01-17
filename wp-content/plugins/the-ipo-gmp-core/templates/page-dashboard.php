@@ -203,7 +203,7 @@ get_header();
                                 class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Pre-Listing</button>
                         </div>
                         <a href="<?php echo home_url('/mainboard-ipos/'); ?>"
-                            class="text-primary text-xs font-bold hover:underline hidden md:block">View All →</a>
+                            class="text-primary text-xs font-bold hover:underline">View All →</a>
                     </div>
                 </div>
                 <div id="mainboard-container" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
@@ -496,8 +496,8 @@ get_header();
                             <button id="btn-sme-closed" onclick="filterSME('closed')"
                                 class="px-3 py-1 bg-slate-800 text-slate-400 rounded-full border border-slate-700 transition-all hover:bg-slate-700 hover:text-white">Pre-Listing</button>
                         </div>
-                        <a class="text-primary text-xs font-bold hover:underline hidden md:block"
-                            href="<?php echo home_url('/sme-ipos/'); ?>">View All SME →</a>
+                        <a class="text-primary text-xs font-bold hover:underline"
+                            href="<?php echo home_url('/sme-ipos/'); ?>">View All →</a>
                     </div>
                 </div>
                 <div id="sme-container" class="rounded-xl border border-border-navy bg-card-dark overflow-hidden">
