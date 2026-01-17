@@ -3,7 +3,7 @@
  * Plugin Name: The IPO GMP Core
  * Description: Core functionality, templates, and assets for The IPO GMP platform. Safe from theme updates.
  * Version: 2.0.0
- * Author: Zolaha.com
+ * Author: zolaha.com
  * Text Domain: the-ipo-gmp-core
  */
 

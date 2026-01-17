@@ -1,14 +1,14 @@
-# Zolaha Plugins Ecosystem - Developer Documentation
+# zolaha Plugins Ecosystem - Developer Documentation
 
 **Date:** January 10, 2026  
-**Author:** Antigravity (Google DeepMind) for Zolaha.com  
+**Author:** Antigravity (Google DeepMind) for zolaha.com  
 **Version:** 2.0 (Production Ready)
 
 ---
 
 ## 1. Ecosystem Overview
 
-This suite consists of three interconnected plugins designed to manage financial data (IPOs and Buybacks) for Zolaha.com. The plugins share a common "Premium" architectural pattern and design system.
+This suite consists of three interconnected plugins designed to manage financial data (IPOs and Buybacks) for zolaha.com. The plugins share a common "Premium" architectural pattern and design system.
 
 ### The Stack
 -   **Architecture:** Modular Class-Based (Loader, Admin, Fetcher, API).

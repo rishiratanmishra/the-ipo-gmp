@@ -3,12 +3,13 @@
  * Plugin Name: IPO Manager
  * Description: Master administration hub for IPO management and settings.
  * Version: 2.0.0
- * Author: Zolaha.com
+ * Author: zolaha.com
  * Author URI: https://zolaha.com
  * Package: IPO_Manager
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 // Constants
 global $wpdb;
@@ -27,7 +28,7 @@ new IPOM_Admin();
 new IPOM_Shortcode();
 
 // Activation Hook
-register_activation_hook(__FILE__, function() {
+register_activation_hook(__FILE__, function () {
     global $wpdb;
     $charset_collate = $wpdb->get_charset_collate();
     $table_name = IPOM_TABLE;
@@ -65,13 +66,13 @@ register_activation_hook(__FILE__, function() {
     if (!wp_next_scheduled("ipom_hourly_event")) {
         wp_schedule_event(time(), 'hourly', "ipom_hourly_event");
     }
-    
+
     // Initial Fetch
     IPOM_Fetcher::fetch_and_store();
 });
 
 // Deactivation Hook
-register_deactivation_hook(__FILE__, function() {
+register_deactivation_hook(__FILE__, function () {
     wp_clear_scheduled_hook("ipom_hourly_event");
 });
 

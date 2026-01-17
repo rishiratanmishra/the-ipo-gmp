@@ -3,19 +3,20 @@
  * Plugin Name: Buyback Manager
  * Description: Manages buyback data, scraping, and admin tabs.
  * Version: 1.0.0
- * Author: Zolaha.com
+ * Author: zolaha.com
  * Author URI: https://zolaha.com
  */
 
-if(!defined("ABSPATH")) exit;
+if (!defined("ABSPATH"))
+    exit;
 /**
  * Buyback Manager Main Plugin File
  *
  * Bootstrap file to initialize constants, database tables, and include dependencies.
  *
- * @package    Zolaha_Buyback_Manager
+ * @package    zolaha_Buyback_Manager
  * @since      1.0.0
- * @author     Zolaha.com
+ * @author     zolaha.com
  * @link       https://zolaha.com
  */
 
@@ -36,7 +37,8 @@ global $wpdb;
 define('BBM_TABLE', $wpdb->prefix . 'buybacks');
 
 // Install Table Logic
-function bbm_install_table() {
+function bbm_install_table()
+{
     global $wpdb;
     $table_name = BBM_TABLE;
     $charset_collate = $wpdb->get_charset_collate();
@@ -63,7 +65,7 @@ function bbm_install_table() {
 }
 
 // Add Custom Cron Interval (5 Hours)
-add_filter('cron_schedules', function($schedules){
+add_filter('cron_schedules', function ($schedules) {
     $schedules['every_5_hours'] = [
         'interval' => 5 * 3600,
         'display' => __('Every 5 Hours')
@@ -72,15 +74,15 @@ add_filter('cron_schedules', function($schedules){
 });
 
 // Register Event on Activation
-register_activation_hook(__FILE__, function() {
+register_activation_hook(__FILE__, function () {
     bbm_install_table(); // Create Table
     BBM_Scraper::fetch_and_store(); // Run once immediately
-    
+
     // Store Default API Key if not exists
     if (!get_option('bbm_api_key')) {
         update_option('bbm_api_key', 'zolaha_secure_' . wp_generate_password(12, false));
     }
-    
+
     // Schedule Cron if not exists
     if (!wp_next_scheduled('bbm_auto_fetch_event')) {
         wp_schedule_event(time(), 'every_5_hours', 'bbm_auto_fetch_event');
@@ -88,7 +90,7 @@ register_activation_hook(__FILE__, function() {
 });
 
 // Clear Event on Deactivation
-register_deactivation_hook(__FILE__, function() {
+register_deactivation_hook(__FILE__, function () {
     wp_clear_scheduled_hook('bbm_auto_fetch_event');
 });
 
@@ -96,7 +98,7 @@ register_deactivation_hook(__FILE__, function() {
 add_action('bbm_auto_fetch_event', ['BBM_Scraper', 'fetch_and_store']);
 
 // Clear Event on Deactivation
-register_deactivation_hook(__FILE__, function() {
+register_deactivation_hook(__FILE__, function () {
     wp_clear_scheduled_hook('bbm_daily_scrape_event');
 });
 

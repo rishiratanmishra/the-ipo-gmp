@@ -8,23 +8,28 @@
  * @package Broker_Manager
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
-class BM_API {
+class BM_API
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         add_action('rest_api_init', [$this, 'register_routes']);
     }
 
-    public function register_routes() {
+    public function register_routes()
+    {
         register_rest_route('zolaha/v1', '/brokers', [
-            'methods'  => 'GET',
+            'methods' => 'GET',
             'callback' => [$this, 'get_brokers'],
             'permission_callback' => '__return_true', // Validation inside callback
         ]);
     }
 
-    public function get_brokers($request) {
+    public function get_brokers($request)
+    {
         // 1. AUTHENTICATION
         $api_key = $request->get_header('X-Api-Key');
         $valid_key = get_option('bm_api_key', '');
@@ -45,7 +50,7 @@ class BM_API {
         }
 
         global $wpdb;
-        
+
         // Query Custom Table for maximum performance
         $results = $wpdb->get_results("
             SELECT * FROM " . BM_TABLE . " 
@@ -58,13 +63,13 @@ class BM_API {
             // Parse Pros/Cons
             $pros = array_filter(array_map('trim', explode("\n", $row->pros)));
             $cons = array_filter(array_map('trim', explode("\n", $row->cons)));
-            
+
             // Fallback for logo if missing in table (check featured image)
             $logo = $row->logo_url;
-            if(!$logo && $row->post_id) {
+            if (!$logo && $row->post_id) {
                 $thumb_id = get_post_thumbnail_id($row->post_id);
-                if($thumb_id) {
-                     $logo = wp_get_attachment_url($thumb_id);
+                if ($thumb_id) {
+                    $logo = wp_get_attachment_url($thumb_id);
                 }
             }
 

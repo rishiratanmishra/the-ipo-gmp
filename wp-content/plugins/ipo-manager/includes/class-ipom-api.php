@@ -8,23 +8,28 @@
  * @package IPO_Master_Admin
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
-class IPOM_API {
+class IPOM_API
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         add_action('rest_api_init', [$this, 'register_routes']);
     }
 
-    public function register_routes() {
+    public function register_routes()
+    {
         register_rest_route('zolaha/v1', '/ipos', [
-            'methods'  => 'GET',
+            'methods' => 'GET',
             'callback' => [$this, 'get_ipos'],
             'permission_callback' => '__return_true', // Validation done inside callback
         ]);
     }
 
-    public function get_ipos($request) {
+    public function get_ipos($request)
+    {
         // 1. SECURITY: API Key Check
         $api_key = $request->get_header('X-Api-Key');
         $valid_key = get_option('ipom_api_key', 'zolaha_secure_ipo_key_default'); // Fetch from DB
@@ -38,7 +43,7 @@ class IPOM_API {
         $search = sanitize_text_field($request->get_param('search'));
         $limit = isset($request['limit']) ? intval($request['limit']) : 20;
         $page = isset($request['page']) ? intval($request['page']) : 1;
-        
+
         $limit = ($limit > 0 && $limit <= 100) ? $limit : 20;
         $page = ($page > 0) ? $page : 1;
         $offset = ($page - 1) * $limit;
@@ -59,8 +64,10 @@ class IPOM_API {
         $args = [];
 
         if (!empty($type)) {
-            if (strtolower($type) === 'sme') $where .= " AND is_sme = 1";
-            elseif (strtolower($type) === 'main') $where .= " AND is_sme = 0";
+            if (strtolower($type) === 'sme')
+                $where .= " AND is_sme = 1";
+            elseif (strtolower($type) === 'main')
+                $where .= " AND is_sme = 0";
         }
 
         if (!empty($search)) {

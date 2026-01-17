@@ -3,7 +3,7 @@
  * Plugin Name: IPO AI Writer
  * Description: Automated long-form IPO blog generator with AI, WP-Cron, and real-time dynamic data.
  * Version: 1.0.0
- * Author: Zolaha.com
+ * Author: zolaha.com
  * Text Domain: ipo-ai-writer
  * Domain Path: /languages
  */

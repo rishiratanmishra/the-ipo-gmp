@@ -8,23 +8,27 @@
  * @package IPO_Master_Details
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
-class IPOD_API {
+class IPOD_API
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         add_action('rest_api_init', [$this, 'register_routes']);
     }
 
-    public function register_routes() {
+    public function register_routes()
+    {
         register_rest_route('zolaha/v1', '/details', [
-            'methods'  => 'GET',
+            'methods' => 'GET',
             'callback' => [$this, 'get_details'],
             'permission_callback' => '__return_true',
             'args' => [
                 'id' => [
                     'required' => true,
-                    'validate_callback' => function($param) {
+                    'validate_callback' => function ($param) {
                         return is_numeric($param);
                     }
                 ]
@@ -32,7 +36,8 @@ class IPOD_API {
         ]);
     }
 
-    public function get_details($request) {
+    public function get_details($request)
+    {
         // 1. AUTHENTICATION (Shared Key)
         $api_key = $request->get_header('X-Api-Key');
         $valid_key = get_option('ipom_api_key', 'zolaha_secure_ipo_key_default');
@@ -61,7 +66,7 @@ class IPOD_API {
         }
 
         $data = json_decode($row->details_json, true);
-        
+
         // Inject metadata
         $response_data = [
             'ipo_id' => $ipo_id,

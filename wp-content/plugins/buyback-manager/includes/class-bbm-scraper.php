@@ -1,5 +1,6 @@
 <?php
-class BBM_Scraper {
+class BBM_Scraper
+{
     /**
      * Fetch Live Buyback Data
      *
@@ -10,27 +11,29 @@ class BBM_Scraper {
      * @return void
      */
 
-    public static function fetch_and_store() {
+    public static function fetch_and_store()
+    {
         set_time_limit(300); // Allow 5 minutes for execution (vital for sleep delays)
         global $wpdb;
-        
-        // ZOLAHA OPTIMIZATION: Get list of already CLOSED buybacks to skip re-scraping
+
+        // zolaha OPTIMIZATION: Get list of already CLOSED buybacks to skip re-scraping
         $table_name = defined('BBM_TABLE') ? BBM_TABLE : $wpdb->prefix . 'buybacks';
         $closed_companies = $wpdb->get_col("SELECT company FROM $table_name WHERE type = 'Closed' OR status = 'Closed'");
-        if (!is_array($closed_companies)) $closed_companies = [];
+        if (!is_array($closed_companies))
+            $closed_companies = [];
 
         $url = "https://groww.in/buy-back";
-        
+
         $headers = [
             'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept'     => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Referer'    => 'https://google.com'
+            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Referer' => 'https://google.com'
         ];
 
         $response = wp_remote_get($url, [
             'user-agent' => $headers['User-Agent'], // WP uses this key specifically sometimes, but headers array is better
-            'headers'    => $headers,
-            'timeout'    => 30
+            'headers' => $headers,
+            'timeout' => 30
         ]);
 
         if (is_wp_error($response)) {
@@ -57,11 +60,15 @@ class BBM_Scraper {
             $title_text = strtolower(trim($h2->textContent));
             $type = null;
 
-            if (strpos($title_text, "open") === 0) $type = "Open";
-            elseif (strpos($title_text, "upcoming") === 0) $type = "Upcoming";
-            elseif (strpos($title_text, "recently closed") === 0) $type = "Closed";
+            if (strpos($title_text, "open") === 0)
+                $type = "Open";
+            elseif (strpos($title_text, "upcoming") === 0)
+                $type = "Upcoming";
+            elseif (strpos($title_text, "recently closed") === 0)
+                $type = "Closed";
 
-            if (!$type) continue;
+            if (!$type)
+                continue;
 
             // next div containing table
             $table = $h2->nextSibling;
@@ -69,21 +76,23 @@ class BBM_Scraper {
                 $table = $table->nextSibling;
             }
 
-            if (!$table) continue;
+            if (!$table)
+                continue;
 
             $rows = $xpath->query(".//tbody/tr", $table);
 
             foreach ($rows as $row) {
 
                 $cols = $xpath->query(".//td", $row);
-                if ($cols->length < 4) continue;
+                if ($cols->length < 4)
+                    continue;
 
                 // Basic Values
                 $company_name = trim($cols->item(1)->textContent);
                 $offer_price = trim($cols->item(2)->textContent);
                 $status = trim($cols->item(3)->textContent);
 
-                // ZOLAHA OPTIMIZATION: Skip if already closed
+                // zolaha OPTIMIZATION: Skip if already closed
                 if (in_array($company_name, $closed_companies)) {
                     continue;
                 }
@@ -117,13 +126,13 @@ class BBM_Scraper {
                     // ANTI-BAN: Sleep before API call (2 seconds)
                     // sleep(2); // Commented out by user request (Batching/Throttling disabled)
 
-                    $api_url = "https://groww.in/v1/api/stocks_portfolio/v2/buyback/fetch?searchId=".$searchId;
+                    $api_url = "https://groww.in/v1/api/stocks_portfolio/v2/buyback/fetch?searchId=" . $searchId;
 
                     $api_response = wp_remote_get($api_url, [
                         'headers' => [
                             'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                            'Accept'     => 'application/json',
-                            'Referer'    => 'https://groww.in/buy-back'
+                            'Accept' => 'application/json',
+                            'Referer' => 'https://groww.in/buy-back'
                         ],
                         'timeout' => 20
                     ]);
@@ -142,12 +151,12 @@ class BBM_Scraper {
                             $record_date = $data['recordDate'] ?? "";
 
                             $start_date = $data['startDate'] ?? "";
-                            $end_date   = $data['endDate'] ?? "";
+                            $end_date = $data['endDate'] ?? "";
                             $period = $start_date . " - " . $end_date;
 
                             $issue_size = $data['issuedAmount'] ?? "";
-                            $shares     = $data['issuedShares'] ?? "";
-                            $logo       = $data['companyLogo'] ?? $logo;
+                            $shares = $data['issuedShares'] ?? "";
+                            $logo = $data['companyLogo'] ?? $logo;
 
                             // ----------------------
                             // MARKET PRICE (NSE / BSE AUTO)
@@ -179,7 +188,7 @@ class BBM_Scraper {
                                     $price_res = wp_remote_get($price_api, [
                                         'headers' => [
                                             'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                                            'Accept'     => 'application/json'
+                                            'Accept' => 'application/json'
                                         ],
                                         'timeout' => 15
                                     ]);
@@ -191,8 +200,7 @@ class BBM_Scraper {
 
                                         if (!empty($price_json['ltp'])) {
                                             $market_price = $price_json['ltp'];
-                                        }
-                                        elseif (!empty($price_json['close'])) {
+                                        } elseif (!empty($price_json['close'])) {
                                             $market_price = $price_json['close'];
                                         }
                                     }

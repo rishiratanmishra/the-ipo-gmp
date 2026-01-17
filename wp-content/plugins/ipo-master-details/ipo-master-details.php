@@ -3,19 +3,20 @@
  * Plugin Name: IPO Master Details
  * Description: Scrapes and provides detailed analytics for IPOs.
  * Version: 2.0.0
- * Author: Zolaha.com
+ * Author: zolaha.com
  * Author URI: https://zolaha.com
  * Package: IPO_Master_Details
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 // Constants
 global $wpdb;
 define("IPOD_PATH", plugin_dir_path(__FILE__));
 define("IPOD_URL", plugin_dir_url(__FILE__));
 define("IPOD_MASTER", $wpdb->prefix . "ipomaster"); // Dependency from other plugin
-define("IPOD_TABLE",  $wpdb->prefix . "ipodetails");
+define("IPOD_TABLE", $wpdb->prefix . "ipodetails");
 
 // Include Dependencies
 require_once IPOD_PATH . 'includes/class-ipod-fetcher.php';
@@ -45,7 +46,7 @@ register_activation_hook(__FILE__, function () {
     if (!wp_next_scheduled("ipodetails_hourly_event")) {
         wp_schedule_event(time(), "hourly", "ipodetails_hourly_event");
     }
-    
+
     // Initial Fetch
     IPOD_Fetcher::fetch_all();
 });

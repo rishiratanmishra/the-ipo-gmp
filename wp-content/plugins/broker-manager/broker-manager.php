@@ -3,11 +3,12 @@
  * Plugin Name: Broker Manager
  * Description: Defines and manages broker information and reviews.
  * Version: 1.0.0
- * Author: Zolaha.com
+ * Author: zolaha.com
  * Author URI: https://zolaha.com
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 define('BM_PATH', plugin_dir_path(__FILE__));
 define('BM_URL', plugin_dir_url(__FILE__));
@@ -24,7 +25,8 @@ require_once BM_PATH . 'includes/class-bm-api.php';
 // Activation Hook: Create Table
 register_activation_hook(__FILE__, 'bm_install');
 
-function bm_install() {
+function bm_install()
+{
     global $wpdb;
     $table_name = BM_TABLE;
     $charset_collate = $wpdb->get_charset_collate();
@@ -53,18 +55,19 @@ function bm_install() {
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
-    
+
     // Auto-generate API Key if missing
-    if(!get_option('bm_api_key')) {
+    if (!get_option('bm_api_key')) {
         update_option('bm_api_key', wp_generate_password(32, false));
     }
 }
 
 // Enqueue Assets (Frontend)
-function bm_enqueue_assets() {
+function bm_enqueue_assets()
+{
     wp_enqueue_style('bm-style', BM_URL . 'assets/css/style.css', [], '2.1');
     wp_enqueue_script('bm-script', BM_URL . 'assets/js/script.js', ['jquery'], '2.1', true);
-    
+
     // Pass AJAX URL to script
     wp_localize_script('bm-script', 'bm_ajax', [
         'url' => admin_url('admin-ajax.php')

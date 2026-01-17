@@ -1,7 +1,7 @@
 /*
 Theme Name: IPO Premium
 Theme URI: https://zolaha.com/themes/ipo-premium
-Author: Zolaha.com
+Author: zolaha.com
 Author URI: https://zolaha.com
 Description: A production-grade, glassmorphism-styled WordPress theme optimized for IPO GMP data. Includes extensive customization, elementor compatibility, and white-labeling features.
 Version: 1.0.0
@@ -16,6 +16,7 @@ Tags: custom-background, custom-colors, custom-menu, featured-images, full-width
 
 /* Reset & Basic Base (Tailwind handles most, but good for fallbacks) */
 body {
-    background-color: #050A18; /* Fallback */
+    background-color: #050A18;
+    /* Fallback */
     color: #f1f5f9;
 }

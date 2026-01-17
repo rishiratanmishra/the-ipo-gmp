@@ -90,18 +90,18 @@ class IPO_License_Manager
     {
         if (!self::is_active() && !isset($_GET['customize_changeset_uuid'])) {
             ?>
-                        <div class="notice notice-warning is-dismissible">
-                            <p>
-                                <strong>
-                                    <?php _e('IPO Premium Theme:', 'ipo-premium'); ?>
-                                </strong>
-                                <?php _e('Please activate your license to unlock full features.', 'ipo-premium'); ?>
-                                <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=ipopro_license_section')); ?>">
-                                    <?php _e('Enter License Key', 'ipo-premium'); ?>
-                                </a>
-                            </p>
-                        </div>
-                        <?php
+            <div class="notice notice-warning is-dismissible">
+                <p>
+                    <strong>
+                        <?php _e('IPO Premium Theme:', 'ipo-premium'); ?>
+                    </strong>
+                    <?php _e('Please activate your license to unlock full features.', 'ipo-premium'); ?>
+                    <a href="<?php echo esc_url(admin_url('customize.php?autofocus[section]=ipopro_license_section')); ?>">
+                        <?php _e('Enter License Key', 'ipo-premium'); ?>
+                    </a>
+                </p>
+            </div>
+            <?php
         }
     }
 }
