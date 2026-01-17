@@ -15,12 +15,12 @@ $t_buybacks = $wpdb->prefix . 'buybacks';
 // 1. Determine Context
 $slug = get_post_field('post_name', get_post());
 $context = 'mainboard'; // default
-$title = 'Mainboard Radar';
+$title = 'Mainboard IPOs';
 $desc = 'Tracking high-impact listings, GMP trends, and subscription data. Don\'t guess, check the data.';
 
 if (strpos($slug, 'sme') !== false) {
     $context = 'sme';
-    $title = 'SME Radar';
+    $title = 'SME IPOs';
     $desc = 'High Risk. High Reward. Real-time GMP and allotment odds for SME enthusiasts.';
 } elseif (strpos($slug, 'buyback') !== false) {
     $context = 'buyback';

@@ -100,9 +100,8 @@
                 </a>
 
                 <!-- Search Bar (Header) -->
-                <form action="<?php echo home_url('/mainboard-ipos/'); ?>" method="GET"
-                    class="hidden lg:flex items-center w-96 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all relative"
-                    onsubmit="var q = this.querySelector('input[name=\'q\']'); q.value = q.value.trim(); if(q.value === '') return false;">
+                <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET"
+                    class="hidden lg:flex items-center w-96 h-10 bg-slate-900 border border-slate-800 rounded-lg px-4 group focus-within:border-primary/40 transition-all relative">
                     <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -168,7 +167,7 @@
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
-                <form action="<?php echo home_url('/mainboard-ipos/'); ?>" method="GET" class="mb-6 relative"
+                <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET" class="mb-6 relative"
                     onsubmit="var q = this.querySelector('input[name=\'q\']'); q.value = q.value.trim(); if(q.value === '') return false;">
                     <input id="tigc-mobile-search-input" type="text" name="q" placeholder="Search IPOs..."
                         class="w-full bg-slate-900 border border-slate-700 rounded-lg py-3 px-4 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600"
@@ -216,15 +215,6 @@
     </div>
 
     <style>
-        .ticker-animate {
-            display: flex;
-            width: max-content;
-            animation: ticker-slide
-                <?php echo max(5, (int) get_theme_mod('ticker_speed', 20)); ?>
-                s linear infinite;
-            will-change: transform;
-        }
-
         @keyframes ticker-slide {
             0% {
                 transform: translateX(0);
@@ -233,6 +223,23 @@
             100% {
                 transform: translateX(-50%);
             }
+        }
+
+        @-webkit-keyframes ticker-slide {
+            0% {
+                -webkit-transform: translateX(0);
+            }
+
+            100% {
+                -webkit-transform: translateX(-50%);
+            }
+        }
+
+        .ticker-animate {
+            display: flex;
+            width: max-content;
+            animation: ticker-slide 20s linear infinite;
+            will-change: transform;
         }
 
         .ticker-animate:hover {
@@ -289,36 +296,38 @@
                     });
                 }, 300);
             });
-            // Mobile Search Logic
-            const mobileInput = document.getElementById('tigc-mobile-search-input');
-            const mobileResultsContainer = document.getElementById('tigc-mobile-search-results');
-            let mobileDebounceTimer; // Separate timer for mobile
+        });
 
-            if (mobileInput && mobileResultsContainer) {
-                const mobileList = mobileResultsContainer.querySelector('ul');
+        // Mobile Search Logic
+        const mobileInput = document.getElementById('tigc-mobile-search-input');
+        const mobileResultsContainer = document.getElementById('tigc-mobile-search-results');
+        let mobileDebounceTimer; // Separate timer for mobile
 
-                mobileInput.addEventListener('input', function (e) {
-                    clearTimeout(mobileDebounceTimer);
-                    const term = e.target.value.trim();
+        if (mobileInput && mobileResultsContainer) {
+            const mobileList = mobileResultsContainer.querySelector('ul');
 
-                    if (term.length < 2) {
-                        mobileResultsContainer.classList.add('hidden');
-                        return;
-                    }
+            mobileInput.addEventListener('input', function (e) {
+                clearTimeout(mobileDebounceTimer);
+                const term = e.target.value.trim();
 
-                    mobileDebounceTimer = setTimeout(() => {
-                        const url = '<?php echo admin_url('admin-ajax.php'); ?>?action=tigc_ajax_search&term=' + encodeURIComponent(term);
+                if (term.length < 2) {
+                    mobileResultsContainer.classList.add('hidden');
+                    return;
+                }
 
-                        fetch(url)
-                            .then(r => r.json())
-                            .then(res => {
-                                if (res.success && res.data.length > 0) {
-                                    mobileList.innerHTML = '';
-                                    res.data.forEach(item => {
-                                        const li = document.createElement('li');
-                                        const gmpHtml = item.gmp ? `<span class="text-xs font-bold text-neon-emerald whitespace-nowrap">+₹${item.gmp}</span>` : '';
+                mobileDebounceTimer = setTimeout(() => {
+                    const url = '<?php echo admin_url('admin-ajax.php'); ?>?action=tigc_ajax_search&term=' + encodeURIComponent(term);
 
-                                        li.innerHTML = `
+                    fetch(url)
+                        .then(r => r.json())
+                        .then(res => {
+                            if (res.success && res.data.length > 0) {
+                                mobileList.innerHTML = '';
+                                res.data.forEach(item => {
+                                    const li = document.createElement('li');
+                                    const gmpHtml = item.gmp ? `<span class="text-xs font-bold text-neon-emerald whitespace-nowrap">+₹${item.gmp}</span>` : '';
+
+                                    li.innerHTML = `
                                             <a href="<?php echo home_url('/ipo-details/'); ?>?slug=${item.slug}" class="flex items-center justify-between p-3 hover:bg-slate-800/50 transition-colors border-b border-border-navy last:border-0">
                                                 <div class="overflow-hidden mr-2">
                                                     <p class="text-xs font-bold text-white truncate">${item.name}</p>
@@ -326,28 +335,27 @@
                                                 </div>
                                                 ${gmpHtml}
                                             </a>`;
-                                        mobileList.appendChild(li);
-                                    });
-                                    mobileResultsContainer.classList.remove('hidden');
-                                } else {
-                                    mobileList.innerHTML = '<li class="p-3 text-xs text-slate-500 text-center">No results found.</li>';
-                                    mobileResultsContainer.classList.remove('hidden');
-                                }
-                            })
-                            .catch(err => {
-                                console.error('Mobile search error:', err);
-                            });
-                    }, 300);
-                });
-            }
-
-            document.addEventListener('click', function (e) {
-                if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
-                    resultsContainer.classList.add('hidden');
-                }
-                if (mobileInput && !mobileInput.contains(e.target) && mobileResultsContainer && !mobileResultsContainer.contains(e.target)) {
-                    mobileResultsContainer.classList.add('hidden');
-                }
+                                    mobileList.appendChild(li);
+                                });
+                                mobileResultsContainer.classList.remove('hidden');
+                            } else {
+                                mobileList.innerHTML = '<li class="p-3 text-xs text-slate-500 text-center">No results found.</li>';
+                                mobileResultsContainer.classList.remove('hidden');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Mobile search error:', err);
+                        });
+                }, 300);
             });
+        }
+
+        document.addEventListener('click', function (e) {
+            if (searchInput && !searchInput.contains(e.target) && resultsContainer && !resultsContainer.contains(e.target)) {
+                resultsContainer.classList.add('hidden');
+            }
+            if (mobileInput && !mobileInput.contains(e.target) && mobileResultsContainer && !mobileResultsContainer.contains(e.target)) {
+                mobileResultsContainer.classList.add('hidden');
+            }
         });
     </script>
