@@ -96,32 +96,64 @@ get_header();
         </div>
     </div>
     -->
-    <section class="mb-10 text-center lg:text-left pt-6">
+    <section class="mb-10 pt-6">
         <?php
-        $hero_badge = get_theme_mod('hero_badge_text', 'Live Market Data • Mumbai / Gujarat');
-        // Only show if badge has text
-        if (!empty($hero_badge)):
-            ?>
-            <div class="inline-block px-3 py-1 rounded-full bg-slate-800 border border-slate-700 mb-4">
+        $show_hero_image = get_theme_mod('hero_show_image', false);
+        $hero_image_url = get_theme_mod('hero_image');
+        ?>
+        <div class="<?php echo $show_hero_image ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : ''; ?>">
+            <!-- Content Column -->
+            <div class="<?php echo $show_hero_image ? 'text-left' : 'text-center lg:text-left'; ?>">
+                <?php
+                $hero_badge = get_theme_mod('hero_badge_text', 'Live Market Data • Mumbai / Gujarat');
+                if (!empty($hero_badge)):
+                    ?>
+                    <div class="inline-block px-3 py-1 rounded-full bg-slate-800 border border-slate-700 mb-4">
+                        <p
+                            class="text-[10px] mobile:text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
+                            <span class="relative flex h-2 w-2">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            </span>
+                            <?php echo esc_html($hero_badge); ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+                <h1 class="text-white text-[40px] lg:text-[56px] font-black leading-none mb-4 tracking-tighter">
+                    <?php echo esc_html(get_theme_mod('hero_headline_1', 'Stop Guessing.')); ?> <br>
+                    <span
+                        class="text-white"><?php echo esc_html(get_theme_mod('hero_headline_prefix', 'Start ')); ?></span>
+                    <span
+                        class="text-hero-highlight"><?php echo esc_html(get_theme_mod('hero_headline_2', 'Improving.')); ?></span>
+                </h1>
                 <p
-                    class="text-[10px] mobile:text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
-                    <span class="relative flex h-2 w-2">
-                        <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                    </span>
-                    <?php echo esc_html($hero_badge); ?>
+                    class="text-slate-400 text-lg max-w-2xl font-medium leading-relaxed <?php echo $show_hero_image ? '' : 'mx-auto lg:mx-0'; ?>">
+                    <?php echo nl2br(esc_html(get_theme_mod('hero_description', "We track the Grey Market Premium (GMP) so you don't have to rely on rumors. Real-time data for Mainboard & SME IPOs, direct from the street to your screen."))); ?>
                 </p>
             </div>
-        <?php endif; ?>
-        <h1 class="text-white text-[40px] lg:text-[56px] font-black leading-none mb-4 tracking-tighter">
-            <?php echo esc_html(get_theme_mod('hero_headline_1', 'Stop Guessing.')); ?> <br>
-            <span class="text-white"><?php echo esc_html(get_theme_mod('hero_headline_prefix', 'Start ')); ?></span>
-            <span class="text-hero-highlight"><?php echo esc_html(get_theme_mod('hero_headline_2', 'Improving.')); ?></span>
-        </h1>
-        <p class="text-slate-400 text-lg max-w-2xl font-medium leading-relaxed">
-          <?php echo nl2br(esc_html(get_theme_mod('hero_description', "We track the Grey Market Premium (GMP) so you don't have to rely on rumors. Real-time data for Mainboard & SME IPOs, direct from the street to your screen."))); ?>
-        </p>
+
+            <!-- Image Column -->
+            <?php if ($show_hero_image): ?>
+                <div class="hidden lg:block relative">
+                    <?php if ($hero_image_url): ?>
+                        <img src="<?php echo esc_url($hero_image_url); ?>" alt="Hero Image"
+                            class="w-full h-auto rounded-2xl shadow-2xl border border-white/5 bg-slate-800/50">
+                    <?php else: ?>
+                        <!-- Placeholder if enabled but no image selected -->
+                        <div
+                            class="w-full aspect-video rounded-2xl bg-slate-800/50 border border-dashed border-slate-700 flex items-center justify-center">
+                            <span class="text-slate-600 text-sm font-bold uppercase tracking-widest">Hero Image
+                                Placeholder</span>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Glow Effect -->
+                    <div class="absolute -inset-4 bg-primary/20 blur-3xl -z-10 rounded-[100%] opacity-40"></div>
+                </div>
+            <?php endif; ?>
+        </div>
     </section>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
         <div class="flex flex-col gap-2 rounded-xl p-6 border border-border-navy bg-card-dark">

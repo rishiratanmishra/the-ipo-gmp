@@ -219,6 +219,22 @@ function ipopro_customize_register($wp_customize)
         'section' => 'ipopro_hero_section',
     ]));
 
+    // Show Hero Image
+    $wp_customize->add_setting('hero_show_image', ['default' => false, 'sanitize_callback' => 'wp_validate_boolean']);
+    $wp_customize->add_control('hero_show_image', [
+        'label' => __('Show Hero Image', 'ipo-premium'),
+        'description' => __('Enable 2-column layout with image on the right.', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+        'type' => 'checkbox',
+    ]);
+
+    // Hero Image Upload
+    $wp_customize->add_setting('hero_image', ['default' => '', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hero_image', [
+        'label' => __('Hero Image', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+    ]));
+
     // ==========================================
     // SECTION 5: HEADER SETTINGS
     // ==========================================
