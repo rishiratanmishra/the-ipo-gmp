@@ -28,7 +28,7 @@
                         </h2>
                     </a>
                 <?php endif; ?>
-                <p class="text-slate-400 text-[13px] leading-relaxed font-normal">
+                <p class="text-slate-400 text-[13px] leading-relaxed font-normal font-body">
                     <?php echo esc_html(get_theme_mod('footer_description', 'The leading independent provider of IPO intelligence, subscription data, and exhaustive Grey Market Premium analysis.')); ?>
                 </p>
                 <!-- Socials -->
@@ -85,7 +85,7 @@
                 <?php if (get_theme_mod('footer_col1_menu')):
                     $menu_id = get_theme_mod('footer_col1_menu');
                     ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">
                         <?php echo esc_html(get_theme_mod('footer_col1_title', 'Intelligence')); ?>
                     </h4>
                     <?php wp_nav_menu([
@@ -110,6 +110,7 @@
                             font-weight: 500;
                             transition: color 0.2s;
                             text-decoration: none;
+                            font-family: var(--font-body);
                         }
 
                         .space-y-4 li a:hover {
@@ -119,18 +120,19 @@
                 <?php elseif (is_active_sidebar('footer-1')): ?>
                     <?php dynamic_sidebar('footer-1'); ?>
                 <?php else: ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">
                         <?php echo esc_html(get_theme_mod('footer_col1_title', 'Intelligence')); ?>
                     </h4>
                     <ul class="space-y-4">
                         <li><a href="<?php echo home_url('/'); ?>"
-                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">Mainboard
+                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors font-body">Mainboard
                                 IPO Tracker</a></li>
                         <li><a href="<?php echo home_url('/sme-ipos/'); ?>"
-                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">SME IPO
+                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors font-body">SME
+                                IPO
                                 Monitoring</a></li>
                         <li><a href="<?php echo home_url('/buybacks/'); ?>"
-                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">Buyback
+                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors font-body">Buyback
                                 Directory</a></li>
                     </ul>
                 <?php endif; ?>
@@ -141,7 +143,7 @@
                 <?php if (get_theme_mod('footer_col2_menu')):
                     $menu_id = get_theme_mod('footer_col2_menu');
                     ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">
                         <?php echo esc_html(get_theme_mod('footer_col2_title', 'Investor Tools')); ?>
                     </h4>
                     <?php wp_nav_menu([
@@ -152,15 +154,15 @@
                 <?php elseif (is_active_sidebar('footer-2')): ?>
                     <?php dynamic_sidebar('footer-2'); ?>
                 <?php else: ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">
                         <?php echo esc_html(get_theme_mod('footer_col2_title', 'Investor Tools')); ?>
                     </h4>
                     <ul class="space-y-4">
                         <li><a href="#"
-                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">GMP
+                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors font-body">GMP
                                 Historical Data</a></li>
                         <li><a href="#"
-                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">Market
+                                class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors font-body">Market
                                 News Wire</a></li>
                     </ul>
                 <?php endif; ?>
@@ -171,7 +173,7 @@
                 <?php if (get_theme_mod('footer_col3_menu')):
                     $menu_id = get_theme_mod('footer_col3_menu');
                     ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">
                         <?php echo esc_html(get_theme_mod('footer_col3_title', 'The Platform')); ?>
                     </h4>
                     <?php wp_nav_menu([
@@ -182,18 +184,20 @@
                 <?php elseif (is_active_sidebar('footer-3')): ?>
                     <?php dynamic_sidebar('footer-3'); ?>
                 <?php else: ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">
                         <?php echo esc_html(get_theme_mod('footer_col3_title', 'The Platform')); ?>
                     </h4>
                     <ul class="space-y-4">
                         <li><a href="#"
-                                class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors">Privacy &
+                                class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors font-body">Privacy
+                                &
                                 Data Policy</a></li>
                         <li><a href="#"
-                                class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors">Terms of
+                                class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors font-body">Terms
+                                of
                                 Service</a></li>
                         <li><a href="#"
-                                class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors">Disclaimer</a>
+                                class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors font-body">Disclaimer</a>
                         </li>
                     </ul>
                 <?php endif; ?>
@@ -203,7 +207,7 @@
         <!-- Bottom Footer -->
         <div class="pt-10 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex flex-col gap-1">
-                <p class="text-[12px] text-slate-500 font-medium">
+                <p class="text-[12px] text-slate-500 font-medium font-body">
                     ©
                     <?php echo date('Y'); ?> <span
                         class="text-slate-300"><?php echo esc_html(get_theme_mod('footer_copyright', 'IPO GMP Premium')); ?></span>.

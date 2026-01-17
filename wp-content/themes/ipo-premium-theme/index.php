@@ -10,21 +10,57 @@ get_header();
 <main class="max-w-[1400px] mx-auto px-4 md:px-10 py-16">
 
     <!-- Hero Section with Subtle Glow -->
-    <header class="relative mb-24 text-left">
+    <!-- Hero Section with Subtle Glow -->
+    <?php
+    // Hero Settings
+    $h_prefix = get_theme_mod('hero_headline_prefix', 'Start ');
+    $h_text1 = get_theme_mod('hero_headline_1', 'Stop Guessing.');
+    $h_text2 = get_theme_mod('hero_headline_2', 'Improving.');
+    $hero_desc = get_theme_mod('hero_description', "We track the Grey Market Premium (GMP) so you don't have to rely on rumors. Real-time data for Mainboard & SME IPOs, direct from the street to your screen.");
+
+    $show_image = get_theme_mod('hero_show_image', false);
+    $hero_image = get_theme_mod('hero_image', '');
+
+    $container_class = $show_image ? 'grid grid-cols-1 lg:grid-cols-2 gap-12 items-center' : 'text-left';
+    ?>
+    <header class="relative mb-24 <?php echo $container_class; ?>">
         <!-- Background Glow Effect -->
         <div
             class="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] h-[300px] bg-primary/20 blur-[120px] rounded-full pointer-events-none z-0">
         </div>
 
         <div class="relative z-10">
-            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter mb-6 leading-tight">
-                <span class="text-white">Financial</span>
-                <span class="text-neon-emerald">Insights.</span>
+            <!-- Badge -->
+            <?php if ($badge_text = get_theme_mod('hero_badge_text', 'LIVE MARKET DATA • MUMBAI / GUJARAT')): ?>
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+                        <?php echo esc_html($badge_text); ?>
+                    </span>
+                </div>
+            <?php endif; ?>
+
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter mb-6 leading-tight font-display">
+                <span class="text-white block md:inline"><?php echo esc_html($h_prefix . $h_text1); ?></span>
+                <span class="text-hero-highlight block md:inline"><?php echo esc_html($h_text2); ?></span>
             </h1>
-            <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-medium leading-relaxed">
-                Expert analysis, IPO breakdowns, and market trends curated for the intelligent investor.
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-medium leading-relaxed font-body">
+                <?php echo esc_html($hero_desc); ?>
             </p>
         </div>
+
+        <?php if ($show_image && $hero_image): ?>
+            <div class="relative z-10 hidden lg:block">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+                    <img src="<?php echo esc_url($hero_image); ?>" alt="Market Intelligence"
+                        class="w-full h-auto transform group-hover:scale-105 transition-transform duration-700">
+                </div>
+            </div>
+        <?php endif; ?>
     </header>
 
     <?php

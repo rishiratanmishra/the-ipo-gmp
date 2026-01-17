@@ -87,17 +87,31 @@
             class="flex items-center justify-between whitespace-nowrap bg-header-dark/95 backdrop-blur-md px-4 md:px-10 py-3.5 border-b border-white/5">
             <div class="flex items-center gap-10">
                 <!-- Logo -->
-                <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3 group">
-                    <?php if (has_custom_logo()): ?>
-                        <?php the_custom_logo(); ?>
+                <!-- Logo -->
+                <div class="flex items-center gap-3 group">
+                    <?php 
+                    $header_logo = get_theme_mod('header_logo');
+                    $logo_width  = get_theme_mod('header_logo_width', '150');
+                    
+                    if ($header_logo): ?>
+                        <a href="<?php echo home_url('/'); ?>" class="block">
+                            <img src="<?php echo esc_url($header_logo); ?>" 
+                                 alt="<?php bloginfo('name'); ?>" 
+                                 style="width: <?php echo esc_attr($logo_width); ?>px; height: auto;" 
+                                 class="object-contain" />
+                        </a>
+                    <?php elseif (has_custom_logo()): ?>
+                        <div class="custom-logo-wrapper" style="max-width: <?php echo esc_attr($logo_width); ?>px;">
+                             <?php the_custom_logo(); ?>
+                        </div>
                     <?php else: ?>
-                        <h2
-                            class="text-white text-2xl font-black leading-none tracking-tighter flex items-center font-display">
-                            IPO<span class="text-neon-emerald">GMP</span><span
-                                class="text-primary text-4xl leading-none">.</span>
-                        </h2>
+                        <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3">
+                            <h2 class="text-white text-2xl font-black leading-none tracking-tighter flex items-center font-display">
+                                IPO<span class="text-neon-emerald">GMP</span><span class="text-primary text-4xl leading-none">.</span>
+                            </h2>
+                        </a>
                     <?php endif; ?>
-                </a>
+                </div>
 
                 <!-- Search Bar (Header) -->
                 <form action="<?php echo home_url('/ipo-details/'); ?>" method="GET"

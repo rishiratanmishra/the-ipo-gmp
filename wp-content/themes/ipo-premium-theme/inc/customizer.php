@@ -243,6 +243,25 @@ function ipopro_customize_register($wp_customize)
         'panel' => 'ipopro_theme_panel',
     ]);
 
+    // Header Logo (Custom)
+    $wp_customize->add_setting('header_logo', ['default' => '', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'header_logo', [
+        'label' => __('Header Logo', 'ipo-premium'),
+        'description' => __('Overrides the standard Site Identity logo if set.', 'ipo-premium'),
+        'section' => 'ipopro_header_section',
+        'priority' => 1,
+    ]));
+
+    // Header Logo Width
+    $wp_customize->add_setting('header_logo_width', ['default' => '150', 'sanitize_callback' => 'absint']);
+    $wp_customize->add_control('header_logo_width', [
+        'label' => __('Logo Width (px)', 'ipo-premium'),
+        'section' => 'ipopro_header_section',
+        'type' => 'range',
+        'priority' => 2,
+        'input_attrs' => ['min' => 20, 'max' => 500, 'step' => 5],
+    ]);
+
     // Ticker Label
     $wp_customize->add_setting('ticker_label', ['default' => 'Market Pulse:', 'sanitize_callback' => 'sanitize_text_field']);
     $wp_customize->add_control('ticker_label', [

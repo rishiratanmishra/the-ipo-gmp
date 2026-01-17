@@ -12,7 +12,7 @@ get_header();
 <main class="max-w-[800px] mx-auto px-6 py-12">
 
     <div class="text-center mb-12">
-        <h1 class="text-3xl font-black text-white mb-4">Let's Talk</h1>
+        <h1 class="text-3xl font-black text-white mb-4 font-display">Let's Talk</h1>
         <p class="text-slate-400 text-lg">
             Spotted a wrong GMP rate? Have a suggestion? Or just want to say hi?
         </p>
@@ -24,7 +24,7 @@ get_header();
         <!-- Email -->
         <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-border-navy pb-8 mb-8">
             <div class="text-center md:text-left">
-                <h3 class="text-white font-bold text-xl mb-1">Email Us</h3>
+                <h3 class="text-white font-bold text-xl mb-1 font-display">Email Us</h3>
                 <p class="text-slate-400 text-sm">The best way to reach us. We reply within 24 hours.</p>
             </div>
             <a href="mailto:contact@theipogmp.com"
@@ -36,7 +36,7 @@ get_header();
         <!-- Socials -->
         <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 mb-8 border-b border-border-navy">
             <div class="text-center md:text-left">
-                <h3 class="text-white font-bold text-xl mb-1">Social Media</h3>
+                <h3 class="text-white font-bold text-xl mb-1 font-display">Social Media</h3>
                 <p class="text-slate-400 text-sm">Ping us on Twitter for faster queries.</p>
             </div>
             <div class="flex gap-4">
@@ -53,7 +53,8 @@ get_header();
 
         <!-- Physical Address (Optional but helps AdSense Trust) -->
         <div class="text-center md:text-left">
-            <h3 class="text-slate-500 font-bold text-xs uppercase tracking-widest mb-2">Office Location</h3>
+            <h3 class="text-slate-500 font-bold text-xs uppercase tracking-widest mb-2 font-display">Office Location
+            </h3>
             <p class="text-slate-300">
                 Sector 62, Noida<br>
                 Uttar Pradesh, India - 201301

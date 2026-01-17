@@ -19,7 +19,7 @@ if (!defined('IPO_THEME_URI')) {
 function ipopro_scripts()
 {
     // 1. Tailwind (CDN for now, can be swapped for local build)
-    wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,container-queries', [], null);
+    wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,container-queries,typography', [], null);
 
     // 2. Google Fonts (Dynamic based on Customizer)
     $heading_font = get_theme_mod('heading_font', 'Inter');
@@ -61,6 +61,7 @@ function ipopro_scripts()
                         "purple-accent": "#A855F7" 
                     },
                     fontFamily: { 
+                        "sans": [ "var(--font-body)", "sans-serif" ],
                         "display": [ "var(--font-heading)", "sans-serif" ],
                         "body": [ "var(--font-body)", "sans-serif" ]
                     }
@@ -118,7 +119,7 @@ function ipopro_widgets_init()
         'description' => esc_html__('Add widgets here (e.g. Navigation Menu).', 'ipo-premium'),
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-8">',
         'after_widget' => '</div>',
-        'before_title' => '<h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">',
+        'before_title' => '<h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">',
         'after_title' => '</h4>',
     ]);
     register_sidebar([
@@ -127,7 +128,7 @@ function ipopro_widgets_init()
         'description' => esc_html__('Add widgets here.', 'ipo-premium'),
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-8">',
         'after_widget' => '</div>',
-        'before_title' => '<h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">',
+        'before_title' => '<h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">',
         'after_title' => '</h4>',
     ]);
     register_sidebar([
@@ -136,7 +137,7 @@ function ipopro_widgets_init()
         'description' => esc_html__('Add widgets here.', 'ipo-premium'),
         'before_widget' => '<div id="%1$s" class="widget %2$s mb-8">',
         'after_widget' => '</div>',
-        'before_title' => '<h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">',
+        'before_title' => '<h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-display">',
         'after_title' => '</h4>',
     ]);
 }
