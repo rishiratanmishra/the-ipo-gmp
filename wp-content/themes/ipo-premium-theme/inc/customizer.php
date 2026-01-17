@@ -286,7 +286,15 @@ function ipopro_customize_register($wp_customize)
         'type' => 'text',
     ]);
 
-    // Social Links (Instagram & YouTube)
+    // Operational Badge Link
+    $wp_customize->add_setting('footer_badge_link', ['default' => '', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control('footer_badge_link', [
+        'label' => __('Badge Link (Optional)', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'url',
+    ]);
+
+    // Social Links (Instagram & YouTube & Twitter & LinkedIn)
     $wp_customize->add_setting('social_instagram', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
     $wp_customize->add_control('social_instagram', [
         'label' => __('Instagram URL', 'ipo-premium'),
@@ -299,6 +307,85 @@ function ipopro_customize_register($wp_customize)
         'label' => __('YouTube URL', 'ipo-premium'),
         'section' => 'ipopro_footer_section',
         'type' => 'url',
+    ]);
+
+    $wp_customize->add_setting('social_twitter', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control('social_twitter', [
+        'label' => __('X (Twitter) URL', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'url',
+    ]);
+
+    $wp_customize->add_setting('social_linkedin', ['default' => '#', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control('social_linkedin', [
+        'label' => __('LinkedIn URL', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'url',
+    ]);
+
+    // Footer Logo
+    $wp_customize->add_setting('footer_logo', ['default' => '', 'sanitize_callback' => 'esc_url_raw']);
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'footer_logo', [
+        'label' => __('Footer Logo', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+    ]));
+
+    // Fetch Menus for Selection
+    $menus = wp_get_nav_menus();
+    $menu_choices = ['' => __('-- Select Menu --', 'ipo-premium')];
+    if (!empty($menus)) {
+        foreach ($menus as $menu) {
+            $menu_choices[$menu->term_id] = $menu->name;
+        }
+    }
+
+    // Footer Column Titles & Menus
+    // Col 1
+    $wp_customize->add_setting('footer_col1_title', ['default' => 'Intelligence', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('footer_col1_title', [
+        'label' => __('Column 1 Title', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting('footer_col1_menu', ['default' => '', 'sanitize_callback' => 'absint']);
+    $wp_customize->add_control('footer_col1_menu', [
+        'label' => __('Column 1 Menu', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'select',
+        'choices' => $menu_choices,
+    ]);
+
+    // Col 2
+    $wp_customize->add_setting('footer_col2_title', ['default' => 'Investor Tools', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('footer_col2_title', [
+        'label' => __('Column 2 Title', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting('footer_col2_menu', ['default' => '', 'sanitize_callback' => 'absint']);
+    $wp_customize->add_control('footer_col2_menu', [
+        'label' => __('Column 2 Menu', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'select',
+        'choices' => $menu_choices,
+    ]);
+
+    // Col 3
+    $wp_customize->add_setting('footer_col3_title', ['default' => 'The Platform', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('footer_col3_title', [
+        'label' => __('Column 3 Title', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting('footer_col3_menu', ['default' => '', 'sanitize_callback' => 'absint']);
+    $wp_customize->add_control('footer_col3_menu', [
+        'label' => __('Column 3 Menu', 'ipo-premium'),
+        'section' => 'ipopro_footer_section',
+        'type' => 'select',
+        'choices' => $menu_choices,
     ]);
 }
 add_action('customize_register', 'ipopro_customize_register');

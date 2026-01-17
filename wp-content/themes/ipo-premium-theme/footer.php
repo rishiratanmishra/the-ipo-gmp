@@ -12,18 +12,51 @@
 
             <!-- Branding & About -->
             <div class="space-y-8">
-                <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3 group">
-                    <h2
-                        class="text-white text-[28px] font-black leading-none tracking-tighter flex items-center font-display">
-                        IPO<span class="text-neon-emerald">GMP</span><span
-                            class="text-primary text-4xl leading-none">.</span>
-                    </h2>
-                </a>
+                <?php
+                $footer_logo = get_theme_mod('footer_logo');
+                if ($footer_logo): ?>
+                    <a href="<?php echo home_url('/'); ?>" class="block mb-6">
+                        <img src="<?php echo esc_url($footer_logo); ?>" alt="<?php bloginfo('name'); ?>"
+                            class="h-10 w-auto">
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3 group">
+                        <h2
+                            class="text-white text-[28px] font-black leading-none tracking-tighter flex items-center font-display">
+                            IPO<span class="text-neon-emerald">GMP</span><span
+                                class="text-primary text-4xl leading-none">.</span>
+                        </h2>
+                    </a>
+                <?php endif; ?>
                 <p class="text-slate-400 text-[13px] leading-relaxed font-normal">
                     <?php echo esc_html(get_theme_mod('footer_description', 'The leading independent provider of IPO intelligence, subscription data, and exhaustive Grey Market Premium analysis.')); ?>
                 </p>
                 <!-- Socials -->
                 <div class="flex items-center gap-5">
+                    <?php if (get_theme_mod('social_twitter')): ?>
+                        <a href="<?php echo esc_url(get_theme_mod('social_twitter', '#')); ?>"
+                            class="text-slate-500 hover:text-white transition-colors" target="_blank"
+                            aria-label="X (Twitter)">
+                            <!-- X Logo -->
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if (get_theme_mod('social_linkedin')): ?>
+                        <a href="<?php echo esc_url(get_theme_mod('social_linkedin', '#')); ?>"
+                            class="text-slate-500 hover:text-[#0077b5] transition-colors" target="_blank"
+                            aria-label="LinkedIn">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    <?php endif; ?>
+
                     <?php if (get_theme_mod('social_instagram')): ?>
                         <a href="<?php echo esc_url(get_theme_mod('social_instagram', '#')); ?>"
                             class="text-slate-500 hover:text-[#E1306C] transition-colors" target="_blank"
@@ -49,10 +82,46 @@
 
             <!-- Market Intelligence -->
             <div>
-                <?php if (is_active_sidebar('footer-1')): ?>
+                <?php if (get_theme_mod('footer_col1_menu')):
+                    $menu_id = get_theme_mod('footer_col1_menu');
+                    ?>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                        <?php echo esc_html(get_theme_mod('footer_col1_title', 'Intelligence')); ?>
+                    </h4>
+                    <?php wp_nav_menu([
+                        'menu' => $menu_id,
+                        'container' => false,
+                        'menu_class' => 'space-y-4',
+                        'link_before' => '',
+                        'link_after' => '',
+                    ]); ?>
+                    <!-- Style the items via css or filter, but for now standard ul output is okay if we add class to ul -->
+                    <!-- Note: default wp_nav_menu layout is li > a. We need to match styles. -->
+                    <style>
+                        /* Quick fix to style the menu items if not standard */
+                        .space-y-4 li {
+                            list-style: none;
+                            margin: 0;
+                        }
+
+                        .space-y-4 li a {
+                            color: #64748b;
+                            font-size: 13px;
+                            font-weight: 500;
+                            transition: color 0.2s;
+                            text-decoration: none;
+                        }
+
+                        .space-y-4 li a:hover {
+                            color: var(--color-primary);
+                        }
+                    </style>
+                <?php elseif (is_active_sidebar('footer-1')): ?>
                     <?php dynamic_sidebar('footer-1'); ?>
                 <?php else: ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">Intelligence</h4>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                        <?php echo esc_html(get_theme_mod('footer_col1_title', 'Intelligence')); ?>
+                    </h4>
                     <ul class="space-y-4">
                         <li><a href="<?php echo home_url('/'); ?>"
                                 class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">Mainboard
@@ -69,10 +138,23 @@
 
             <!-- Investor Tools -->
             <div>
-                <?php if (is_active_sidebar('footer-2')): ?>
+                <?php if (get_theme_mod('footer_col2_menu')):
+                    $menu_id = get_theme_mod('footer_col2_menu');
+                    ?>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                        <?php echo esc_html(get_theme_mod('footer_col2_title', 'Investor Tools')); ?>
+                    </h4>
+                    <?php wp_nav_menu([
+                        'menu' => $menu_id,
+                        'container' => false,
+                        'menu_class' => 'space-y-4',
+                    ]); ?>
+                <?php elseif (is_active_sidebar('footer-2')): ?>
                     <?php dynamic_sidebar('footer-2'); ?>
                 <?php else: ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">Investor Tools</h4>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                        <?php echo esc_html(get_theme_mod('footer_col2_title', 'Investor Tools')); ?>
+                    </h4>
                     <ul class="space-y-4">
                         <li><a href="#"
                                 class="text-slate-500 hover:text-primary text-[13px] font-medium transition-colors">GMP
@@ -86,10 +168,23 @@
 
             <!-- Corporate -->
             <div>
-                <?php if (is_active_sidebar('footer-3')): ?>
+                <?php if (get_theme_mod('footer_col3_menu')):
+                    $menu_id = get_theme_mod('footer_col3_menu');
+                    ?>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                        <?php echo esc_html(get_theme_mod('footer_col3_title', 'The Platform')); ?>
+                    </h4>
+                    <?php wp_nav_menu([
+                        'menu' => $menu_id,
+                        'container' => false,
+                        'menu_class' => 'space-y-4',
+                    ]); ?>
+                <?php elseif (is_active_sidebar('footer-3')): ?>
                     <?php dynamic_sidebar('footer-3'); ?>
                 <?php else: ?>
-                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">The Platform</h4>
+                    <h4 class="text-white font-bold text-xs uppercase tracking-[0.2em] mb-8 font-sans">
+                        <?php echo esc_html(get_theme_mod('footer_col3_title', 'The Platform')); ?>
+                    </h4>
                     <ul class="space-y-4">
                         <li><a href="#"
                                 class="text-slate-500 hover:text-white text-[13px] font-medium transition-colors">Privacy &
@@ -118,12 +213,26 @@
 
             <?php if (get_theme_mod('footer_badge', true)): ?>
                 <div class="flex items-center gap-8">
-                    <div class="flex items-center gap-2.5 px-4 py-2 bg-slate-900/50 border border-slate-800 rounded-full">
-                        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                            <?php echo esc_html(get_theme_mod('footer_badge_label', 'System Operational')); ?>
-                        </span>
-                    </div>
+                    <?php
+                    $badge_link = get_theme_mod('footer_badge_link');
+                    if ($badge_link):
+                        ?>
+                        <a href="<?php echo esc_url($badge_link); ?>" target="_blank"
+                            class="flex items-center gap-2.5 px-4 py-2 bg-slate-900/50 border border-slate-800 rounded-full hover:bg-slate-800/80 transition-colors group">
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 group-hover:animate-pulse"></div>
+                            <span
+                                class="text-[10px] text-slate-400 font-bold uppercase tracking-widest group-hover:text-slate-300 transition-colors">
+                                <?php echo esc_html(get_theme_mod('footer_badge_label', 'System Operational')); ?>
+                            </span>
+                        </a>
+                    <?php else: ?>
+                        <div class="flex items-center gap-2.5 px-4 py-2 bg-slate-900/50 border border-slate-800 rounded-full">
+                            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                                <?php echo esc_html(get_theme_mod('footer_badge_label', 'System Operational')); ?>
+                            </span>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         </div>
