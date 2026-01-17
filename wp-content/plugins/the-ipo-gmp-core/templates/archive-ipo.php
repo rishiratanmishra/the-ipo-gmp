@@ -56,8 +56,14 @@ get_header();
 
 <main class="max-w-[1280px] mx-auto px-4 md:px-10 py-8">
     <section class="mb-10 text-center lg:text-left pt-6">
-        <h1 class="text-white text-3xl md:text-5xl font-black leading-tight mb-4 tracking-tighter">
-            <?php echo esc_html($title); ?>
+        <h1 class="text-white text-5xl md:text-7xl font-black leading-none mb-6 tracking-tighter">
+            <?php
+            $title_parts = explode(' ', $title);
+            $last_word = array_pop($title_parts);
+            $main_part = implode(' ', $title_parts);
+            ?>
+            <span class="text-white"><?php echo esc_html($main_part); ?></span>
+            <span class="text-neon-emerald"><?php echo esc_html($last_word); ?>.</span>
         </h1>
         <p class="text-slate-400 text-base md:text-lg max-w-2xl font-medium leading-relaxed">
             <?php echo esc_html($desc); ?>

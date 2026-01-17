@@ -18,7 +18,8 @@ get_header();
 
         <div class="relative z-10">
             <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter mb-6 leading-tight">
-                Financial Insights
+                <span class="text-white">Financial</span>
+                <span class="text-neon-emerald">Insights.</span>
             </h1>
             <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-medium leading-relaxed">
                 Expert analysis, IPO breakdowns, and market trends curated for the intelligent investor.
