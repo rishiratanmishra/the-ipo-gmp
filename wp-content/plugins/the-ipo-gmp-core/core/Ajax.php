@@ -124,8 +124,13 @@ class Ajax
                         // Strictly Open/Live
                         $where .= " AND (status = 'open' OR status LIKE '%live%')";
                     } elseif ($filter_status === 'pre-listing') {
-                        // Closed / Allotment / Out (Not yet listed)
-                        $where .= " AND (status IN ('close', 'closed', 'allotment') OR status LIKE '%out%') AND status NOT LIKE '%list%'";
+                        // Match Homepage Logic: Allotment OR (Closed + Future Listing)
+                        // status IN ('allotment') OR status LIKE '%allotment%' OR (status IN ('close', 'closed') AND STR_TO_DATE(listing_date, '%b %d, %Y') >= CURDATE())
+                        $where .= " AND (
+                            status IN ('allotment') 
+                            OR status LIKE '%allotment%' 
+                            OR (status IN ('close', 'closed') AND STR_TO_DATE(listing_date, '%b %d, %Y') >= CURDATE())
+                        )";
                     } elseif ($filter_status === 'closed') {
                         // Actually Listed or just Closed
                         $where .= " AND (status LIKE '%list%' OR status IN ('close', 'closed'))";
@@ -148,9 +153,21 @@ class Ajax
             }
         } else {
             if ($context === 'buyback') {
-                $html .= '<div class="col-span-full py-12 text-center text-slate-500 font-medium">No records found matching your criteria.</div>';
+                $html .= '<div class="col-span-full py-12 text-center text-slate-500 font-medium flex flex-col items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-3xl text-slate-600">account_balance</span>
+                    <p>No Corporate Action currently.</p>
+                </div>';
             } else {
-                $html .= '<tr><td colspan="5" class="py-12 text-center text-slate-500">No records found.</td></tr>';
+                $term_msg = $context === 'sme' ? 'SME IPOs' : 'Mainboard IPOs';
+                $html .= '<tr><td colspan="5" class="py-12 text-center text-slate-500">
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-slate-600 mb-1">
+                            <span class="material-symbols-outlined text-2xl">bedtime</span>
+                        </div>
+                        <p class="text-white font-bold text-sm">Silence on the Street</p>
+                        <p class="text-slate-500 text-xs">No ' . $term_msg . ' match your filter.</p>
+                    </div>
+                </td></tr>';
             }
         }
 

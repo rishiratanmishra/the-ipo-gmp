@@ -15,17 +15,17 @@ $t_buybacks = $wpdb->prefix . 'buybacks';
 // 1. Determine Context
 $slug = get_post_field('post_name', get_post());
 $context = 'mainboard'; // default
-$title = 'Mainboard IPOs';
-$desc = 'Complete list of Mainboard IPOs including active, upcoming, and closed issues.';
+$title = 'Mainboard Radar';
+$desc = 'Tracking high-impact listings, GMP trends, and subscription data. Don\'t guess, check the data.';
 
 if (strpos($slug, 'sme') !== false) {
     $context = 'sme';
-    $title = 'SME IPOs';
-    $desc = 'Track all SME IPOs, listing gains, and subscription status.';
+    $title = 'SME Radar';
+    $desc = 'High Risk. High Reward. Real-time GMP and allotment odds for SME enthusiasts.';
 } elseif (strpos($slug, 'buyback') !== false) {
     $context = 'buyback';
-    $title = 'Buybacks';
-    $desc = 'Latest Share Buybacks, Tender Offers, and Open Market buybacks.';
+    $title = 'Buyback Scanner';
+    $desc = 'Don\'t sell cheap. Track live Tender Offers & Open Markets. Smart money exits here.';
 }
 
 // 2. Initial Data (Active by Default)
@@ -67,7 +67,8 @@ get_header();
     <!-- Filters & Search -->
     <div class="flex flex-wrap md:flex-row justify-between items-center gap-4 mb-6">
         <!-- Filter Buttons -->
-        <div class="flex p-1 bg-slate-900/50 rounded-xl border border-border-navy overflow-x-auto custom-scrollbar max-w-full">
+        <div
+            class="flex p-1 bg-slate-900/50 rounded-xl border border-border-navy overflow-x-auto custom-scrollbar max-w-full">
             <button onclick="setFilter('active')" id="btn-active"
                 class="filter-btn active px-4 py-2 rounded-lg text-sm font-bold text-white bg-slate-800 transition-all whitespace-nowrap">Active</button>
 

@@ -93,9 +93,9 @@ get_header();
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
         <div>
             <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">Buyback <span
-                    class="text-purple-500">Watch</span></h1>
-            <p class="text-slate-400 text-sm font-medium">Tracking <?php echo $total_items; ?> Tender Offers & Open
-                Market Buybacks.</p>
+                    class="text-purple-500">Scanner</span></h1>
+            <p class="text-slate-400 text-sm font-medium">Don't sell cheap. Track <?php echo $total_items; ?> live
+                Tender Offers & Open Markets.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
@@ -193,8 +193,9 @@ get_header();
                 </div>
             <?php endforeach; else: ?>
             <div class="col-span-full py-20 text-center bg-[#0B1220] rounded-2xl border border-dashed border-border-navy">
-                <span class="material-symbols-outlined text-4xl text-slate-700 mb-4">search_off</span>
-                <p class="text-slate-500">No buyback events found for the current selection.</p>
+                <span class="material-symbols-outlined text-4xl text-slate-700 mb-4">account_balance</span>
+                <h4 class="text-white font-bold mb-1">No Corporate Action</h4>
+                <p class="text-slate-500 font-medium text-sm">Markets are quiet on the buyback front.</p>
                 <?php if ($status || $search): ?>
                     <a href="<?php echo esc_url($base_url); ?>"
                         class="mt-4 text-xs font-bold text-purple-500 hover:text-purple-400 transition-colors">Clear All

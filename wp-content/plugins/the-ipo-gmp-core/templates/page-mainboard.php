@@ -41,10 +41,11 @@ if (!empty($status)) {
     $today = current_time('Y-m-d'); // Use WP local time
 
     if ($s === 'pre-listing') {
-        // Closed/Allotment but Future/Today Listing
+        // Match Homepage Logic: Allotment OR (Closed + Future Listing)
         $where_clauses[] = "(
-            (status IN ('close', 'closed', 'allotment') OR status LIKE '%allotment%') 
-            AND STR_TO_DATE(listing_date, '%b %d, %Y') >= '$today'
+            status IN ('allotment') 
+            OR status LIKE '%allotment%'
+            OR (status IN ('close', 'closed') AND STR_TO_DATE(listing_date, '%b %d, %Y') >= '$today')
         )";
     } elseif ($s === 'listed') {
         // Explicitly Listed OR (Closed/Allotment AND Past Listing)
@@ -118,8 +119,9 @@ get_header();
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
         <div>
             <h1 class="text-white text-3xl font-black tracking-tight mb-2">Mainboard <span
-                    class="text-primary">Market</span></h1>
-            <p class="text-slate-400 text-sm font-medium">Tracking <?php echo $total_items; ?> Mainboard IPOs</p>
+                    class="text-primary">Radar</span></h1>
+            <p class="text-slate-400 text-sm font-medium">Tracking <?php echo $total_items; ?> high-impact listings.
+                Don't believe the hype, check the data.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
@@ -151,7 +153,8 @@ get_header();
                 onsubmit="this.q.value = this.q.value.trim(); if(this.q.value === '') return false;">
                 <span
                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors">search</span>
-                <input type="text" id="ipo-search-input" name="q" value="<?php echo esc_attr($search); ?>" placeholder="Search company..."
+                <input type="text" id="ipo-search-input" name="q" value="<?php echo esc_attr($search); ?>"
+                    placeholder="Search company..."
                     class="bg-slate-900 border border-slate-700 text-white text-sm rounded-lg pl-10 pr-4 py-2.5 w-full sm:w-64 focus:ring-1 focus:ring-primary focus:border-primary placeholder-slate-600">
                 <?php if ($search): ?>
                     <a href="?"
@@ -275,8 +278,9 @@ get_header();
 
             <?php else: ?>
                 <div class="flex flex-col items-center justify-center py-20">
-                    <span class="material-symbols-outlined text-4xl text-slate-700 mb-2">search_off</span>
-                    <p class="text-slate-500 font-medium">No IPOs found matching criteria.</p>
+                    <span class="material-symbols-outlined text-4xl text-slate-700 mb-2">bedtime</span>
+                    <h4 class="text-white font-bold mb-1">Silence on the Street</h4>
+                    <p class="text-slate-500 font-medium text-sm">No Mainboard IPOs found here.</p>
                     <?php if ($status || $search): ?>
                         <a href="?" class="mt-4 text-xs font-bold text-primary hover:underline">Clear Filters</a>
                     <?php endif; ?>
@@ -330,7 +334,7 @@ get_header();
         if (searchInput && ajaxContainer) {
             searchInput.addEventListener('input', function () {
                 clearTimeout(searchTimeout);
-                const query = this.value; 
+                const query = this.value;
 
                 searchTimeout = setTimeout(() => {
                     ajaxContainer.style.opacity = '0.5';

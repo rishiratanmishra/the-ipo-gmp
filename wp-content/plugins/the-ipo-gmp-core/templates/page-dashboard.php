@@ -97,10 +97,25 @@ get_header();
     </div>
     -->
     <section class="mb-10 text-center lg:text-left pt-6">
-        <h1 class="text-white text-[44px] lg:text-[52px] font-black leading-tight mb-4 tracking-tighter">Live IPO <span
-                class="text-neon-emerald">GMP</span>, Subscription & Allotment Status</h1>
-        <p class="text-slate-400 text-lg max-w-2xl font-medium leading-relaxed">Track India's Real-time Grey Market
-            Premium (GMP), Live Subscription numbers, and Listing Estimates for all Mainboard & SME IPOs.</p>
+        <div class="inline-block px-3 py-1 rounded-full bg-slate-800 border border-slate-700 mb-4">
+            <p
+                class="text-[10px] mobile:text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                Live Market Data • Mumbai / Gujarat
+            </p>
+        </div>
+        <h1 class="text-white text-[40px] lg:text-[56px] font-black leading-none mb-4 tracking-tighter">
+            Stop Guessing. <br>
+            Start <span class="text-neon-emerald">Improving.</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl font-medium leading-relaxed">
+            We track the <strong>Grey Market Premium (GMP)</strong> so you don't have to rely on rumors.
+            Real-time data for Mainboard & SME IPOs, direct from the street to your screen.
+        </p>
     </section>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
         <div class="flex flex-col gap-2 rounded-xl p-6 border border-border-navy bg-card-dark">
@@ -263,13 +278,11 @@ get_header();
                                             <div class="flex flex-col items-center justify-center gap-3">
                                                 <div
                                                     class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-slate-600 mb-1">
-                                                    <span
-                                                        class="material-symbols-outlined text-2xl">sentiment_content</span>
+                                                    <span class="material-symbols-outlined text-2xl">bedtime</span>
                                                 </div>
-                                                <p class="text-slate-400 font-medium text-sm">No active Mainboard IPOs
-                                                    currently.</p>
-                                                <p class="text-slate-600 text-xs">Switch to 'Upcoming' tab to see future
-                                                    listings.</p>
+                                                <p class="text-white font-bold text-sm">Market is Sleeping</p>
+                                                <p class="text-slate-500 text-xs">No active Mainboard IPOs right now.
+                                                    <br>Whales are waiting, you should too.</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -567,10 +580,16 @@ get_header();
             <!-- Latest News Section -->
             <section>
                 <div class="flex items-center justify-between mb-4 px-1">
-                    <h2 class="text-white text-2xl font-bold tracking-tight">Latest IPO Intelligence</h2>
+                    <h2 class="text-white text-2xl font-bold tracking-tight">Market Pulse <span class="text-primary text-sm font-normal ml-2 hidden md:inline-block">/ Expert Views</span></h2>
                     <a class="text-primary text-xs font-bold hover:underline"
-                        href="<?php echo home_url('/blog/'); ?>">Read Analysis →</a>
+                        href="<?php echo home_url('/blog/'); ?>">Read Full Reports →</a>
                 </div>
+                <!-- ... grid ... --> 
+                <!-- Note: The grid content loop is fine, just updating the empty state below -->
+                
+                <!-- WE NEED TO TARGET THE EMPTY STATE ONLY IF POSSIBLE OR JUST REPLACE THE WHOLE BLOCK IF EASIER. 
+                     Checking line numbers, the loop is 574-606. Empty state is 608-619. 
+                     I will replace the start of section to the end of empty state to be safe and clean. -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <?php
                     $recent_posts = get_posts(array('numberposts' => 3, 'post_status' => 'publish'));
@@ -610,11 +629,12 @@ get_header();
                             class="col-span-3 py-16 text-center border border-dashed border-border-navy rounded-xl flex flex-col items-center justify-center gap-3 bg-slate-900/20">
                             <div
                                 class="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center text-slate-600 mb-2">
-                                <span class="material-symbols-outlined text-3xl">newsmode</span>
+                                <span class="material-symbols-outlined text-3xl">edit_note</span>
                             </div>
-                            <h4 class="text-slate-300 font-bold text-sm">No Analytics Published Yet</h4>
-                            <p class="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed">Our experts are analyzing the
-                                latest market trends. <br>Check back soon for in-depth insights.</p>
+                            <h4 class="text-slate-300 font-bold text-sm">Analysis Brewing...</h4>
+                            <p class="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed">
+                                Our writers are looking for the next breakout IPO. <br>New reports will drop here soon.
+                            </p>
                         </div>
                     <?php endif; ?>
                 </div>
