@@ -97,24 +97,30 @@ get_header();
     </div>
     -->
     <section class="mb-10 text-center lg:text-left pt-6">
-        <div class="inline-block px-3 py-1 rounded-full bg-slate-800 border border-slate-700 mb-4">
-            <p
-                class="text-[10px] mobile:text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
-                <span class="relative flex h-2 w-2">
-                    <span
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                </span>
-                Live Market Data • Mumbai / Gujarat
-            </p>
-        </div>
+        <?php
+        $hero_badge = get_theme_mod('hero_badge_text', 'Live Market Data • Mumbai / Gujarat');
+        // Only show if badge has text
+        if (!empty($hero_badge)):
+            ?>
+            <div class="inline-block px-3 py-1 rounded-full bg-slate-800 border border-slate-700 mb-4">
+                <p
+                    class="text-[10px] mobile:text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    <?php echo esc_html($hero_badge); ?>
+                </p>
+            </div>
+        <?php endif; ?>
         <h1 class="text-white text-[40px] lg:text-[56px] font-black leading-none mb-4 tracking-tighter">
-            Stop Guessing. <br>
-            Start <span class="text-neon-emerald">Improving.</span>
+            <?php echo esc_html(get_theme_mod('hero_headline_1', 'Stop Guessing.')); ?> <br>
+            <span class="text-white"><?php echo esc_html(get_theme_mod('hero_headline_prefix', 'Start ')); ?></span>
+            <span class="text-hero-highlight"><?php echo esc_html(get_theme_mod('hero_headline_2', 'Improving.')); ?></span>
         </h1>
         <p class="text-slate-400 text-lg max-w-2xl font-medium leading-relaxed">
-            We track the <strong>Grey Market Premium (GMP)</strong> so you don't have to rely on rumors.
-            Real-time data for Mainboard & SME IPOs, direct from the street to your screen.
+          <?php echo nl2br(esc_html(get_theme_mod('hero_description', "We track the Grey Market Premium (GMP) so you don't have to rely on rumors. Real-time data for Mainboard & SME IPOs, direct from the street to your screen."))); ?>
         </p>
     </section>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
@@ -617,9 +623,9 @@ get_header();
                                             $cats = get_the_category();
                                             $cat_name = !empty($cats) ? $cats[0]->name : 'Analysis';
                                             ?>
-                                                    <span
+                                            <span
                                                 class="px-2 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-lg text-[10px] font-bold text-white uppercase tracking-wider">
-                                                        <?php echo esc_html($cat_name); ?>
+                                                <?php echo esc_html($cat_name); ?>
                                             </span>
                                         </div>
                                     </div>

@@ -160,6 +160,66 @@ function ipopro_customize_register($wp_customize)
     ]);
 
     // ==========================================
+    // SECTION 4.5: HERO SECTION (NEW)
+    // ==========================================
+    $wp_customize->add_section('ipopro_hero_section', [
+        'title' => __('Hero Section', 'ipo-premium'),
+        'panel' => 'ipopro_theme_panel',
+        'priority' => 45, // Between Layout and Header
+    ]);
+
+    // Badge Text
+    $wp_customize->add_setting('hero_badge_text', ['default' => 'LIVE MARKET DATA • MUMBAI / GUJARAT', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('hero_badge_text', [
+        'label' => __('Badge Text', 'ipo-premium'),
+        'description' => __('Leave empty to hide the badge.', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+        'type' => 'text',
+    ]);
+
+    // Headline Part 1 (White)
+    $wp_customize->add_setting('hero_headline_1', ['default' => 'Stop Guessing.', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('hero_headline_1', [
+        'label' => __('Headline Part 1', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+        'type' => 'text',
+    ]);
+
+    // Headline Part 2 (Color)
+    $wp_customize->add_setting('hero_headline_2', ['default' => 'Improving.', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('hero_headline_2', [
+        'label' => __('Headline Part 2 (Highlighted)', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+        'type' => 'text',
+    ]);
+
+    // Headline Prefix (Middle part, e.g. "Start ", White)
+    $wp_customize->add_setting('hero_headline_prefix', ['default' => 'Start ', 'sanitize_callback' => 'sanitize_text_field']);
+    $wp_customize->add_control('hero_headline_prefix', [
+        'label' => __('Headline Prefix (Before Highlight)', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+        'type' => 'text',
+    ]);
+
+    // Description
+    $wp_customize->add_setting('hero_description', [
+        'default' => "We track the Grey Market Premium (GMP) so you don't have to rely on rumors. Real-time data for Mainboard & SME IPOs, direct from the street to your screen.",
+        'sanitize_callback' => 'sanitize_textarea_field'
+    ]);
+    $wp_customize->add_control('hero_description', [
+        'label' => __('Hero Description', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+        'type' => 'textarea',
+    ]);
+
+    // Highlight Color
+    $wp_customize->add_setting('hero_highlight_color', ['default' => '#00FF94', 'sanitize_callback' => 'sanitize_hex_color']);
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hero_highlight_color', [
+        'label' => __('Headline Highlight Color', 'ipo-premium'),
+        'section' => 'ipopro_hero_section',
+    ]));
+
+    // ==========================================
     // SECTION 5: HEADER SETTINGS
     // ==========================================
     $wp_customize->add_section('ipopro_header_section', [
@@ -270,6 +330,9 @@ function ipopro_customizer_css()
             --color-loss:
                 <?php echo get_theme_mod('gmp_loss_color', '#F87171'); ?>
             ;
+            --color-hero-highlight:
+                <?php echo get_theme_mod('hero_highlight_color', '#00FF94'); ?>
+            ;
 
             /* Typography */
             --font-heading: '<?php echo get_theme_mod('heading_font', 'Inter'); ?>', sans-serif;
@@ -313,6 +376,10 @@ function ipopro_customizer_css()
 
         .text-red-400 {
             color: var(--color-loss) !important;
+        }
+
+        .text-hero-highlight {
+            color: var(--color-hero-highlight) !important;
         }
 
         .glass-card {
