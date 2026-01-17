@@ -110,7 +110,6 @@ $est_profit = $gmp * $lot_size;
                         class="text-2xl font-black <?php echo ($ipo->premium < 0) ? 'text-red-400' : 'text-emerald-400'; ?> leading-none">
                         <?php echo ($ipo->premium < 0) ? '-₹' . abs($ipo->premium) : '+₹' . ($ipo->premium ?: '0'); ?>
                     </p>
-                    <p class="text-[10px] text-slate-400 mt-1">(<?php echo $gmp_perc; ?>%)</p>
                 </div>
                 <div class="text-center lg:text-left lg:border-l border-slate-700/50 lg:pl-6">
                     <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Price</p>
